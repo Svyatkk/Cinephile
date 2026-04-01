@@ -1,0 +1,56 @@
+.nav {
+    background-color: rgb(34, 31, 31);
+    font-size: 1em;
+    height: 60px;
+    display: flex;
+    padding: 0 10px 0 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.6em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.logo:hover {
+    color: red;
+    transition: 0.3s;
+}
+
+.block {
+    border: 1px solid white;
+    height: 100%;
+    width: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.loginButton {
+    border: 1px solid white;
+}
+
+.login {
+    border: 1px solid white;
+    display: flex;
+    gap: 15px;
+    font-weight: bold;
+    align-items: center;
+
+}
+
+.icon {
+    border: 1px solid white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: 0.4s;
+
+}
+
+.login:hover .icon {
+    background-color: red;
+    transition: 0.3s;
+}
