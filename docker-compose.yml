@@ -17,6 +17,8 @@ services:
       dockerfile: ./docker/server/Dockerfile
     volumes:
       - ./server:/var/www/html
+    depends_on:
+      - db
 
   client:
     build:
@@ -31,3 +33,29 @@ services:
     environment:
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: cinephile_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: cinephile_user
+      MYSQL_PASSWORD: secretpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+    depends_on:
+      - db
+
+volumes:
+  db_data:
