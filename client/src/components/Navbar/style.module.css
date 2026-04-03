@@ -6,6 +6,8 @@
     padding: 0 10px 0 10px;
     align-items: center;
     justify-content: space-between;
+
+    position: relative;
 }
 
 .logo {
@@ -28,6 +30,17 @@
     align-items: center;
 }
 
+.firstBlock {
+    display: flex;
+    gap: 10px;
+    border: 1px solid white;
+}
+
+.sideBarOpen {
+    border: 1px solid white;
+    cursor: pointer;
+}
+
 .loginButton {
     border: 1px solid white;
 }
@@ -36,9 +49,8 @@
     border: 1px solid white;
     display: flex;
     gap: 15px;
-    font-weight: bold;
     align-items: center;
-
+    font-size: 1.2em;
 }
 
 .icon {
@@ -53,4 +65,72 @@
 .login:hover .icon {
     background-color: red;
     transition: 0.3s;
+}
+
+
+.hamMenu {
+    height: 40px;
+    width: 50px;
+    position: relative;
+    cursor: pointer;
+
+    z-index: 101;
+
+    transition: 1 ease;
+
+}
+
+.hamMenu span {
+    height: 4px;
+    width: 70%;
+    background-color: white;
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease-in-out;
+
+}
+
+.hamMenu span:nth-child(1) {
+    top: 25%;
+
+
+}
+
+.hamMenu span:nth-child(3) {
+    top: 75%;
+
+}
+
+.hamMenu.active span:nth-child(1) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.hamMenu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamMenu.active span:nth-child(3) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.blockTrans {
+    width: 100%;
+    height: calc(100vh);
+    top: 60px;
+    left: 300px;
+    display: none;
+    transition: 0.5s;
+}
+
+.blockTrans.active {
+    position: absolute;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: 0.5s;
+
 }

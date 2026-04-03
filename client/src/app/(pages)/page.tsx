@@ -16,7 +16,6 @@ interface ApiResponse {
 
 
 
-
 export default function Home() {
     const [data, setData] = useState<ApiResponse | null>(null);
     const [loading, setLoading] = useState(true);
@@ -34,6 +33,8 @@ export default function Home() {
                 setLoading(false);
             });
     }, []);
+
+
 
     return (
         <div className={styles.pageMain}>
