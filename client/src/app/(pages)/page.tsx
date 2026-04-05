@@ -21,6 +21,7 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const route = useRouter()
 
+
     useEffect(() => {
         fetch("/api/index.php")
             .then((res) => res.json())

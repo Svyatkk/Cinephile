@@ -9,15 +9,10 @@ export default function NavBar() {
     const [active, setActive] = useState<boolean>(false)
     const [ham, setHam] = useState<boolean>(false)
 
-
-
-
     return (
         <>
 
             <nav className={styles.nav}>
-
-
 
                 <div className={styles.firstBlock}>
                     <div
@@ -25,16 +20,12 @@ export default function NavBar() {
 
                             setActive(prev => !prev)
 
-
-
                         }}
                         className={styles.hamMenu}
                     >
                         <span></span>
                         <span></span>
                         <span></span>
-
-
                     </div>
 
                     <div className={styles.logo}>
@@ -42,7 +33,6 @@ export default function NavBar() {
                     </div>
 
                 </div>
-
 
                 <div className={styles.block}>
 
@@ -58,8 +48,6 @@ export default function NavBar() {
                     </Link>
 
                 </div>
-
-
 
                 <SideBar active={active}></SideBar>
 

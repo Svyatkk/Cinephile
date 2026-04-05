@@ -118,9 +118,11 @@
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+
+
 .blockTrans {
     width: 100%;
-    height: calc(100vh);
+    height: calc(100vh - 60px);
     top: 60px;
     left: 300px;
     display: none;
