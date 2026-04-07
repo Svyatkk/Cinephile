@@ -1,5 +1,10 @@
 <?php
 header('Content-Type: application/json');
+
+
+
+
+
 echo json_encode([
     "status" => "success",
     "message" => "Привіт від PHP бекенду!",
@@ -7,6 +12,8 @@ echo json_encode([
     "data" => [
         ["id" => 1, "title" => "Inception"],
         ["id" => 2, "title" => "Interstellar"],
-        ["id" => 3, "title" => "The Dark Knight"]
+        ["id" => 3, "title" => "The Dark Knight"],
+                ["id" => 4, "title" => "The Dark Knight"]
+
     ]
 ]);

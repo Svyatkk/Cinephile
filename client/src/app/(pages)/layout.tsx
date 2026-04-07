@@ -7,10 +7,9 @@ type Props = {
 
 export default function PagesLayout({ children }: Props) {
 
-
-
     return (
         <>
+
 
             <NavBar></NavBar>
             {children}

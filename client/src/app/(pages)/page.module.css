@@ -1,7 +1,7 @@
 .pageMain {
   display: flex;
   min-height: calc(100vh - 60px);
-
+  border: 10px solid white;
   align-items: center;
   justify-content: center;
   font-family: var(--font-geist-sans);
@@ -12,4 +12,48 @@
   border: 1px solid white;
   width: 200px;
   height: 200px;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 20px 40px;
+  background: #0b0b0b;
+}
+
+.card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.card img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: white;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: red;
 }
