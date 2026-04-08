@@ -12,7 +12,10 @@ export default function PagesLayout({ children }: Props) {
 
 
             <NavBar></NavBar>
-            {children}
+            <div style={{ paddingTop: "60px" }}>
+                {children}
+
+            </div>
 
         </>
     )

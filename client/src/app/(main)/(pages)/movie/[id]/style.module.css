@@ -1,5 +1,45 @@
 .block {
     height: 1200px;
-    width: 200px;
+    width: 100%;
     background-color: black;
+    display: flex;
+    gap: 20px;
+}
+
+
+.poster {
+    border: 1px solid white;
+
+    height: 200px;
+    width: 200px;
+    position: fixed;
+
+
+}
+
+.side {
+    display: flex;
+    border: 1px solid white;
+    height: 200px;
+    margin-left: 250px;
+    width: 100%;
+}
+
+
+.something {
+    border: 1px solid white;
+    width: 200px;
+    height: 200px;
+}
+
+.seans {
+    width: 200px;
+    height: 500px;
+
+}
+
+.description {
+    width: 200px;
+    height: 500px;
+
 }
