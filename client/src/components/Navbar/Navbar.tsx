@@ -4,10 +4,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import SideBar from '../SideBar/SideBar'
+import { useRouter } from 'next/navigation'
 export default function NavBar() {
 
     const [active, setActive] = useState<boolean>(false)
     const [ham, setHam] = useState<boolean>(false)
+    const route = useRouter()
 
     return (
         <>
@@ -30,14 +32,15 @@ export default function NavBar() {
                     </div>
 
                     <div className={styles.logo}>
-                        <p>Cinephile</p>
+                        <p onClick={() => route.push('/')}>Cinephile</p>
                     </div>
 
                 </div>
 
                 <div className={styles.block}>
 
-                    <Link href={'login'} className={styles.login}>
+
+                    <Link href={'/login'} className={styles.login}>
                         <p>Увійти</p>
                         <Image
                             src="/profileImg.svg"

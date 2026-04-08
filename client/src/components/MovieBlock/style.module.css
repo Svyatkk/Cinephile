@@ -1,9 +1,12 @@
 .block {
-    border: 1px solid black;
+    border: 1px solid red;
     display: flex;
     gap: 10px;
+    padding: 20px;
 
-    background-color: wheat;
 
-
+    justify-content: center;
+    align-items: end;
+    height: calc(100vh - 60px);
+    font-size: 24px;
 }

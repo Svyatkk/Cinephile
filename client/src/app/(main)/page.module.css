@@ -1,7 +1,6 @@
 .pageMain {
   display: flex;
   min-height: calc(100vh - 60px);
-  border: 10px solid white;
   align-items: center;
   justify-content: center;
   font-family: var(--font-geist-sans);

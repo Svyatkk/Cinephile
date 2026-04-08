@@ -1,0 +1,18 @@
+.rootPages {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    background-color: red;
+
+
+
+    min-height: calc(100vh - 60px);
+}
+
+.pages {
+    border: 1px solid white;
+    max-width: 1300px;
+    width: 100%;
+}
