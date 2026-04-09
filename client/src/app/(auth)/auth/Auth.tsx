@@ -17,7 +17,11 @@ export default function Auth() {
             email, password
         }
         try {
-            await userService.auth(payload)
+            const response = await userService.auth(payload)
+            if (response.user) {
+                localStorage.setItem('user', JSON.stringify(response.user));
+            }
+
             route.push('/')
             route.refresh()
 
