@@ -4,10 +4,12 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from "swiper/modules";
 import MovieBlock from "../MovieBlock/MovieBlock";
-import "swiper/css";
+import "swiper/css"
 import "swiper/css/navigation";
 
 import styles from './style.module.css'
+
+
 
 import { IMovive } from "@/types/movie.interface";
 

@@ -13,21 +13,6 @@ export default function Home() {
     const route = useRouter()
 
 
-    useEffect(() => {
-        fetch('/api/index.php')
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Помилка HTTP: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(data => {
-                console.log("Отримані дані:", data);
-                setMovies(data.data);
-            })
-            .catch(err => console.error("Помилка завантаження даних:", err));
-
-    }, [])
 
 
     return (

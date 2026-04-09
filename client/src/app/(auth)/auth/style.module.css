@@ -1,0 +1,34 @@
+.block {
+    border: 1px solid white;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+
+
+}
+
+.auth {
+    width: 50%;
+    height: 100%;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.images {
+    width: 50%;
+    height: 100%;
+    border: 1px solid white;
+
+}
+
+.blockAuth {
+    max-width: 300px;
+    width: 100%;
+    height: 500px;
+    border: 1px solid white;
+
+
+}

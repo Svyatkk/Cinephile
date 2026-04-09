@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import SideBar from '../SideBar/SideBar'
 import { useRouter } from 'next/navigation'
+import { PAGES_URL } from '@/api/config'
 export default function NavBar() {
 
     const [active, setActive] = useState<boolean>(false)
@@ -40,7 +41,8 @@ export default function NavBar() {
                 <div className={styles.block}>
 
 
-                    <Link href={'/login'} className={styles.login}>
+
+                    <Link href={PAGES_URL.AUTH} className={styles.login}>
                         <p>Увійти</p>
                         <Image
                             src="/profileImg.svg"
