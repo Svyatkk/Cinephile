@@ -32,8 +32,13 @@ if ($uri === '/api/auth') {
     require_once __DIR__ . '/../controllers/auth.php';
 } 
 else if ($uri === '/api/movies') {
-    require_once __DIR__ . '/../controllers/movies.php';
+    require_once __DIR__ . '/../controllers/movie.php';
 } 
+else if ($uri === '/api/upload') {
+    require_once __DIR__ . '/../controllers/upload.php';
+}
+
+
 else {
     http_response_code(404);
     echo json_encode(["message" => "API Ендпоінт не знайдено."]);

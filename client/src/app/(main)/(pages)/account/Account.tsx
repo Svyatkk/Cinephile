@@ -1,11 +1,12 @@
 'use client'
 import { useEffect, useState } from "react"
 import { IUser } from "@/types/user.interface"
+import styels from './style.module.css'
+
 export default function Accout() {
 
 
     const [user, setUser] = useState<IUser | null>(null)
-
 
 
     useEffect(() => {
@@ -15,12 +16,15 @@ export default function Accout() {
         }
     }, [])
 
-
-
     return (
         <>
-            {user?.email}
-            {user?.password}
+
+            <div className={styels.block}>
+                {user?.email}
+                {user?.password}
+            </div>
+
+
 
         </>
     )

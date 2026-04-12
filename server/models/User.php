@@ -1,70 +1,98 @@
 <?php
 
-class User {
+class Movie {
     private $conn;
-    private $table_name = "users";
-    
+    private $table_name = "movies";
+
     public $id;
-    public $name;
-    public $email;
-    public $password_hash;
-    public $role;
+    public $title;
+    public $original_title;
+    public $description;
+    public $poster_url;
+    public $release_year;
+    public $duration_minutes;
+    public $genres;
+    public $director;
+    public $cast_actors;
+    public $country;
+    public $studio;
+    public $language;
+    public $age_restriction;
+    public $inclusive_adaptation;
 
     public function __construct($db) {
         $this->conn = $db;
-    }
+    }       
 
-    public function emailExists() {
-        $query = "SELECT id FROM " . $this->table_name . " WHERE email = ? LIMIT 0,1";
+    public function read() {
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->email);
         $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            return true;
-        }
-        return false;
+        return $stmt;
     }
 
-    public function getUserByEmail() {
-        $query = "SELECT id, name, email, password_hash, role FROM " . $this->table_name . " WHERE email = ? LIMIT 0,1";
+    public function readOne($id) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = ? LIMIT 0,1";
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
         
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->email);
-        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($stmt->rowCount() > 0) {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+        if($row) {
+            $this->id = $row['id'];
+            $this->title = $row['title'];
+            $this->original_title = $row['original_title'];
+            $this->description = $row['description'];
+            $this->poster_url = $row['poster_url'];
+            $this->release_year = $row['release_year'];
+            $this->duration_minutes = $row['duration_minutes'];
+            $this->genres = $row['genres'];
+            $this->director = $row['director'];
+            $this->cast_actors = $row['cast_actors'];
+            $this->country = $row['country'];
+            $this->studio = $row['studio'];
+            $this->language = $row['language'];
+            $this->age_restriction = $row['age_restriction'];
+            $this->inclusive_adaptation = $row['inclusive_adaptation'];
+            return true;
         }
         return false;
     }
 
     public function create() {
-    $query = "INSERT INTO " . $this->table_name . " (name, email, password_hash) VALUES (:name, :email, :password_hash)";
+        $query = "INSERT INTO " . $this->table_name . " 
+                (title, original_title, description, poster_url, release_year, duration_minutes, genres, director, cast_actors, country, studio, language, age_restriction, inclusive_adaptation) 
+                VALUES 
+                (:title, :original_title, :description, :poster_url, :release_year, :duration_minutes, :genres, :director, :cast_actors, :country, :studio, :language, :age_restriction, :inclusive_adaptation)";
 
-    $stmt = $this->conn->prepare($query);
+        $stmt = $this->conn->prepare($query);
 
-    $this->name = htmlspecialchars(strip_tags($this->name));
-    $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->title = htmlspecialchars(strip_tags($this->title));
+        $this->original_title = htmlspecialchars(strip_tags($this->original_title));
 
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":email", $this->email);
-    $stmt->bindParam(":password_hash", $this->password_hash);
+        $stmt->bindParam(':title', $this->title);
+        $stmt->bindParam(':original_title', $this->original_title);
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':poster_url', $this->poster_url);
+        $stmt->bindParam(':release_year', $this->release_year);
+        $stmt->bindParam(':duration_minutes', $this->duration_minutes);
+        $stmt->bindParam(':genres', $this->genres);
+        $stmt->bindParam(':director', $this->director);
+        $stmt->bindParam(':cast_actors', $this->cast_actors);
+        $stmt->bindParam(':country', $this->country);
+        $stmt->bindParam(':studio', $this->studio);
+        $stmt->bindParam(':language', $this->language);
+        $stmt->bindParam(':age_restriction', $this->age_restriction);
+        $stmt->bindParam(':inclusive_adaptation', $this->inclusive_adaptation);
 
-    try {
-        if ($stmt->execute()) {
+        if($stmt->execute()) {
             return true;
         }
-    } catch (PDOException $e) {
- 
-        http_response_code(500);
-        echo json_encode([
-            "success" => false, 
-            "message" => "Помилка бази даних: " . $e->getMessage()
-        ]);
-        exit(); 
+               
+        printf("Error: %s.\n", $stmt->error);
+        return false;
     }
-    
-    return false;
 }
-}
+?>

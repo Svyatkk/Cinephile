@@ -5,15 +5,19 @@ import styles from './page.module.css'
 import { useRouter } from "next/navigation";
 import MainSwiper from "@/components/MainSwiper/MainSwiper";
 import { Main } from "next/document";
-import { IMovive } from "@/types/movie.interface";
-
+import { IMovie } from "@/types/movie.interface";
+import { movieService } from "@/api/movie.service";
 export default function Home() {
 
-    const [movies, setMovies] = useState<IMovive[] | null>()
+    const [movies, setMovies] = useState<IMovie[] | null>()
     const route = useRouter()
 
+    useEffect(() => {
+        movieService.getAll()
+            .then(res => setMovies(res))
+            .catch(err => console.log(err))
 
-
+    }, [])
 
     return (
         <div className={styles.pageMain}>

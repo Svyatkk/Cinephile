@@ -13,7 +13,7 @@ class UserService {
         $user->email = $email;
     
         if ($user->emailExists()) {
-            
+                
             $userData = $user->getUserByEmail(); 
 
             if ($userData && password_verify($password, $userData['password_hash'])) {
@@ -48,4 +48,6 @@ class UserService {
             }
         }
     }
+
+
 }

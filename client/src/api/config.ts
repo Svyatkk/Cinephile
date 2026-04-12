@@ -11,7 +11,8 @@ export const fetchOptions = {
 export const PAGES_URL = {
     AUTH: `/auth`,
     MAIN: `/`,
-    ACCOUNT: `/account`
+    ACCOUNT: `/account`,
+    ADMIN: '/admin'
 
 }
 

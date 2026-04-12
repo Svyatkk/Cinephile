@@ -11,10 +11,10 @@ import styles from './style.module.css'
 
 
 
-import { IMovive } from "@/types/movie.interface";
+import { IMovie } from '@/types/movie.interface';
 
 type Props = {
-    movies: IMovive[] | null | undefined;
+    movies: IMovie[] | null | undefined;
 };
 
 export default function MainSwiper({ movies }: Props) {

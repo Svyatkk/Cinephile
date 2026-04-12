@@ -1,7 +1,7 @@
 'use client'
 import styles from './style.module.css'
 import { useState } from "react"
-import { userService } from '@/api/user.serice'
+import { userService } from '@/api/user.service'
 
 
 
@@ -26,8 +26,6 @@ export default function MoviePage({ id }: Props) {
 
                 </div>
 
-
-
                 <div className={styles.side}>
                     <div className={styles.description}>
                         {id}
@@ -37,12 +35,6 @@ export default function MoviePage({ id }: Props) {
 
                     </div>
                 </div>
-
-
-
-
-
-
 
             </div>
 

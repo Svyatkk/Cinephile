@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import SideBar from '../SideBar/SideBar'
 import { useRouter } from 'next/navigation'
 import { PAGES_URL } from '@/api/config'
-import { userService } from '@/api/user.serice'
+import { userService } from '@/api/user.service'
 import { IUser } from '@/types/user.interface'
 export default function NavBar() {
 
@@ -14,7 +14,6 @@ export default function NavBar() {
     const [ham, setHam] = useState<boolean>(false)
     const route = useRouter()
     const [user, setUser] = useState<IUser | null>(null)
-
 
 
 

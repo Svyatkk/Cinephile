@@ -1,5 +1,5 @@
 'use client'
-import { userService } from "@/api/user.serice"
+import { userService } from "@/api/user.service"
 import styles from './style.module.css'
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -12,24 +12,29 @@ export default function Auth() {
     const route = useRouter()
 
     const handleAuth = async () => {
+        const payload = { email, password };
 
-        const payload = {
-            email, password
-        }
         try {
-            const response = await userService.auth(payload)
+            const response = await userService.auth(payload);
+
             if (response.user) {
                 localStorage.setItem('user', JSON.stringify(response.user));
+
+                if (response.user.role === 'admin') {
+                    route.push(PAGES_URL.ADMIN);
+                } else {
+                    route.push(PAGES_URL.MAIN);
+                }
+                route.refresh();
             }
 
-            route.push('/')
-            route.refresh()
-
         } catch (error) {
-            console.log(error)
-        }
+            console.log('Помилка авторизації:', error);
 
+        }
     }
+
+
 
 
     return (

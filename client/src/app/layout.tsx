@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Cinephile",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
