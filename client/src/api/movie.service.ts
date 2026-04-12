@@ -43,9 +43,9 @@ export const movieService = {
             console.error('Помилка від бекенду:', errorText);
             throw new Error(`Помилка запиту: ${response.status}`);
         }
-
         return response.json()
 
     }
+
 
 }

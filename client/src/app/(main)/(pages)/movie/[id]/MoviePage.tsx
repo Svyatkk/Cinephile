@@ -9,11 +9,10 @@ import { IMovie } from '@/types/movie.interface'
 type Props = {
     id: string
 }
-//пзніше тут буде передавтися не id а дата фільму
-
 
 
 export default function MoviePage({ id }: Props) {
+
 
 
     const [movie, setMovie] = useState<IMovie | null>()

@@ -34,10 +34,21 @@ if ($uri === '/api/auth') {
 else if ($uri === '/api/movies') {
     require_once __DIR__ . '/../controllers/movie.php';
 } 
-else if ($uri === '/api/upload') {
-    require_once __DIR__ . '/../controllers/upload.php';
+else if (strpos($uri, '/api/uploads/') === 0) {
+    $relativePath = str_replace('/api/', '', $uri);
+    $filePath = __DIR__ . '/' . $relativePath; 
+    
+    if (file_exists($filePath)) {
+        $mimeType = mime_content_type($filePath);
+        header('Content-Type: ' . $mimeType);
+        readfile($filePath);
+        exit();
+    } else {
+        http_response_code(404);
+        echo json_encode(["message" => "Файл картинки не знайдено на сервері.", "path" => $filePath]);
+        exit();
+    }
 }
-
 
 else {
     http_response_code(404);

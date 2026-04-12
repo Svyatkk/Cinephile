@@ -12,8 +12,8 @@ export const PAGES_URL = {
     AUTH: `/auth`,
     MAIN: `/`,
     ACCOUNT: `/account`,
-    ADMIN: '/admin'
-
+    ADMIN: '/admin',
+    MOVIE: (id: number): string => `/movie/${id}`
 }
 
 
