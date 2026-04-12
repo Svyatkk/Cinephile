@@ -1,7 +1,8 @@
 'use client'
 import styles from './style.module.css'
-import { useState } from "react"
-import { userService } from '@/api/user.service'
+import { useEffect, useState } from "react"
+import { movieService } from '@/api/movie.service'
+import { IMovie } from '@/types/movie.interface'
 
 
 
@@ -15,6 +16,13 @@ type Props = {
 export default function MoviePage({ id }: Props) {
 
 
+    const [movie, setMovie] = useState<IMovie | null>()
+
+    useEffect(() => {
+        movieService.getById(id)
+            .then(res => setMovie(res))
+
+    }, [])
 
     return (
         <>
@@ -28,7 +36,7 @@ export default function MoviePage({ id }: Props) {
 
                 <div className={styles.side}>
                     <div className={styles.description}>
-                        {id}
+                        {movie?.original_title}
                     </div>
 
                     <div className={styles.seans}>

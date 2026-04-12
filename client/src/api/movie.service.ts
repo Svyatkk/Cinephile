@@ -33,7 +33,18 @@ export const movieService = {
         }
 
         return response.json()
+    },
+    async getById(id: string) {
+        const response = await fetch(`${BASE_URL}/movies?id=${id}`, {
+            ...fetchOptions,
+        })
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Помилка від бекенду:', errorText);
+            throw new Error(`Помилка запиту: ${response.status}`);
+        }
 
+        return response.json()
 
     }
 
