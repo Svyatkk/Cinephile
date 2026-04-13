@@ -8,6 +8,11 @@
     justify-content: space-between;
     width: 100%;
     position: fixed;
+
+    z-index: 100;
+
+
+
 }
 
 
@@ -62,6 +67,7 @@
     height: 30px;
     border-radius: 50%;
     transition: 0.4s;
+
 
 }
 
@@ -123,17 +129,19 @@
 
 
 
+
 .blockTrans {
+
     width: 100%;
     height: calc(100vh - 60px);
     top: 60px;
-    left: 300px;
-    display: none;
+    position: fixed;
+    opacity: 0;
     transition: 0.5s;
 }
 
 .blockTrans.active {
-    position: absolute;
+    opacity: 1;
     display: block;
     background-color: rgba(0, 0, 0, 0.6);
     transition: 0.5s;

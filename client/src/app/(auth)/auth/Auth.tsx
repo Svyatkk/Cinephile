@@ -1,10 +1,10 @@
 'use client'
-import { userService } from "@/api/user.service"
+import { userService } from '@/api/user.service'
 import styles from './style.module.css'
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { PAGES_URL } from "@/api/config"
-
+import Link from 'next/link'
 export default function Auth() {
 
     const [email, setEmail] = useState<string>()
@@ -34,25 +34,37 @@ export default function Auth() {
         }
     }
 
-
-
-
     return (
         <>
             <div className={styles.block}>
 
                 <div className={styles.auth}>
                     <div className={styles.blockAuth}>
-                        <label htmlFor=""><input placeholder="email" onChange={(e) => {
+                        <div className={styles.blockText}>
+                            <h1>Вхід до особистого кабінету
+                            </h1>
+                            <p>Тут всі ваші замовлення та особиста інформація
+
+                            </p>
+                        </div>
+
+                        <label htmlFor=""><input placeholder="Email" onChange={(e) => {
                             setEmail(e.target.value)
 
                         }} type="text" /></label>
 
-                        <label htmlFor=""><input placeholder="password" onChange={(e) => {
+
+                        <label htmlFor=""><input placeholder="Пароль" onChange={(e) => {
                             setPassword(e.target.value)
 
                         }} type="text" /></label>
                         <button onClick={handleAuth}>Продовжити</button>
+
+
+
+                        <div className={styles.return}>
+                            Повернутися на сайт <Link className={styles.link} href={PAGES_URL.MAIN}>Cinephile</Link>
+                        </div>
 
                     </div>
 

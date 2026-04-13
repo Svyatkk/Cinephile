@@ -6,7 +6,8 @@
     background-color: rgb(34, 31, 31);
     left: -100%;
     transition: left 0.4s ease;
-    z-index: 50;
+    z-index: 9999;
+
 }
 
 

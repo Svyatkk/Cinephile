@@ -5,12 +5,16 @@ import { IMovie } from '@/types/movie.interface'
 import { useRouter } from 'next/navigation'
 import { PAGES_URL, BASE_URL } from '@/api/config'
 
+
+
+
 type Props = {
     movie: IMovie
 }
 
 export default function MovieBlock({ movie }: Props) {
     const route = useRouter()
+
 
 
     const poster = movie.poster_url;

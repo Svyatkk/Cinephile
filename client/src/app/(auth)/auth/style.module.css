@@ -1,34 +1,130 @@
 .block {
-    border: 1px solid white;
     width: 100%;
     height: 100vh;
     display: flex;
-
+    background: linear-gradient(135deg, #0b0b0b, #1a1a1a);
+    color: white;
 
 }
+
+
 
 .auth {
     width: 50%;
     height: 100%;
-    border: 1px solid white;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-
 .images {
     width: 50%;
     height: 100%;
-    border: 1px solid white;
+    background: linear-gradient(135deg, #ff0000, #000000);
+    position: relative;
+}
 
+.images::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
 }
 
 .blockAuth {
-    max-width: 300px;
+    max-width: 370px;
     width: 100%;
-    height: 500px;
-    border: 1px solid white;
+    padding: 40px 30px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
 
 
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.return {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.link {
+    color: red;
+    transition: 0.5s;
+
+
+}
+
+.link:hover {
+    transform: translateY(-2px);
+}
+
+
+
+.blockText {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+
+}
+
+.blockAuth h1 {
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.blockAuth input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 14px;
+
+    outline: none;
+    transition: 0.3s;
+}
+
+.blockAuth input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.blockAuth input:focus {
+    border: 1px solid red;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.blockAuth>button {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.blockAuth>button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+}
+
+.blockAuth>button:active {
+    transform: scale(0.97);
 }

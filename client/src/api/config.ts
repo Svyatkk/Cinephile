@@ -13,7 +13,8 @@ export const PAGES_URL = {
     MAIN: `/`,
     ACCOUNT: `/account`,
     ADMIN: '/admin',
-    MOVIE: (id: number): string => `/movie/${id}`
+    MOVIE: (id: number): string => `/movie/${id}`,
+    MOVIES: '/movies'
 }
 
 

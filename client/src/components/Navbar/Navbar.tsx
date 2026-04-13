@@ -11,11 +11,8 @@ import { IUser } from '@/types/user.interface'
 export default function NavBar() {
 
     const [active, setActive] = useState<boolean>(false)
-    const [ham, setHam] = useState<boolean>(false)
     const route = useRouter()
     const [user, setUser] = useState<IUser | null>(null)
-
-
 
     useEffect(() => {
 
@@ -28,8 +25,6 @@ export default function NavBar() {
 
     return (
         <>
-
-
             <nav className={styles.nav}>
 
                 <div className={styles.firstBlock}>
@@ -39,7 +34,7 @@ export default function NavBar() {
                             setActive(prev => !prev)
 
                         }}
-                        className={styles.hamMenu}
+                        className={`${styles.hamMenu} ${active ? styles.active : ''}`}
                     >
                         <span></span>
                         <span></span>
@@ -47,7 +42,7 @@ export default function NavBar() {
                     </div>
 
                     <div className={styles.logo}>
-                        <p onClick={() => route.push('/')}>Cinephile</p>
+                        <p onClick={() => route.push(PAGES_URL.MAIN)}>Cinephile</p>
                     </div>
 
                 </div>
@@ -83,7 +78,6 @@ export default function NavBar() {
                                 </Link>
                             )
                     }
-
 
                 </div>
 
