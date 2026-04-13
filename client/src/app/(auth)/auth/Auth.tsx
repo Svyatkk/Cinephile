@@ -60,8 +60,6 @@ export default function Auth() {
                         }} type="text" /></label>
                         <button onClick={handleAuth}>Продовжити</button>
 
-
-
                         <div className={styles.return}>
                             Повернутися на сайт <Link className={styles.link} href={PAGES_URL.MAIN}>Cinephile</Link>
                         </div>
