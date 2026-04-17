@@ -10,6 +10,7 @@ export const userService = {
         })
 
 
+
         if (!response.ok) {
             const errorText = await response.text();
             console.error('Помилка від бекенду:', errorText);

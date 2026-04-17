@@ -1,45 +1,289 @@
-.block {
-    height: 1200px;
-    width: 100%;
-    background-color: black;
-    display: flex;
-    gap: 20px;
+.page {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    background: #0b0b0d;
+    color: #e6e6e6;
+    min-height: 100vh;
 }
 
+
+.hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.heroBg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: blur(18px) brightness(0.3);
+    transform: scale(1.05);
+}
+
+.heroOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(11, 11, 13, 0) 0%,
+            rgba(11, 11, 13, 0.75) 60%,
+            #0b0b0d 100%);
+}
+
+.heroContent {
+    position: relative;
+    display: flex;
+    gap: 36px;
+    align-items: flex-end;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+.posterWrap {
+    flex-shrink: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.06);
+}
 
 .poster {
-    border: 1px solid white;
-
-    height: 200px;
     width: 200px;
-    position: fixed;
-
-
+    height: 300px;
+    object-fit: cover;
+    display: block;
 }
 
-.side {
+.posterPlaceholder {
+    width: 200px;
+    height: 300px;
+    background: #151517;
     display: flex;
-    border: 1px solid white;
-    height: 200px;
-    margin-left: 250px;
-    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.posterPlaceholderText {
+    font-size: 48px;
+    color: rgba(255, 255, 255, 0.2);
 }
 
 
-.something {
-    border: 1px solid white;
-    width: 200px;
-    height: 200px;
+.heroMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 8px;
 }
 
-.seans {
-    width: 200px;
-    height: 500px;
+.ageBadge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    border: 1.5px solid #b3121d;
+    color: #ff3b4a;
+    font-size: 13px;
+    font-weight: 700;
+    width: fit-content;
+    letter-spacing: 1px;
+    background: rgba(179, 18, 29, 0.08);
+}
 
+.title {
+    font-size: 38px;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+}
+
+.originalTitle {
+    margin: 0;
+    font-size: 15px;
+    color: rgba(230, 230, 230, 0.5);
+    font-style: italic;
+}
+
+
+.tagRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.tag {
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 13px;
+    color: rgba(230, 230, 230, 0.75);
+    font-weight: 500;
+}
+
+.tagAccent {
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(255, 59, 74, 0.12);
+    border: 1px solid rgba(255, 59, 74, 0.35);
+    font-size: 13px;
+    color: #ff3b4a;
+    font-weight: 600;
+}
+
+
+.buyBtn {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: #b3121d;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.buyBtn:hover {
+    background: #ff3b4a;
+}
+
+.buyBtnIcon {
+    font-size: 12px;
+}
+
+
+.body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+}
+
+.section {
+    margin-bottom: 48px;
+}
+
+.sectionTitle {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ff3b4a;
+    margin-bottom: 20px;
 }
 
 .description {
-    width: 200px;
-    height: 500px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(230, 230, 230, 0.75);
+    max-width: 720px;
+}
 
+
+.detailGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.detailLabel {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgba(230, 230, 230, 0.35);
+}
+
+.detailValue {
+    font-size: 15px;
+    color: #e6e6e6;
+    font-weight: 500;
+}
+
+
+.castGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.castChip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 40px;
+}
+
+.castAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 59, 74, 0.15);
+    color: #ff3b4a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.castName {
+    font-size: 14px;
+    color: rgba(230, 230, 230, 0.85);
+}
+
+.ctaSection {
+    margin-top: 16px;
+    padding: 40px;
+    background: rgba(255, 59, 74, 0.06);
+    border: 1px solid rgba(255, 59, 74, 0.2);
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.ctaText {
+    font-size: 16px;
+    color: rgba(230, 230, 230, 0.7);
+    max-width: 500px;
+}
+
+.buyBtnLarge {
+    padding: 16px 36px;
+    background: #b3121d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.buyBtnLarge:hover {
+    background: #ff3b4a;
 }

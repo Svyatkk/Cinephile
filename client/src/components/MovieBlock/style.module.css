@@ -17,4 +17,7 @@
 
 .title {
     position: absolute;
+    cursor: pointer;
+    z-index: 10000;
+    cursor: pointer;
 }
