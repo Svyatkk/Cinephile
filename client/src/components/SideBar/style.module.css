@@ -1,97 +1,132 @@
 .sideBar {
     position: fixed;
     top: 60px;
-    height: calc(100vh);
-    width: 300px;
-    background-color: rgb(34, 31, 31);
+    height: calc(100vh - 60px);
+    width: 320px;
+    background-color: #1a1a1a;
     left: -100%;
     transition: left 0.4s ease;
     z-index: 9999;
-    display: flex;
-    border: 1px solid white;
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-}
-
-
-.blocks {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    border: 1px solid white;
-}
-
-
-.logout {
-    border: 1px solid white;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.logout .login:hover {
-    color: gray;
-    transition: 0.3s;
-}
-
-
-.logout span {
-    font-size: 8px;
-    font-weight: bold;
-    color: rgb(66, 65, 65);
-}
-
-.logout .login {
-    display: flex;
-    align-items: center;
-    width: 30%;
-    background-color: red;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
-    transition: 0.3s;
-    padding-left: 5px;
-    padding-right: 7px;
-    justify-content: center;
-    border: none;
-    font-size: 0.6em;
-}
-
-
-.links {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    border: 1px solid red;
-
-
-}
-
-.links .link {
-    font-size: 1.2em;
-    transition: 0.3s;
-
-}
-
-.link:hover {
-    color: red;
-    transition: 0.3s;
-}
-
-.blocks {
-    border: 1px solid white;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.links {
-    border: 1px solid white;
+    padding: 30px;
+    color: white;
+    overflow-y: auto;
 }
 
 .sideBar.open {
     left: 0;
-    transition: left 0.4s ease;
+}
 
+.blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.link {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.link:hover {
+    color: #ff0000;
+}
+
+.redText {
+    color: #ff0000;
+}
+
+.yellowText {
+    color: #fbbc05;
+}
+
+.yellowText:hover {
+    color: #e5a703;
+}
+
+.sectionTitle {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #888;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.logout {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 50%;
+    padding: 12px;
+    background-color: #ff0000;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.loginBtn:hover {
+    background-color: #cc0000;
+}
+
+.icon {
+    filter: brightness(0) invert(1);
+}
+
+.socialMedia {
+    display: flex;
+    flex-direction: column;
+}
+
+.socialLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.socialLinks a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.socialLinks a:hover {
+    color: #ff0000;
+}
+
+.socialIcon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
 }

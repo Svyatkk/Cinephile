@@ -8,10 +8,7 @@ import "swiper/css"
 import "swiper/css/navigation";
 
 
-
-
 import styles from './style.module.css'
-
 
 
 import { IMovie } from '@/types/movie.interface';

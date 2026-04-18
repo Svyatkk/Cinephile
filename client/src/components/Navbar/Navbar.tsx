@@ -15,6 +15,7 @@ export default function NavBar() {
     const [user, setUser] = useState<IUser | null>(null)
 
 
+
     useEffect(() => {
 
         const storedUser = localStorage.getItem('user');
@@ -22,6 +23,7 @@ export default function NavBar() {
             setUser(JSON.parse(storedUser));
         }
     }, [])
+
 
 
     return (
@@ -83,11 +85,11 @@ export default function NavBar() {
                 </div>
 
                 <SideBar active={active}></SideBar>
-                {/* 
-                <div className={`${styles.blockTrans} ${active ? styles.active : ''}`}>
-
-
-                </div> */}
+                <div
+                    className={`${styles.blockTrans} ${active ? styles.active : ''}`}
+                    onClick={() => setActive(false)}
+                >
+                </div>
 
             </nav >
         </>

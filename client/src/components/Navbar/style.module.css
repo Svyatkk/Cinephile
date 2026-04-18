@@ -127,22 +127,21 @@
 
 
 
-/* .blockTrans {
-
+.blockTrans {
     width: 100%;
     height: calc(100vh - 60px);
     top: 60px;
+    left: 0;
     position: fixed;
     opacity: 0;
+    visibility: hidden;
     transition: 0.5s;
-    z-index: -4000;
-
+    z-index: 999;
 }
 
 .blockTrans.active {
     opacity: 1;
-    display: block;
+    visibility: visible;
     background-color: rgba(0, 0, 0, 0.6);
     transition: 0.5s;
-
-} */
+}
