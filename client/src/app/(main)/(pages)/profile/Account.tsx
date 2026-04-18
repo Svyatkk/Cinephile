@@ -26,7 +26,7 @@ export default function Account() {
                             <h1>Особистий кабінет</h1>
                             <div className={styles.userInfo}>
                                 <div className={styles.avatar}>
-                                    <Image src="/profileImg.svg" width={60} height={60} alt="Avatar" className={styles.avatarImg}/>
+                                    <Image src="/profileImg.svg" width={60} height={60} alt="Avatar" className={styles.avatarImg} />
                                 </div>
                                 <div className={styles.details}>
                                     <div className={styles.field}>

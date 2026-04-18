@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 0);
+error_reporting(E_ERROR);
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
@@ -34,6 +37,9 @@ if ($uri === '/api/auth') {
 else if ($uri === '/api/movies') {
     require_once __DIR__ . '/../controllers/movie.php';
 } 
+else if ($uri === '/api/sessions') {
+    require_once __DIR__ . '/../controllers/session.php';
+}
 else if (strpos($uri, '/api/uploads/') === 0) {
     $relativePath = str_replace('/api/', '', $uri);
     $filePath = __DIR__ . '/' . $relativePath; 

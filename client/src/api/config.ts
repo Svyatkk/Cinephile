@@ -8,10 +8,12 @@ export const fetchOptions = {
 };
 
 
+
+
 export const PAGES_URL = {
     AUTH: `/auth`,
     MAIN: `/`,
-    ACCOUNT: `/account`,
+    ACCOUNT: `/profile`,
     ADMIN: '/admin',
     MOVIE: (id: number): string => `/movie/${id}`,
     MOVIES: '/movies'

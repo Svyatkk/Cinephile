@@ -1,18 +1,21 @@
 'use client'
 import { userService } from '@/api/user.service'
 import styles from './style.module.css'
-import { useEffect, useState } from "react"
+import { useRef } from "react"
 import { useRouter } from "next/navigation"
 import { PAGES_URL } from "@/api/config"
 import Link from 'next/link'
 export default function Auth() {
 
-    const [email, setEmail] = useState<string>()
-    const [password, setPassword] = useState<string>()
+    const emailRef = useRef<HTMLInputElement>(null)
+    const passwordRef = useRef<HTMLInputElement>(null)
     const route = useRouter()
 
     const handleAuth = async () => {
-        const payload = { email, password };
+        const payload = {
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value
+        };
 
         try {
             const response = await userService.auth(payload);
@@ -48,17 +51,11 @@ export default function Auth() {
                             </p>
                         </div>
 
-                        <label htmlFor=""><input placeholder="Email" onChange={(e) => {
-                            setEmail(e.target.value)
-
-                        }} type="text" /></label>
+                        <label htmlFor=""><input suppressHydrationWarning ref={emailRef} placeholder="Email" type="text" /></label>
 
 
-                        <label htmlFor=""><input placeholder="Пароль" onChange={(e) => {
-                            setPassword(e.target.value)
-
-                        }} type="text" /></label>
-                        <button onClick={handleAuth}>Продовжити</button>
+                        <label htmlFor=""><input suppressHydrationWarning ref={passwordRef} placeholder="Пароль" type="password" /></label>
+                        <button suppressHydrationWarning onClick={handleAuth}>Продовжити</button>
 
                         <div className={styles.return}>
                             Повернутися на сайт <Link className={styles.link} href={PAGES_URL.MAIN}>Cinephile</Link>

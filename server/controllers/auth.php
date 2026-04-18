@@ -5,7 +5,7 @@ $data = json_decode(file_get_contents("php://input"));
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'POST') {
-    if (!empty($data->email) && !empty($data->password)) {
+    if (!is_null($data) && !empty($data->email) && !empty($data->password)) {
         
         $name = !empty($data->name) ? $data->name : explode('@', $data->email)[0];
         $userService = new UserService($db); 
