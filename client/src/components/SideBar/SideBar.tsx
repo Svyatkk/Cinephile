@@ -23,7 +23,8 @@ export default function SideBar({ active }: Props) {
         }
     }, [])
 
-    const handleLogout = (e: React.MouseEvent) => {
+
+    const handleLogout = (e: MouseEvent) => {
         e.preventDefault();
         localStorage.removeItem('user');
         window.location.href = PAGES_URL.MAIN;

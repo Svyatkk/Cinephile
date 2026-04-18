@@ -45,7 +45,7 @@ export default function NavBar() {
                     </div>
 
                     <div className={styles.logo}>
-                        <p onClick={() => route.push(PAGES_URL.MAIN)}>Cinephile</p>
+                        <p className={active ? styles.activeLogo : ''} onClick={() => route.push(PAGES_URL.MAIN)}>Cinephile</p>
                     </div>
 
                 </div>

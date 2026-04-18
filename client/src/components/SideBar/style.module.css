@@ -36,8 +36,24 @@
     font-weight: 500;
     color: white;
     text-decoration: none;
-    transition: 0.3s;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateX(-20px);
+    opacity: 0;
 }
+
+.sideBar.open .link {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.sideBar.open .link:nth-child(1) { transition-delay: 0.1s; }
+.sideBar.open .link:nth-child(2) { transition-delay: 0.15s; }
+.sideBar.open .link:nth-child(3) { transition-delay: 0.2s; }
+.sideBar.open .link:nth-child(4) { transition-delay: 0.25s; }
+.sideBar.open .link:nth-child(5) { transition-delay: 0.3s; }
+.sideBar.open .link:nth-child(6) { transition-delay: 0.35s; }
+.sideBar.open .link:nth-child(7) { transition-delay: 0.4s; }
+.sideBar.open .link:nth-child(8) { transition-delay: 0.45s; }
 
 .link:hover {
     color: #ff0000;
@@ -73,9 +89,9 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 50%;
+    width: 60%;
     padding: 12px;
-    background-color: #ff0000;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
     color: white;
     border-radius: 8px;
     text-decoration: none;
@@ -83,7 +99,15 @@
     font-size: 1rem;
     border: none;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateX(-30px);
+    opacity: 0;
+}
+
+.sideBar.open .loginBtn {
+    transform: translateX(0);
+    opacity: 1;
+    transition-delay: 0.5s;
 }
 
 .loginBtn:hover {

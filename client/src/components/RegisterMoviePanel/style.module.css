@@ -6,23 +6,24 @@
 }
 
 .container {
-    border: 10px solid black;
     width: 100%;
     max-width: 800px;
-    background-color: #ffffff;
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
     padding: 30px 40px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    color: black;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .title {
     margin-top: 0;
     margin-bottom: 24px;
     font-size: 24px;
-    color: #111827;
+    color: white;
     font-weight: 600;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 15px;
 }
 
@@ -45,7 +46,7 @@
 .formGroup label {
     font-size: 14px;
     font-weight: 500;
-    color: #374151;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .formGroup input[type="text"],
@@ -54,21 +55,21 @@
 .formGroup textarea {
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     font-size: 14px;
-    background-color: #fdfdfd;
+    background-color: rgba(255, 255, 255, 0.05);
     transition: border-color 0.2s, box-shadow 0.2s;
     font-family: inherit;
-    color: black;
+    color: white;
 }
 
 .formGroup input:focus,
 .formGroup select:focus,
 .formGroup textarea:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #ff0000;
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
 }
 
 .checkboxGroup {
@@ -92,23 +93,25 @@
     grid-column: 1 / -1;
     margin-top: 10px;
     padding: 14px;
-    background-color: #10b981;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: 0.3s;
 }
 
 .submitBtn:hover {
-    background-color: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
 }
 
 .submitBtn:disabled {
-    background-color: #9ca3af;
+    background: #444;
     cursor: not-allowed;
+    transform: none;
 }
 
 .message {

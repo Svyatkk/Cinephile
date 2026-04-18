@@ -21,6 +21,10 @@
     transition: 0.2s;
 }
 
+.logo p {
+    transition: 0.5s;
+}
+
 .logo:hover {
     color: red;
     transition: 0.3s;
@@ -125,7 +129,11 @@
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+.activeLogo {
+    color: red !important;
+    transition: 0.5s;
 
+}
 
 .blockTrans {
     width: 100%;
