@@ -24,5 +24,12 @@ class Hall {
         }
         return false;
     }
+
+    public function readAll() {
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY name ASC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

@@ -12,12 +12,12 @@ export const movieService = {
             body: JSON.stringify(payload)
         })
 
-
         if (!response.ok) {
             const errorText = await response.text();
             console.error('Помилка від бекенду:', errorText);
             throw new Error(`Помилка запиту: ${response.status}`);
         }
+
 
         return response.json()
     },
@@ -31,6 +31,7 @@ export const movieService = {
             console.error('Помилка від бекенду:', errorText);
             throw new Error(`Помилка запиту: ${response.status}`);
         }
+
 
         return response.json()
     },

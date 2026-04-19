@@ -23,7 +23,6 @@ export default function SideBar({ active }: Props) {
         }
     }, [])
 
-
     const handleLogout = (e: MouseEvent) => {
         e.preventDefault();
         localStorage.removeItem('user');
@@ -32,6 +31,8 @@ export default function SideBar({ active }: Props) {
     }
 
     return (
+
+
         <div className={`${style.sideBar} ${active ? style.open : ''}`}>
             <div className={style.blocks}>
 
@@ -45,6 +46,8 @@ export default function SideBar({ active }: Props) {
                     <Link className={style.link} href={PAGES_URL.MAIN}>Допомога</Link>
                     <Link className={style.link} href={PAGES_URL.MAIN}>Про компанію</Link>
                 </div>
+
+
 
                 <div className={style.logout}>
                     <span className={style.sectionTitle}>ОСОБИСТИЙ КАБІНЕТ</span>

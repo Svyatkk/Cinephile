@@ -10,7 +10,7 @@ if ($method === 'POST') {
         $name = !empty($data->name) ? $data->name : explode('@', $data->email)[0];
         $userService = new UserService($db); 
         $result = $userService->auth($name, $data->email, $data->password);
-    
+        
         if ($result['success']) {
             http_response_code(200); 
             echo json_encode(["message" => $result['message'], "user" => $result['user'] ?? null]);

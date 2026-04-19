@@ -16,4 +16,5 @@ export const sessionService = {
 
         return response.json();
     }
+
 };

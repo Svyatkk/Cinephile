@@ -1,6 +1,64 @@
 .page {
-    border: 1px solid white;
+    width: 100%;
+    min-height: 100vh;
+    padding: 100px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #0b0b0b, #1a1a1a);
+    color: white;
+}
+
+.adminTitle {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    background: linear-gradient(to right, #ff0000, #ff8888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+    background: rgba(255, 255, 255, 0.05);
     padding: 10px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
 
+.tabBtn {
+    padding: 12px 30px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+.tabBtn:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.activeTab {
+    background: #ff0000 !important;
+    color: white !important;
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

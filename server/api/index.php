@@ -40,6 +40,12 @@ else if ($uri === '/api/movies') {
 else if ($uri === '/api/sessions') {
     require_once __DIR__ . '/../controllers/session.php';
 }
+else if ($uri === '/api/city') {
+    require_once __DIR__ . '/../controllers/city.php';
+}
+else if ($uri === '/api/halls') {
+    require_once __DIR__ . '/../controllers/hall.php';
+}
 else if (strpos($uri, '/api/uploads/') === 0) {
     $relativePath = str_replace('/api/', '', $uri);
     $filePath = __DIR__ . '/' . $relativePath; 

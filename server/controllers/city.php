@@ -18,5 +18,10 @@ if ($method === 'POST') {
         http_response_code(400);
         echo json_encode(["message" => "Введіть назву міста."]);
     }
+} else if ($method === 'GET') {
+    $city = new City($db);
+    $cities = $city->readAll();
+    http_response_code(200);
+    echo json_encode($cities);
 }
 ?>
