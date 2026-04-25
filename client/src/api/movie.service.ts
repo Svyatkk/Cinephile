@@ -45,8 +45,20 @@ export const movieService = {
             throw new Error(`Помилка запиту: ${response.status}`);
         }
         return response.json()
+    },
+    async getByName(name: string) {
+        const response = await fetch(`${BASE_URL}/movies?name=${name}`, {
+            ...fetchOptions,
+        })
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Помилка від бекенду:', errorText);
+            throw new Error(`Помилка запиту: ${response.status}`);
+        }
+        return response.json()
 
     }
+
 
 
 }

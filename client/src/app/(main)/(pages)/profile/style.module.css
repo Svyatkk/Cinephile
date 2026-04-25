@@ -146,3 +146,45 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
 }
+
+.adminPanel {
+    margin-top: 20px;
+    background: rgba(255, 0, 0, 0.03);
+    padding: 40px 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.adminPanel h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #ff0000;
+    margin-bottom: 30px;
+}
+
+.adminLinks {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    color: red;
+}
+
+.adminLink {
+    padding: 12px 40px;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.adminLink:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
+}

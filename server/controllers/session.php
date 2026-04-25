@@ -36,6 +36,16 @@ if ($method === 'POST') {
         echo json_encode(["message" => "Неповні дані. Заповніть всі обов'язкові поля."]);
     }
 } 
+else if ($method === 'GET') {
+    if (isset($_GET['movie_id'])) {
+        $result = $sessionService->getSessionsByMovieId($_GET['movie_id']);
+        http_response_code(200);
+        echo json_encode($result['data']);
+    } else {
+        http_response_code(400);
+        echo json_encode(["message" => "Вкажіть movie_id"]);
+    }
+}
 else {
     http_response_code(405); 
     echo json_encode(["message" => "Цей метод не підтримується."]);

@@ -1,0 +1,103 @@
+.schedule {
+    background: #1a1a1a;
+    border-radius: 16px;
+    padding: 24px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.datePicker {
+    background: #333;
+    border: 1px solid #444;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.datePicker:hover {
+    border-color: #ff0000;
+}
+
+.cinemaGroup {
+    margin-bottom: 30px;
+}
+
+.cinemaName {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.cinemaAddress {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.formatGroup {
+    margin-bottom: 20px;
+}
+
+.formatTitle {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.timeList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.timeItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #252525;
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.timeItem:hover {
+    background: #333;
+    border-color: #ff0000;
+    transform: translateY(-2px);
+}
+
+.time {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ff0000;
+}
+
+.price {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 2px;
+}

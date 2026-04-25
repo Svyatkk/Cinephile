@@ -1,0 +1,89 @@
+.content {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fff;
+}
+
+.panelCitiesContainer {
+    position: absolute;
+    top: 1200px;
+    right: 0;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    z-index: 100;
+    background-color: #2e2e2e !important;
+    height: 200vh;
+
+
+    transition: all 0.4s ease;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.panelCitiesContainer.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    top: 60px
+}
+
+.rootCitiesPanel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftCol {
+    flex: 1;
+    border-right: 1px solid #444;
+    padding-right: 20px;
+}
+
+.rightCol {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.colTitle {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cityItem {
+    cursor: pointer;
+    color: white;
+    font-weight: normal;
+    transition: color 0.3s;
+}
+
+.cityItemActive {
+    cursor: pointer;
+    color: #ff0000;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.cinemaItem {
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.cinemaItem:hover {
+    color: white;
+}
+
+.emptyText {
+    color: #777;
+    font-style: italic;
+}

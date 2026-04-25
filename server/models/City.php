@@ -23,7 +23,33 @@ class City {
         $query = "SELECT * FROM " . $this->table_name . " ORDER BY name ASC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $cities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $queryCinemas = "SELECT * FROM cinemas";
+        $stmtCinemas = $this->conn->prepare($queryCinemas);
+        $stmtCinemas->execute();
+        $cinemas = $stmtCinemas->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($cities as &$city) {
+            $city['cinemas'] = [];
+            foreach ($cinemas as $cinema) {
+                if ($cinema['city_id'] == $city['id']) {
+                    $city['cinemas'][] = $cinema;
+                }
+            }
+        }
+
+        return $cities;
     }
+
+    public function getById(int $id) {
+        $query = "SELECT * FROM $this->table_name WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+        
 }
 ?>

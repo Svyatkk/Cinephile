@@ -15,6 +15,19 @@ export const sessionService = {
         }
 
         return response.json();
+    },
+
+    async getByMovieId(movieId: number): Promise<ISession[]> {
+        const response = await fetch(`${BASE_URL}/sessions?movie_id=${movieId}`, {
+            method: "GET",
+            ...fetchOptions
+        });
+
+        if (!response.ok) {
+            throw new Error(`Помилка при отриманні сеансів: ${response.status}`);
+        }
+
+        return response.json();
     }
 
 };

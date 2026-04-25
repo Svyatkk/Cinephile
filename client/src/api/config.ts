@@ -19,6 +19,3 @@ export const PAGES_URL = {
     MOVIE: (id: number): string => `/movie/${id}`,
     MOVIES: '/movies'
 }
-
-
-

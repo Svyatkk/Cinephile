@@ -9,8 +9,7 @@ type Props = {
 }
 
 export default function Pages({ children }: Props) {
-
-
+    
     return (
         <>
             <div className={styles.rootPages}>
@@ -19,8 +18,6 @@ export default function Pages({ children }: Props) {
 
                 </div>
             </div>
-
-
         </>
     )
 }

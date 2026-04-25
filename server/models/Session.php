@@ -22,7 +22,7 @@ class Session {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+          
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " 
                 (movie_id, hall_id, start_time, end_time, base_price, format, language_tag) 
@@ -44,8 +44,7 @@ class Session {
         }
         return false;
     }
-    
-        
+
     public function checkOverlap($hall_id, $start_time, $end_time) {
         $query = "SELECT id FROM " . $this->table_name . " 
                   WHERE hall_id = :hall_id 

@@ -19,9 +19,30 @@ if ($method === 'POST') {
         echo json_encode(["message" => "Введіть назву міста."]);
     }
 } else if ($method === 'GET') {
-    $city = new City($db);
-    $cities = $city->readAll();
-    http_response_code(200);
-    echo json_encode($cities);
+    $id = $data->id ?? null;
+
+    if ($id !== null) {
+        $city = new City($db);
+        $city_data = $city->getById($id);
+
+        if ($city_data) {
+            http_response_code(200);
+            echo json_encode([
+                "success" => true,
+                "data" => $city_data
+            ]);
+        } else {
+            http_response_code(404);
+            echo json_encode([
+                "success" => false,
+                "message" => "Місто не знайдено."
+            ]);
+        }
+    } else {
+        $city = new City($db);
+        $cities = $city->readAll();
+        http_response_code(200);
+        echo json_encode($cities);
+    }
 }
 ?>

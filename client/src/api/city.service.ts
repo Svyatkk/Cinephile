@@ -12,6 +12,7 @@ export const cityService = {
         }
         return response.json();
     },
+
     async create(name: string) {
         const response = await fetch(`${BASE_URL}/city`, {
             method: "POST",
@@ -23,5 +24,7 @@ export const cityService = {
             throw new Error(error.message || "Помилка при створенні міста");
         }
         return response.json();
-    }
+    },
+
+
 };

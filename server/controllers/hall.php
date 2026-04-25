@@ -27,6 +27,11 @@ if ($method === 'POST') {
         http_response_code(400);
         echo json_encode(["message" => "Заповніть всі обов'язкові поля: кінотеатр, назва, кількість рядів та місць."]);
     }
+} else if ($method === 'GET') {
+    $hall = new Hall($db);
+    $halls = $hall->readAll();
+    http_response_code(200);
+    echo json_encode($halls);
 } else {
     http_response_code(405);
     echo json_encode(["message" => "Метод не підтримується"]);

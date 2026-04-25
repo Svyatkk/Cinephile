@@ -59,7 +59,7 @@ class MovieService {
         
     public function getMovieById($id) {
         $movie = new Movie($this->db);
-        
+
         if ($movie->readOne($id)) {
             $movie_data = [
                 "id" => $movie->id,
@@ -90,5 +90,9 @@ class MovieService {
             ];
         }
     }
+
+        
+    
+        
 }
 ?>

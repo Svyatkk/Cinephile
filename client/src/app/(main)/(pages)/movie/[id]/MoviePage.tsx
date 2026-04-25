@@ -1,8 +1,11 @@
 'use client'
-import { useEffect, useState } from "react"
-import { movieService } from '@/api/movie.service'
-import { IMovie } from '@/types/movie.interface'
+
+import SessionSchedule from "@/components/SessionSchedule/SessionSchedule"
 import styles from './style.module.css'
+import { movieService } from "@/api/movie.service";
+import { IMovie } from "@/types/movie.interface";
+import { useState, useEffect } from "react";
+
 type Props = {
     id: string
 }
@@ -20,6 +23,7 @@ export default function MoviePage({ id }: Props) {
 
     if (!loaded) return <MovieSkeleton />
     if (!movie) return null
+
 
     const genres = movie.genres?.split(',').map(g => g.trim()) ?? []
 
@@ -62,53 +66,54 @@ export default function MoviePage({ id }: Props) {
 
                         <button className={styles.buyBtn}>
                             <span className={styles.buyBtnIcon}>▶</span>
-                            Купити квиток
+                            Дивитись трейлер
                         </button>
                     </div>
+
+
                 </div>
             </div>
 
-            <div className={styles.body}>
-                {movie.description && (
+            <div className={styles.mainContent}>
+                <div className={styles.body}>
+                    {movie.description && (
+                        <section className={styles.section}>
+                            <h2 className={styles.sectionTitle}>Про фільм</h2>
+                            <p className={styles.description}>{movie.description}</p>
+                        </section>
+                    )}
+
                     <section className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Про фільм</h2>
-                        <p className={styles.description}>{movie.description}</p>
-                    </section>
-                )}
-
-                <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Деталі</h2>
-                    <div className={styles.detailGrid}>
-                        {movie.director && <DetailItem label="Режисер" value={movie.director} />}
-                        {movie.country && <DetailItem label="Країна" value={movie.country} />}
-                        {movie.studio && <DetailItem label="Студія" value={movie.studio} />}
-                        {movie.release_year && <DetailItem label="Рік" value={String(movie.release_year)} />}
-                        {movie.duration_minutes && <DetailItem label="Тривалість" value={formatDuration(movie.duration_minutes)} />}
-                        {movie.language && <DetailItem label="Оригінальна мова" value={movie.language} />}
-                    </div>
-                </section>
-
-
-                {movie.cast_actors && (
-                    <section className={styles.section}>
-                        <h2 className={styles.sectionTitle}>У ролях</h2>
-                        <div className={styles.castGrid}>
-                            {movie.cast_actors.split(',').map(actor => actor.trim()).map(actor => (
-                                <div key={actor} className={styles.castChip}>
-                                    <div className={styles.castAvatar}>{actor.charAt(0)}</div>
-                                    <span className={styles.castName}>{actor}</span>
-                                </div>
-                            ))}
+                        <h2 className={styles.sectionTitle}>Деталі</h2>
+                        <div className={styles.detailGrid}>
+                            {movie.director && <DetailItem label="Режисер" value={movie.director} />}
+                            {movie.country && <DetailItem label="Країна" value={movie.country} />}
+                            {movie.studio && <DetailItem label="Студія" value={movie.studio} />}
+                            {movie.release_year && <DetailItem label="Рік" value={String(movie.release_year)} />}
+                            {movie.duration_minutes && <DetailItem label="Тривалість" value={formatDuration(movie.duration_minutes)} />}
+                            {movie.language && <DetailItem label="Оригінальна мова" value={movie.language} />}
                         </div>
                     </section>
-                )}
 
-                <section className={styles.ctaSection}>
-                    <p className={styles.ctaText}>Обирайте сеанс та насолоджуйтесь переглядом у кінотеатрі!</p>
-                    <button className={styles.buyBtnLarge}>
-                        Купити квиток на сеанс
-                    </button>
-                </section>
+
+                    {movie.cast_actors && (
+                        <section className={styles.section}>
+                            <h2 className={styles.sectionTitle}>У ролях</h2>
+                            <div className={styles.castGrid}>
+                                {movie.cast_actors.split(',').map(actor => actor.trim()).map(actor => (
+                                    <div key={actor} className={styles.castChip}>
+                                        <div className={styles.castAvatar}>{actor.charAt(0)}</div>
+                                        <span className={styles.castName}>{actor}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
+
+                <aside className={styles.sidebar}>
+                    <SessionSchedule movieId={Number(id)} />
+                </aside>
             </div>
         </div>
     )

@@ -8,11 +8,32 @@ import { useRouter } from 'next/navigation'
 import { PAGES_URL } from '@/api/config'
 import { userService } from '@/api/user.service'
 import { IUser } from '@/types/user.interface'
+import { ICinema, ICity } from '@/types/cinema.interface'
+import { BASE_URL } from '@/api/config'
+import PanelCities from '../PanelCities/PanelCities'
+
+
+
 export default function NavBar() {
 
     const [active, setActive] = useState<boolean>(false)
     const route = useRouter()
     const [user, setUser] = useState<IUser | null>(null)
+    const [cities, setCities] = useState<ICity[]>([])
+    const [activePanelCities, setActivePanelCities] = useState<boolean>(false)
+
+    const [chosenCity, setchosenCity] = useState<ICity | null>(null)
+    const [chosenCiname, setchosenCiname] = useState<ICinema | null>(null)
+
+
+    useEffect(() => {
+        const fetchCities = async () => {
+            const response = await fetch(`${BASE_URL}/city`);
+            const data = await response.json();
+            setCities(data);
+        };
+        fetchCities();
+    }, [])
 
 
 
@@ -52,36 +73,58 @@ export default function NavBar() {
 
                 <div className={styles.block}>
 
+                    <div className={styles.citySection}>
+                        <div className={styles.choseCity}>
+                            {chosenCity && (
+                                <div>
+                                    {chosenCity.name}
+                                    {chosenCiname && ` | ${chosenCiname.name}`}
+                                </div>
+                            )}
+                        </div>
+                        <button onClick={() => {
 
-                    {
-                        user ?
-                            (
-                                <Link href={PAGES_URL.ACCOUNT} className={styles.login}>
-                                    <p>Мій кабінет</p>
-                                    <Image
-                                        src="/profileImg.svg"
-                                        alt="Іконка профілю"
-                                        width={30}
-                                        height={30}
-                                        className={styles.icon}
-                                    />
-                                </Link>
-                            )
-                            :
-                            (
-                                <Link href={PAGES_URL.AUTH} className={styles.login}>
-                                    <p>Увійти</p>
-                                    <Image
-                                        src="/profileImg.svg"
-                                        alt="Іконка профілю"
-                                        width={30}
-                                        height={30}
-                                        className={styles.icon}
-                                    />
-                                </Link>
-                            )
-                    }
+                            setActivePanelCities(prev => !prev)
 
+
+                        }} className={styles.buttonCities} >
+
+                        </button>
+
+                    </div>
+
+
+                    <div>
+
+                        {
+                            user ?
+                                (
+                                    <Link href={PAGES_URL.ACCOUNT} className={styles.login}>
+                                        <p>Мій кабінет</p>
+                                        <Image
+                                            src="/profileImg.svg"
+                                            alt="Іконка профілю"
+                                            width={30}
+                                            height={30}
+                                            className={styles.icon}
+                                        />
+                                    </Link>
+                                )
+                                :
+                                (
+                                    <Link href={PAGES_URL.AUTH} className={styles.login}>
+                                        <p>Увійти</p>
+                                        <Image
+                                            src="/profileImg.svg"
+                                            alt="Іконка профілю"
+                                            width={30}
+                                            height={30}
+                                            className={styles.icon}
+                                        />
+                                    </Link>
+                                )
+                        }
+                    </div>
                 </div>
 
                 <SideBar active={active}></SideBar>
@@ -90,6 +133,9 @@ export default function NavBar() {
                     onClick={() => setActive(false)}
                 >
                 </div>
+                <PanelCities setChosenCinema={setchosenCiname} setChosenCity={setchosenCity} active={activePanelCities} cities={cities}></PanelCities>
+
+
 
             </nav >
         </>

@@ -17,6 +17,7 @@ export default function Account() {
         }
     }, [])
 
+
     return (
         <div className={styles.container}>
             <div className={styles.content}>
@@ -40,11 +41,25 @@ export default function Account() {
                                 <p className={styles.emptyOrders}>У вас поки немає замовлень</p>
                             </div>
                         </div>
+
                     ) : (
                         <div className={styles.authPrompt}>
                             <h1>УПС...</h1>
                             <p>Для перегляду особистого кабінету спочатку увійдіть в акаунт</p>
                             <Link href={PAGES_URL.AUTH} className={styles.loginBtn}>Увійти</Link>
+                        </div>
+                    )
+                }
+
+
+
+                {
+                    user && user.role === 'admin' && (
+                        <div className={styles.adminPanel}>
+                            <h2>Адмін панель</h2>
+                            <div className={styles.adminLinks}>
+                                <Link href={PAGES_URL.ADMIN} className={styles.adminLink}>Перейти в адмін панель</Link>
+                            </div>
                         </div>
                     )
                 }

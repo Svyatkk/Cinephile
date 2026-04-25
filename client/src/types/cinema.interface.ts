@@ -8,6 +8,7 @@ export interface ICinema {
 export interface ICity {
     id: number;
     name: string;
+    cinemas?: ICinema[];
 }
 
 export interface IHall {
@@ -16,3 +17,4 @@ export interface IHall {
     name: string;
     technologies: string;
 }
+

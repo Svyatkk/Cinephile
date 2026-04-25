@@ -23,6 +23,7 @@ export default function SideBar({ active }: Props) {
         }
     }, [])
 
+
     const handleLogout = (e: MouseEvent) => {
         e.preventDefault();
         localStorage.removeItem('user');
@@ -46,6 +47,7 @@ export default function SideBar({ active }: Props) {
                     <Link className={style.link} href={PAGES_URL.MAIN}>Допомога</Link>
                     <Link className={style.link} href={PAGES_URL.MAIN}>Про компанію</Link>
                 </div>
+
 
 
 
@@ -79,10 +81,10 @@ export default function SideBar({ active }: Props) {
                 <div className={style.socialMedia}>
                     <span className={style.sectionTitle}>МИ В СОЦІАЛЬНИХ МЕРЕЖАХ</span>
                     <div className={style.socialLinks}>
-                        <a href="#"><div className={style.socialIcon}>f</div> Facebook</a>
-                        <a href="#"><div className={style.socialIcon}>y</div> Youtube</a>
-                        <a href="#"><div className={style.socialIcon}>i</div> Instagram</a>
-                        <a href="#"><div className={style.socialIcon}>t</div> Telegram</a>
+                        <Link href={'#'}><div className={style.socialIcon}>f</div> Facebook</Link>
+                        <Link href={'#'}><div className={style.socialIcon}>y</div> Youtube</Link>
+                        <Link href={'#'}><div className={style.socialIcon}>i</div> Instagram</Link>
+                        <Link href={'#'}><div className={style.socialIcon}>t</div> Telegram</Link>
                     </div>
                 </div>
 
