@@ -1,8 +1,6 @@
 .block {
-    border: 1px solid red;
     display: flex;
     gap: 10px;
-    padding: 20px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -12,7 +10,7 @@
     font-size: 24px;
     position: relative;
     z-index: -100;
-
+    position: relative;
 }
 
 .title {
@@ -20,4 +18,167 @@
     cursor: pointer;
     z-index: 10000;
     cursor: pointer;
+}
+
+
+
+
+.information {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-color: rgba(15, 15, 15, 0.9);
+    transition: 0.4s ease-in-out;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    color: white;
+    text-align: center;
+}
+
+.information.active {
+    opacity: 1;
+}
+
+.blockInfo {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.topActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.actionBtn {
+    flex: 1;
+    background: rgba(90, 90, 70, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    text-decoration: none;
+    color: white;
+    transition: background 0.2s;
+    text-align: left;
+    cursor: pointer;
+}
+
+.actionBtn:hover {
+    background: rgba(90, 90, 70, 0.8);
+}
+
+.iconBox {
+    background: rgba(255, 255, 255, 0.15);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.cinemaTitle {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.todayLabel {
+    color: #ff0000;
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    margin-bottom: 10px;
+}
+
+.closestSessionSection {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.sectionHeading {
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.closestSessionBox {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+}
+
+.timeDisplay {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.timeText {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.formatText {
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+.buyBtn {
+    background: #ff0000;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.premiereContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.doorIcon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.premiereLabel {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.premiereDateText {
+    color: #ff0000;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.ticketsStatus {
+    font-size: 16px;
 }

@@ -215,6 +215,7 @@ export default function RegisterFilmPanel() {
                         <label htmlFor="inclusive">Є інклюзивна адаптація (тифлокоментар/субтитри)</label>
                     </div>
 
+
                     <button type="submit" disabled={isLoading} className={styles.submitBtn}>
                         {isLoading ? 'Збереження...' : 'Додати фільм'}
                     </button>

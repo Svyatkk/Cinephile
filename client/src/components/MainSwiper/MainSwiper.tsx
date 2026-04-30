@@ -10,15 +10,14 @@ import "swiper/css/navigation";
 
 import styles from './style.module.css'
 
-
 import { IMovie } from '@/types/movie.interface';
 
 type Props = {
     movies: IMovie[] | null | undefined;
 };
 
-export default function MainSwiper({ movies }: Props) {
 
+export default function MainSwiper({ movies }: Props) {
 
     return (
         <div className={styles.wrapper}>

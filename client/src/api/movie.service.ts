@@ -18,7 +18,6 @@ export const movieService = {
             throw new Error(`Помилка запиту: ${response.status}`);
         }
 
-
         return response.json()
     },
     async getAll() {
@@ -57,8 +56,21 @@ export const movieService = {
         }
         return response.json()
 
+    },
+
+    async getSessionsMovie(name: string) {
+
+        const response = await fetch(`${BASE_URL}/getSessionsMovie/movie?name=${name}`, {
+            ...fetchOptions,
+        })
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Помилка від бекенду:', errorText);
+            throw new Error(`Помилка запиту: ${response.status}`);
+        }
+
+
+        return response.json()
     }
-
-
 
 }

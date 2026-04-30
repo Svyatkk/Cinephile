@@ -11,11 +11,13 @@ export default function Auth() {
     const passwordRef = useRef<HTMLInputElement>(null)
     const route = useRouter()
 
+
     const handleAuth = async () => {
         const payload = {
             email: emailRef.current?.value,
             password: passwordRef.current?.value
         };
+
 
         try {
             const response = await userService.auth(payload);
@@ -36,8 +38,6 @@ export default function Auth() {
 
         }
     }
-
-
 
     return (
         <>

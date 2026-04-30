@@ -18,6 +18,7 @@ export default function MoviePage({ id }: Props) {
         movieService.getById(id).then(res => {
             setMovie(res)
             setLoaded(true)
+
         })
     }, [id])
 

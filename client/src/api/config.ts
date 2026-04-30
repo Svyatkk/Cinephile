@@ -7,10 +7,6 @@ export const fetchOptions = {
     }
 };
 
-
-
-
-
 export const PAGES_URL = {
     AUTH: `/auth`,
     MAIN: `/`,

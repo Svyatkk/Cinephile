@@ -8,6 +8,13 @@
     max-width: 400px;
 }
 
+.schedule.inTheMovieBlock {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 10px 0 0 0;
+}
+
 .header {
     display: flex;
     flex-direction: column;

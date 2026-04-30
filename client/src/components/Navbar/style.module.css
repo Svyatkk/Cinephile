@@ -9,7 +9,6 @@
     width: 100%;
     position: fixed;
     z-index: 1000;
-    border: 1px solid white;
 
 }
 
@@ -62,7 +61,6 @@
 .firstBlock {
     display: flex;
     gap: 10px;
-    border: 1px solid white;
     align-items: center;
 }
 

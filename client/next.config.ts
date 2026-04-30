@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://nginx/api/:path*',
+      },
+    ];
+  },
   webpack: (config, context) => {
     config.watchOptions = {
       poll: 1000,

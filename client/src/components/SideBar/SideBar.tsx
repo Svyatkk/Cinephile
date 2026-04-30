@@ -23,7 +23,6 @@ export default function SideBar({ active }: Props) {
         }
     }, [])
 
-
     const handleLogout = (e: MouseEvent) => {
         e.preventDefault();
         localStorage.removeItem('user');
@@ -32,8 +31,6 @@ export default function SideBar({ active }: Props) {
     }
 
     return (
-
-
         <div className={`${style.sideBar} ${active ? style.open : ''}`}>
             <div className={style.blocks}>
 

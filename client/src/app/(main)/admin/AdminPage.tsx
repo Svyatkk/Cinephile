@@ -74,7 +74,6 @@ export default function AdminPage() {
             </div>
 
 
-
             <div className={styles.content}>
                 {activeTab === 'film' && <RegisterFilmPanel />}
                 {activeTab === 'session' && <RegisterSessionPanel />}

@@ -14,6 +14,7 @@ type Props = {
 export default function PanelCities({ active, cities, setChosenCity, setChosenCinema, }: Props) {
 
 
+
     const [selectedCityId, setSelectedCityId] = useState<number | null>(null);
 
     const activeCity = cities.find(c => c.id === selectedCityId);
@@ -22,7 +23,6 @@ export default function PanelCities({ active, cities, setChosenCity, setChosenCi
         <div className={`${styles.panelCitiesContainer} ${active ? styles.active : ''}`}>
             <div className={styles.rootCitiesPanel}>
 
-                {/* Ліва колонка: Список міст */}
                 <div className={styles.leftCol}>
                     <h3 className={styles.colTitle}>Міста</h3>
                     <div className={styles.list}>

@@ -24,4 +24,5 @@ export const hallService = {
         }
         return response.json();
     }
+
 };

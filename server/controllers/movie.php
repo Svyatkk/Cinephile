@@ -8,7 +8,7 @@ $movieService = new MovieService($db);
 
 if ($method === 'POST') {
     if (!empty($data->title)) {
-        
+            
         $result = $movieService->create(
             $data->title,
             $data->original_title ?? '',
@@ -52,7 +52,7 @@ else if ($method === 'GET') {
     } 
     else {
         $result = $movieService->getAllMovies();
-        
+
         if ($result['success']) {
             http_response_code(200);
             echo json_encode($result['data']);

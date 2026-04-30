@@ -13,7 +13,6 @@ import { BASE_URL } from '@/api/config'
 import PanelCities from '../PanelCities/PanelCities'
 
 
-
 export default function NavBar() {
 
     const [active, setActive] = useState<boolean>(false)

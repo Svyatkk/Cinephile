@@ -10,10 +10,7 @@ export default async function page({ params }: Props) {
 
     return (
         <>
-
             <MoviePage id={`${String(id)}`}></MoviePage>
-
-
         </>
     )
 }

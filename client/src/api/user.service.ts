@@ -9,8 +9,6 @@ export const userService = {
             body: JSON.stringify(payload)
         })
 
-
-
         if (!response.ok) {
             const errorText = await response.text();
             console.error('Помилка від бекенду:', errorText);

@@ -10,8 +10,8 @@ if ($method === 'POST') {
         $cinema->name = $data->name;
         $cinema->city_id = $data->city_id;
         $cinema->address = $data->address;
+        
 
-            
         if ($cinema->create()) {
             http_response_code(201);
             echo json_encode(["message" => "Кінотеатр успішно додано."]);

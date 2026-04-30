@@ -5,11 +5,12 @@ import { ISession } from '@/types/session.interface'
 import styles from './style.module.css'
 
 type Props = {
-    movieId: number
+    movieId: number,
+    inTheMovieBlock?: boolean | false
 }
 
 
-export default function SessionSchedule({ movieId }: Props) {
+export default function SessionSchedule({ movieId, inTheMovieBlock }: Props) {
     const [sessions, setSessions] = useState<ISession[]>([])
     const [selectedDate, setSelectedDate] = useState<string>('')
     const [dates, setDates] = useState<string[]>([])
@@ -17,8 +18,6 @@ export default function SessionSchedule({ movieId }: Props) {
     useEffect(() => {
         sessionService.getByMovieId(movieId).then(data => {
             setSessions(data)
-
-
 
             const uniqueDates = Array.from(new Set(data.map((s: any) => s.start_time.split(' ')[0])))
             setDates(uniqueDates)
@@ -45,7 +44,7 @@ export default function SessionSchedule({ movieId }: Props) {
     }, {})
 
     return (
-        <div className={styles.schedule}>
+        <div className={`${styles.schedule} ${inTheMovieBlock ? styles.inTheMovieBlock : ''}`}>
             <div className={styles.header}>
                 <h2 className={styles.title}>Розклад сеансів</h2>
                 <select

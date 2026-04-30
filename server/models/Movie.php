@@ -47,7 +47,7 @@ class Movie {
         $stmt->bindParam(':age_restriction', $this->age_restriction);
         $stmt->bindParam(':inclusive_adaptation', $this->inclusive_adaptation);
 
-        // 4. Виконання запиту
+            
         if ($stmt->execute()) {
             return true;
         }
