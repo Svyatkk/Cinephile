@@ -81,7 +81,10 @@ export default function MovieBlock({ movie }: Props) {
                                         <div className={styles.timeText}>{formatTime(closestSession.start_time)}</div>
                                         <div className={styles.formatText}>{closestSession.format || '2D'}</div>
                                     </div>
-                                    <button className={styles.buyBtn}>Купити квиток</button>
+                                    <button 
+                                        className={styles.buyBtn}
+                                        onClick={() => closestSession?.id && route.push(`${PAGES_URL.SEATPLAN}?sessionId=${closestSession.id}`)}
+                                    >Купити квиток</button>
                                 </div>
                                 <SessionSchedule inTheMovieBlock={true} movieId={Number(movie?.id)} />
                             </div>

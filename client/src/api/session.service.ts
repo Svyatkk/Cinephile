@@ -28,6 +28,19 @@ export const sessionService = {
         }
 
         return response.json();
+    },
+
+    async getById(id: number): Promise<ISession> {
+        const response = await fetch(`${BASE_URL}/sessions?id=${id}`, {
+            method: "GET",
+            ...fetchOptions
+        });
+
+        if (!response.ok) {
+            throw new Error(`Сеанс не знайдено: ${response.status}`);
+        }
+
+        return response.json();
     }
 
 };

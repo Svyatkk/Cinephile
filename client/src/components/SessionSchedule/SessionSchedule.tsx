@@ -6,11 +6,12 @@ import styles from './style.module.css'
 
 type Props = {
     movieId: number,
-    inTheMovieBlock?: boolean | false
+    inTheMovieBlock?: boolean | false,
+    onSessionClick?: (session: ISession) => void
 }
 
 
-export default function SessionSchedule({ movieId, inTheMovieBlock }: Props) {
+export default function SessionSchedule({ movieId, inTheMovieBlock, onSessionClick }: Props) {
     const [sessions, setSessions] = useState<ISession[]>([])
     const [selectedDate, setSelectedDate] = useState<string>('')
     const [dates, setDates] = useState<string[]>([])
@@ -70,7 +71,12 @@ export default function SessionSchedule({ movieId, inTheMovieBlock }: Props) {
                                     <h4 className={styles.formatTitle}>{langKey}</h4>
                                     <div className={styles.timeList}>
                                         {grouped[cinemaName][langKey].map((s: any) => (
-                                            <div key={s.id} className={styles.timeItem}>
+                                            <div 
+                                                key={s.id} 
+                                                className={styles.timeItem}
+                                                onClick={() => onSessionClick && onSessionClick(s)}
+                                                style={{ cursor: onSessionClick ? 'pointer' : 'default' }}
+                                            >
                                                 <span className={styles.time}>{s.start_time.split(' ')[1].substring(0, 5)}</span>
                                                 <span className={styles.price}>{Math.round(s.base_price)} грн</span>
                                             </div>

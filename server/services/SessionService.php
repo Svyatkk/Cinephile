@@ -46,5 +46,25 @@ class SessionService {
         
         return ["success" => true, "data" => $stmt->fetchAll(PDO::FETCH_ASSOC)];
     }
+
+    public function getSessionById($id) {
+        $query = "SELECT s.*, h.name as hall_name, c.name as cinema_name, c.address as cinema_address, ci.name as city_name
+                  FROM sessions s
+                  JOIN halls h ON s.hall_id = h.id
+                  JOIN cinemas c ON h.cinema_id = c.id
+                  JOIN cities ci ON c.city_id = ci.id
+                  WHERE s.id = :id
+                  LIMIT 1";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return ["success" => true, "data" => $row];
+        }
+        return ["success" => false, "data" => null];
+    }
 }
 ?>

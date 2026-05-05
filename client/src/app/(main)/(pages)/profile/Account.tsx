@@ -51,8 +51,6 @@ export default function Account() {
                     )
                 }
 
-
-
                 {
                     user && user.role === 'admin' && (
                         <div className={styles.adminPanel}>

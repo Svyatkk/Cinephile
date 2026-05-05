@@ -7,4 +7,10 @@ export interface ISession {
     base_price: number;
     format: string;
     language_tag: string;
+
+
+    hall_name?: string;
+    cinema_name?: string;
+    cinema_address?: string;
+    city_name?: string;
 }

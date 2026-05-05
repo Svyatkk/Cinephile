@@ -103,9 +103,6 @@ export default function RegisterSessionPanel() {
                         ))}
                     </select>
                 </div>
-
-
-
                 <div className={styles.formGroup}>
                     <label>Місто</label>
                     <select value={selectedCity} onChange={(e) => {

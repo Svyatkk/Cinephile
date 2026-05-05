@@ -37,13 +37,22 @@ if ($method === 'POST') {
     }
 } 
 else if ($method === 'GET') {
-    if (isset($_GET['movie_id'])) {
+    if (isset($_GET['id'])) {
+        $result = $sessionService->getSessionById($_GET['id']);
+        if ($result['success']) {
+            http_response_code(200);
+            echo json_encode($result['data']);
+        } else {
+            http_response_code(404);
+            echo json_encode(["message" => "Сеанс не знайдено"]);
+        }
+    } else if (isset($_GET['movie_id'])) {
         $result = $sessionService->getSessionsByMovieId($_GET['movie_id']);
         http_response_code(200);
         echo json_encode($result['data']);
     } else {
         http_response_code(400);
-        echo json_encode(["message" => "Вкажіть movie_id"]);
+        echo json_encode(["message" => "Вкажіть movie_id або id"]);
     }
 }
 else {

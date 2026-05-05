@@ -4,7 +4,10 @@ import SessionSchedule from "@/components/SessionSchedule/SessionSchedule"
 import styles from './style.module.css'
 import { movieService } from "@/api/movie.service";
 import { IMovie } from "@/types/movie.interface";
+import { ISession } from "@/types/session.interface";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { PAGES_URL } from "@/api/config";
 
 type Props = {
     id: string
@@ -13,6 +16,11 @@ type Props = {
 export default function MoviePage({ id }: Props) {
     const [movie, setMovie] = useState<IMovie | null>(null)
     const [loaded, setLoaded] = useState(false)
+    const router = useRouter()
+
+    const handleSessionClick = (session: ISession) => {
+        router.push(`${PAGES_URL.SEATPLAN}?sessionId=${session.id}`)
+    }
 
     useEffect(() => {
         movieService.getById(id).then(res => {
@@ -24,6 +32,7 @@ export default function MoviePage({ id }: Props) {
 
     if (!loaded) return <MovieSkeleton />
     if (!movie) return null
+
 
 
     const genres = movie.genres?.split(',').map(g => g.trim()) ?? []
@@ -96,7 +105,6 @@ export default function MoviePage({ id }: Props) {
                         </div>
                     </section>
 
-
                     {movie.cast_actors && (
                         <section className={styles.section}>
                             <h2 className={styles.sectionTitle}>У ролях</h2>
@@ -113,7 +121,7 @@ export default function MoviePage({ id }: Props) {
                 </div>
 
                 <aside className={styles.sidebar}>
-                    <SessionSchedule movieId={Number(id)} />
+                    <SessionSchedule movieId={Number(id)} onSessionClick={handleSessionClick} />
                 </aside>
             </div>
         </div>
