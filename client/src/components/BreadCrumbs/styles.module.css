@@ -1,18 +1,82 @@
 .breadCrumbs {
-    background-color: yellow;
+    background-color: rgb(34, 31, 31);
     display: flex;
-    gap: 10px;
-    width: 300px;
-    height: 100px;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding: 0 10px 0 10px;
+    border-bottom: 1px solid #222;
+}
+
+/* .nav {
+    background-color: rgb(34, 31, 31);
+    font-size: 1em;
+    height: 60px;
+    display: flex;
+    padding: 0 10px 0 10px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+
+}
+
+ */
+
+.logoBox {
+    color: white;
+    font-size: 1.6em;
+    font-weight: bold;
+    margin-right: 40px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logoBox:hover {
+    color: red;
+}
+
+.linksContainer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.linkItem {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .link {
-    border: 1px solid black;
-    background-color: purple;
-    padding: 10px;
-    width: auto;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    text-decoration: none;
+    transition: 0.2s;
+    padding-bottom: 2px;
+}
 
+.linkActive {
+    color: #ff0000;
+    border-bottom: 2px solid #ff0000;
+}
+
+.linkDisabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.linkInactive {
+    color: #9f8fb3;
+}
+
+.separator {
+    color: #ccc;
+    font-size: 14px;
+}
+
+.emojis {
+    margin-left: 10px;
+    font-size: 18px;
 }

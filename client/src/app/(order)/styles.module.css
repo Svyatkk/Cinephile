@@ -1,4 +1,4 @@
 .pageLayout {
-    background-color: white !important;
-    height: 100vh;
+    background-color: #0b0b0d !important;
+    min-height: 100vh;
 }

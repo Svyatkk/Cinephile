@@ -40,20 +40,24 @@ class MovieService {
         }
     }
 
-    public function getAllMovies() {
-        $movie = new Movie($this->db);
-        $stmt = $movie->read();
-        
-        $movies_arr = [];
-        
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            array_push($movies_arr, $row);
+    public function getAll($cinema_id = null) {
+        try {
+            if ($cinema_id) {
+                $query = "SELECT DISTINCT m.* FROM movies m
+                          JOIN sessions s ON m.id = s.movie_id
+                          JOIN halls h ON s.hall_id = h.id
+                          WHERE h.cinema_id = :cinema_id";
+                $stmt = $this->db->prepare($query);
+                $stmt->execute([':cinema_id' => $cinema_id]);
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                $query = "SELECT * FROM movies";
+                $stmt = $this->db->query($query);
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $e) {
+            return [];
         }
-        
-        return [
-            "success" => true,
-            "data" => $movies_arr
-        ];
     }
     
         

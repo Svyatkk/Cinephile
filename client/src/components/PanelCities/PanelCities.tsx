@@ -12,9 +12,6 @@ type Props = {
 }
 
 export default function PanelCities({ active, cities, setChosenCity, setChosenCinema, }: Props) {
-
-
-
     const [selectedCityId, setSelectedCityId] = useState<number | null>(null);
 
     const activeCity = cities.find(c => c.id === selectedCityId);

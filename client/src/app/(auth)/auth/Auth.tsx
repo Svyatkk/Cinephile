@@ -1,7 +1,7 @@
 'use client'
 import { userService } from '@/api/user.service'
 import styles from './style.module.css'
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { PAGES_URL } from "@/api/config"
 import Link from 'next/link'
@@ -10,9 +10,11 @@ export default function Auth() {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const route = useRouter()
+    const [error, setError] = useState<string | null>(null);
 
 
     const handleAuth = async () => {
+        setError(null);
         const payload = {
             email: emailRef.current?.value,
             password: passwordRef.current?.value
@@ -33,9 +35,9 @@ export default function Auth() {
                 route.refresh();
             }
 
-        } catch (error) {
-            console.log('Помилка авторизації:', error);
-
+        } catch (err: any) {
+            console.log('Помилка авторизації:', err);
+            setError(err.message || 'Неправильний логін або пароль');
         }
     }
 
@@ -49,9 +51,14 @@ export default function Auth() {
                             <h1>Вхід до особистого кабінету
                             </h1>
                             <p>Тут всі ваші замовлення та особиста інформація
-
                             </p>
                         </div>
+
+                        {error && (
+                            <div className={styles.errorBlock}>
+                                {error}
+                            </div>
+                        )}
 
                         <label htmlFor=""><input suppressHydrationWarning ref={emailRef} placeholder="Email" type="text" /></label>
 
@@ -66,12 +73,8 @@ export default function Auth() {
                     </div>
 
                 </div>
-
-
                 <div className={styles.images}>
-
                 </div>
-
             </div>
         </>
     )

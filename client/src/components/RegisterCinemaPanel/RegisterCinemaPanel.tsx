@@ -15,7 +15,7 @@ export default function RegisterCinemaPanel() {
         city_id: '',
         address: ''
     })
-
+    
     useEffect(() => {
         cityService.getAll().then(setCities).catch(console.error)
     }, [])

@@ -11,6 +11,7 @@ import { IUser } from '@/types/user.interface'
 import { ICinema, ICity } from '@/types/cinema.interface'
 import { BASE_URL } from '@/api/config'
 import PanelCities from '../PanelCities/PanelCities'
+import { spawn } from 'child_process'
 
 
 export default function NavBar() {
@@ -32,19 +33,19 @@ export default function NavBar() {
             setCities(data);
         };
         fetchCities();
+
+        const storedCity = localStorage.getItem('chosenCity');
+        if (storedCity) setchosenCity(JSON.parse(storedCity));
+        const storedCinema = localStorage.getItem('chosenCinema');
+        if (storedCinema) setchosenCiname(JSON.parse(storedCinema));
     }, [])
 
-
-
     useEffect(() => {
-
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
     }, [])
-
-
 
     return (
         <>
@@ -75,26 +76,31 @@ export default function NavBar() {
                     <div className={styles.citySection}>
                         <div className={styles.choseCity}>
                             {chosenCity && (
-                                <div>
-                                    {chosenCity.name}
-                                    {chosenCiname && ` | ${chosenCiname.name}`}
+                                <div className={styles.cities}>
+                                    <span>
+                                        {chosenCity.name}
+                                    </span>
+                                    <span>
+                                        {`|`}
+                                    </span>
+                                    {chosenCiname && <span>{chosenCiname.name}</span>}
+
                                 </div>
-                            )}
+                            )
+
+                            }
                         </div>
                         <button onClick={() => {
-
                             setActivePanelCities(prev => !prev)
-
-
-                        }} className={styles.buttonCities} >
-
+                        }} className={`${styles.buttonCities} ${activePanelCities ? styles.active : ''}`} >
+                            <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.arrowIcon}>
+                                <path d="M1 1L7 7L13 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
                         </button>
 
                     </div>
 
-
                     <div>
-
                         {
                             user ?
                                 (
@@ -132,7 +138,20 @@ export default function NavBar() {
                     onClick={() => setActive(false)}
                 >
                 </div>
-                <PanelCities setChosenCinema={setchosenCiname} setChosenCity={setchosenCity} active={activePanelCities} cities={cities}></PanelCities>
+                <PanelCities
+                    setChosenCinema={(cinema) => {
+                        setchosenCiname(cinema);
+                        localStorage.setItem('chosenCinema', JSON.stringify(cinema));
+                        setActivePanelCities(false);
+                        window.dispatchEvent(new Event('cinemaChanged'));
+                    }}
+                    setChosenCity={(city) => {
+                        setchosenCity(city);
+                        localStorage.setItem('chosenCity', JSON.stringify(city));
+                    }}
+                    active={activePanelCities}
+                    cities={cities}
+                ></PanelCities>
 
 
 

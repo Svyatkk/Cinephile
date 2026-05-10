@@ -101,6 +101,102 @@
     border: 1px dashed rgba(255, 255, 255, 0.2);
 }
 
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.orderCard {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.orderDate {
+    font-weight: bold;
+    color: #e6e6e6;
+}
+
+.statusActions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.orderStatus {
+    color: #4cd964;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.cancelOrderBtn {
+    background: transparent;
+    color: #ff3b4a;
+    border: 1px solid #ff3b4a;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cancelOrderBtn:hover {
+    background: rgba(255, 59, 74, 0.1);
+}
+
+.ticketInfo {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.movieTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff3b4a;
+    margin-bottom: 5px;
+}
+
+.sessionDetails {
+    color: #bbb;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
+.seatDetails {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.barcode {
+    font-family: monospace;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.orderTotal {
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .authPrompt {
     display: flex;
     flex-direction: column;

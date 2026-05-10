@@ -51,15 +51,10 @@ else if ($method === 'GET') {
         }
     } 
     else {
-        $result = $movieService->getAllMovies();
-
-        if ($result['success']) {
-            http_response_code(200);
-            echo json_encode($result['data']);
-        } else {
-            http_response_code(500);
-            echo json_encode(["message" => "Помилка при отриманні списку фільмів."]);
-        }
+        $cinema_id = isset($_GET['cinema_id']) ? intval($_GET['cinema_id']) : null;
+        $movies = $movieService->getAll($cinema_id);
+        http_response_code(200);
+        echo json_encode($movies);
     }
 } 
 

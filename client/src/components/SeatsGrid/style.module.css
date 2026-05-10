@@ -1,0 +1,30 @@
+.seatGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.seatRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.rowLabel {
+    width: 30px;
+    text-align: right;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+.rowLabelRight {
+    width: 30px;
+    text-align: left;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 15px;
+}

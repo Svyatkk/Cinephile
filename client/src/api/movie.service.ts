@@ -20,8 +20,9 @@ export const movieService = {
 
         return response.json()
     },
-    async getAll() {
-        const response = await fetch(`${BASE_URL}/movies`, {
+    async getAll(cinemaId?: number) {
+        const url = cinemaId ? `${BASE_URL}/movies?cinema_id=${cinemaId}` : `${BASE_URL}/movies`;
+        const response = await fetch(url, {
             method: "GET",
             ...fetchOptions,
         })

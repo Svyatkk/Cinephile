@@ -33,8 +33,6 @@ export default function MoviePage({ id }: Props) {
     if (!loaded) return <MovieSkeleton />
     if (!movie) return null
 
-
-
     const genres = movie.genres?.split(',').map(g => g.trim()) ?? []
 
     return (

@@ -61,7 +61,16 @@
     transform: translateY(-2px);
 }
 
-
+.errorBlock {
+    background: rgba(255, 59, 74, 0.1);
+    border: 1px solid #ff3b4a;
+    color: #ff3b4a;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+}
 
 .blockText {
     display: flex;

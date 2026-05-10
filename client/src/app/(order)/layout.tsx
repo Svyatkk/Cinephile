@@ -5,19 +5,20 @@ import { PAGES_URL } from "@/api/config"
 type Props = {
     children: React.ReactNode
 }
-
 const breadcrumbsList = [
     {
         name: 'Місця',
         link: `${PAGES_URL.SEATPLAN}`,
     },
     {
-        name: 'Продукти',
-        link: `${PAGES_URL.PRODUCTS}`,
+        name: 'Оплата',
+        link: `${PAGES_URL.CHECKOUT}`,
+    },
+    {
+        name: 'Замовлення',
+        link: '/order-success',
     }
 ]
-
-
 
 export default function LayoutOrder({ children }: Props) {
     return (

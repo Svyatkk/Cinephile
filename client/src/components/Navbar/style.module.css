@@ -31,32 +31,60 @@
 
 
 .citySection {
-    border: 1px solid white;
-
-
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 18px;
 }
 
 .choseCity {
-    border: 1px solid red;
+    display: flex;
+    gap: 10px;
+
+
+}
+
+.cities {
+    display: flex;
+    gap: 2px;
 }
 
 .buttonCities {
-    background-color: transparent;
     width: 30px;
     height: 30px;
     border: 1px solid white;
     border-radius: 50%;
+    cursor: pointer;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: white;
+
+}
+
+.buttonCities:hover {
+    transition: 0.5s;
+    background-color: red;
+}
+
+.arrowIcon {
+    transition: transform 0.3s ease;
+}
+
+.buttonCities.active .arrowIcon {
+    transform: rotate(180deg);
 }
 
 
 .block {
-    border: 1px solid white;
     height: 100%;
-    width: 200px;
     display: flex;
     align-items: center;
     gap: 10px;
 }
+
 
 .firstBlock {
     display: flex;
@@ -73,8 +101,8 @@
     border: 1px solid white;
 }
 
+
 .login {
-    border: 1px solid white;
     display: flex;
     gap: 15px;
     align-items: center;
@@ -163,6 +191,9 @@
     visibility: hidden;
     transition: 0.5s;
     z-index: 999;
+    cursor: pointer;
+
+
 }
 
 .blockTrans.active {

@@ -59,7 +59,7 @@ export default function MovieBlock({ movie }: Props) {
             <div className={`${styles.information} ${active ? styles.active : ""}`}>
                 <div className={styles.blockInfo}>
                     <div className={styles.topActions}>
-                        <Link href={PAGES_URL.MOVIE(movie?.id)} className={styles.actionBtn}>
+                        <Link href={PAGES_URL.MOVIE(Number(movie?.id))} className={styles.actionBtn}>
                             <div className={styles.iconBox}>i</div>
                             Детальніше<br />про фільм
                         </Link>
@@ -81,7 +81,7 @@ export default function MovieBlock({ movie }: Props) {
                                         <div className={styles.timeText}>{formatTime(closestSession.start_time)}</div>
                                         <div className={styles.formatText}>{closestSession.format || '2D'}</div>
                                     </div>
-                                    <button 
+                                    <button
                                         className={styles.buyBtn}
                                         onClick={() => closestSession?.id && route.push(`${PAGES_URL.SEATPLAN}?sessionId=${closestSession.id}`)}
                                     >Купити квиток</button>

@@ -49,6 +49,15 @@ else if ($uri === '/api/halls') {
 else if ($uri === '/api/cinema') {
     require_once __DIR__ . '/../controllers/cinema.php';
 }
+else if ($uri === '/api/seats') {
+    require_once __DIR__ . '/../controllers/seat.php';
+}
+else if ($uri === '/api/cart_locks') {
+    require_once __DIR__ . '/../controllers/cart_locks.php';
+}
+else if ($uri === '/api/orders') {
+    require_once __DIR__ . '/../controllers/order.php';
+}
 else if ($uri === '/api/upload') {
     require_once __DIR__ . '/../controllers/upload.php';
 }

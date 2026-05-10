@@ -46,7 +46,7 @@ class SessionService {
         
         return ["success" => true, "data" => $stmt->fetchAll(PDO::FETCH_ASSOC)];
     }
-
+        
     public function getSessionById($id) {
         $query = "SELECT s.*, h.name as hall_name, c.name as cinema_name, c.address as cinema_address, ci.name as city_name
                   FROM sessions s
