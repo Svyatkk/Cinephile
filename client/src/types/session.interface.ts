@@ -11,7 +11,9 @@ export interface ISession {
     language_tag: string;
 
     hall_name?: string;
+    cinema_id?: number;
     cinema_name?: string;
     cinema_address?: string;
+    city_id?: number;
     city_name?: string;
 }

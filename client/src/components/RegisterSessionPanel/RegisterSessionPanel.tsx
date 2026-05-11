@@ -53,7 +53,28 @@ export default function RegisterSessionPanel() {
     }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+        const { name, value } = e.target;
+        setFormData(prev => {
+            const newData = { ...prev, [name]: value };
+
+            if ((name === 'start_time' || name === 'movie_id') && newData.start_time && newData.movie_id) {
+                const movie = movies.find(m => m.id === Number(newData.movie_id));
+                if (movie && movie.duration_minutes) {
+                    const start = new Date(newData.start_time);
+                    const end = new Date(start.getTime() + movie.duration_minutes * 60000);
+
+                    const year = end.getFullYear();
+                    const month = String(end.getMonth() + 1).padStart(2, '0');
+                    const day = String(end.getDate()).padStart(2, '0');
+                    const hours = String(end.getHours()).padStart(2, '0');
+                    const minutes = String(end.getMinutes()).padStart(2, '0');
+
+                    newData.end_time = `${year}-${month}-${day}T${hours}:${minutes}`;
+                }
+            }
+
+            return newData;
+        });
     }
 
     const selectedMovie = movies?.find(m => m.id === Number(formData.movie_id)) || undefined;
@@ -213,16 +234,18 @@ export default function RegisterSessionPanel() {
                 </button>
             </form >
 
-
-            {selectedMovie && (
+            {selectedMovie && selectedCity && selectedCinema && (
                 <div style={{ marginTop: '40px', width: '100%' }}>
                     <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px', marginBottom: '20px' }}>
-                        Існуючі сеанси для цього фільму
+                        Існуючі сеанси для цього фільму у вибраному кінотеатрі
                     </h3>
 
-
                     <div style={{ width: '100%', maxWidth: 'none' }}>
-                        <SessionSchedule movieId={Number(formData.movie_id)} />
+                        <SessionSchedule
+                            movieId={Number(formData.movie_id)}
+                            cityId={Number(selectedCity)}
+                            cinemaId={Number(selectedCinema)}
+                        />
                     </div>
                 </div>
             )}

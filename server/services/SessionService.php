@@ -31,7 +31,7 @@ class SessionService {
     }
 
     public function getSessionsByMovieId($movie_id) {
-        $query = "SELECT s.*, h.name as hall_name, c.name as cinema_name, c.address as cinema_address, ci.name as city_name
+        $query = "SELECT s.*, h.name as hall_name, c.id as cinema_id, c.name as cinema_name, c.address as cinema_address, ci.id as city_id, ci.name as city_name
                   FROM sessions s
                   JOIN halls h ON s.hall_id = h.id
                   JOIN cinemas c ON h.cinema_id = c.id

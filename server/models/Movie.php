@@ -31,7 +31,7 @@ class Movie {
                 (:title, :original_title, :description, :poster_url, :release_year, :duration_minutes, :genres, :director, :cast_actors, :country, :studio, :language, :age_restriction, :inclusive_adaptation)";
 
         $stmt = $this->conn->prepare($query);
-
+        
         $stmt->bindParam(':title', $this->title);
         $stmt->bindParam(':original_title', $this->original_title);
         $stmt->bindParam(':description', $this->description);

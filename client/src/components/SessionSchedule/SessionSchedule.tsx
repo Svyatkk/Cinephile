@@ -6,29 +6,51 @@ import styles from './style.module.css'
 
 type Props = {
     movieId: number,
+    cityId?: number,
+    cinemaId?: number,
     inTheMovieBlock?: boolean | false,
     onSessionClick?: (session: ISession) => void
 }
 
 
-export default function SessionSchedule({ movieId, inTheMovieBlock, onSessionClick }: Props) {
+export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieBlock, onSessionClick }: Props) {
     const [sessions, setSessions] = useState<ISession[]>([])
     const [selectedDate, setSelectedDate] = useState<string>('')
     const [dates, setDates] = useState<string[]>([])
 
     useEffect(() => {
         sessionService.getByMovieId(movieId).then(data => {
-            setSessions(data)
+            let filtered = data;
+            if (cityId) {
+                filtered = filtered.filter(s => Number(s.city_id) === cityId);
+            }
+            if (cinemaId) {
+                filtered = filtered.filter(s => Number(s.cinema_id) === cinemaId);
+            }
 
-            const uniqueDates = Array.from(new Set(data.map((s: any) => s.start_time.split(' ')[0])))
+            setSessions(filtered)
+
+            const uniqueDates = Array.from(new Set(filtered.map((s: any) => s.start_time.split(' ')[0])))
             setDates(uniqueDates)
             if (uniqueDates.length > 0) {
-                setSelectedDate(uniqueDates[0])
+                if (!uniqueDates.includes(selectedDate)) {
+                    setSelectedDate(uniqueDates[0])
+                }
+            } else {
+                setSelectedDate('')
             }
         }).catch(console.error)
-    }, [movieId])
+    }, [movieId, cityId, cinemaId])
 
-    if (sessions.length === 0) return null
+    if (sessions.length === 0) {
+        return (
+            <div className={styles.schedule}>
+                <p style={{ color: 'rgba(255,255,255,0.5)', textAlign: 'center', padding: '20px' }}>
+                    Немає сеансів для вибраного фільму у цьому місці.
+                </p>
+            </div>
+        )
+    }
 
     const filteredSessions = sessions.filter((s: any) => s.start_time.startsWith(selectedDate))
 

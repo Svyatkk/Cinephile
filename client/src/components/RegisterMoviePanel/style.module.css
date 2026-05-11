@@ -54,6 +54,7 @@
 
 .formGroup input[type="text"],
 .formGroup input[type="number"],
+.formGroup input[type="datetime-local"],
 .formGroup select,
 .formGroup textarea {
     width: 100%;
@@ -61,14 +62,16 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     font-size: 14px;
-    background-color: rgba(255, 255, 255, 0.05) !important;
+    background-color: #1a1a1a !important;
     transition: border-color 0.2s, box-shadow 0.2s;
     font-family: inherit;
     color: white;
-
-
 }
 
+.formGroup select option {
+    background-color: #1a1a1a;
+    color: white;
+}
 
 
 

@@ -56,8 +56,7 @@ class Session {
         $stmt->bindParam(':hall_id', $hall_id);
         $stmt->bindParam(':start_time', $start_time);
         $stmt->bindParam(':end_time', $end_time);
-
-            
+        
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
