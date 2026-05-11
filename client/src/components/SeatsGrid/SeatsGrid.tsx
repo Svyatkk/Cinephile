@@ -9,13 +9,14 @@ interface SeatsGridProps {
 }
 
 export default function SeatsGrid({ seats, selectedSeatIds, onSeatClick }: SeatsGridProps) {
-    // Group seats by row
     const rows = seats.reduce((acc, seat) => {
         if (!acc[seat.row_num]) acc[seat.row_num] = [];
         acc[seat.row_num].push(seat);
         return acc;
     }, {} as Record<number, ISeat[]>);
 
+
+        
     return (
         <div className={styles.seatGrid}>
             {Object.keys(rows).map(rowNumStr => {
@@ -24,7 +25,7 @@ export default function SeatsGrid({ seats, selectedSeatIds, onSeatClick }: Seats
                     <div key={rowNum} className={styles.seatRow}>
                         <div className={styles.rowLabel}>{rowNum}</div>
                         {rows[rowNum].map(seat => (
-                            <Seat 
+                            <Seat
                                 key={seat.id}
                                 id={seat.id}
                                 seatNum={seat.seat_num}

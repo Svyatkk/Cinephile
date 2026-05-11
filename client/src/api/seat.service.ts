@@ -1,3 +1,4 @@
+import { ISeat } from "@/types/seat.interface";
 import { fetchOptions, BASE_URL } from "./config";
 
 

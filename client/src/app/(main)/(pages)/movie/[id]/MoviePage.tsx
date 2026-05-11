@@ -22,6 +22,7 @@ export default function MoviePage({ id }: Props) {
         router.push(`${PAGES_URL.SEATPLAN}?sessionId=${session.id}`)
     }
 
+    
     useEffect(() => {
         movieService.getById(id).then(res => {
             setMovie(res)

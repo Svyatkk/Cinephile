@@ -55,6 +55,7 @@ class Movie {
         return false;
     }
 
+    
     public function read() {
         $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);

@@ -16,5 +16,7 @@ export const PAGES_URL = {
     MOVIES: '/movies',
     SEATPLAN: '/seatplan',
     PRODUCTS: '/products',
-    CHECKOUT: '/checkout'
+    CHECKOUT: '/checkout',
+    CINEMAS: '/cinemas'
+    
 }

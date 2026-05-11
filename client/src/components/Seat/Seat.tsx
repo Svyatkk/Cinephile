@@ -14,7 +14,7 @@ export default function Seat({ id, seatNum, isSelected, isOccupied, onClick }: S
     else if (isSelected) seatClass = styles.seatSelected;
 
     return (
-        <div 
+        <div
             className={`${styles.seat} ${seatClass}`}
             onClick={onClick}
         >

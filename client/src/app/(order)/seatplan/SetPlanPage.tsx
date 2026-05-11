@@ -38,6 +38,8 @@ export default function SeatPlanPage() {
         }).catch(err => {
             setError('Не вдалося завантажити дані сеансу');
             setLoading(false);
+            console.log(err)
+
         });
     }, [sessionId]);
 
