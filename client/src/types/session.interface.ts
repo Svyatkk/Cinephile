@@ -16,4 +16,8 @@ export interface ISession {
     cinema_address?: string;
     city_id?: number;
     city_name?: string;
+    movie_title?: string;
+    age_restriction?: string;
+    duration_minutes?: number;
+    poster_url?: string;
 }

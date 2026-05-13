@@ -24,5 +24,16 @@ export const cinemaService = {
         }
         return response.json();
     },
+    async getById(id: string): Promise<ICinema> {
+        const response = await fetch(`${BASE_URL}/cinema/${id}`, {
+            method: "GET",
+            ...fetchOptions
+        });
+
+        if (!response.ok) {
+            throw new Error(`Помилка при отриманні кінотеатрів: ${response.status}`);
+        }
+        return response.json();
+    }
 
 };

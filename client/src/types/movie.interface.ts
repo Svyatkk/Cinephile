@@ -16,3 +16,4 @@ export interface IMovie {
     inclusive_adaptation?: number;
 
 }
+

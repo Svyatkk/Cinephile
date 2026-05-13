@@ -233,6 +233,7 @@ export default function RegisterSessionPanel() {
                     {isLoading ? 'Збереження...' : 'Створити сеанс'}
                 </button>
             </form >
+            
 
             {selectedMovie && selectedCity && selectedCinema && (
                 <div style={{ marginTop: '40px', width: '100%' }}>

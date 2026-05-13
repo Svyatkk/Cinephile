@@ -41,6 +41,19 @@ export const sessionService = {
         }
 
         return response.json();
+    },
+
+    async getByCinemaId(cinemaId: string): Promise<ISession[]> {
+        const response = await fetch(`${BASE_URL}/sessions?cinema_id=${cinemaId}`, {
+            method: "GET",
+            ...fetchOptions
+        });
+
+        if (!response.ok) {
+            throw new Error(`Помилка при отриманні сеансів: ${response.status}`);
+        }
+
+        return response.json();
     }
 
 };

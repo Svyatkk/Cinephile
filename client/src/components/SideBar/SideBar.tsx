@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import style from './style.module.css'
-import { useRouter } from 'next/navigation'
 import { PAGES_URL } from '@/api/config'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -13,7 +12,6 @@ type Props = {
 
 export default function SideBar({ active }: Props) {
 
-    const route = useRouter()
     const [user, setUser] = useState<boolean>()
 
     useEffect(() => {
@@ -36,7 +34,7 @@ export default function SideBar({ active }: Props) {
 
                 <div className={style.links}>
                     <Link className={`${style.link} ${style.redText}`} href={PAGES_URL.MAIN}>Зараз у кіно</Link>
-                    <Link className={style.link} href={PAGES_URL.MAIN}>Скоро у прокаті</Link>
+                    <Link className={style.link} href={PAGES_URL.SOON}>Скоро у прокаті</Link>
                     <Link className={`${style.link} ${style.yellowText}`} href={PAGES_URL.MAIN}>Купити попкорн онлайн</Link>
                     <Link className={style.link} href={PAGES_URL.MAIN}>Акції та знижки</Link>
                     <Link className={style.link} href={PAGES_URL.CINEMAS}>Кінотеатри</Link>

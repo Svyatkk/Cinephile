@@ -50,9 +50,13 @@ else if ($method === 'GET') {
         $result = $sessionService->getSessionsByMovieId($_GET['movie_id']);
         http_response_code(200);
         echo json_encode($result['data']);
+    } else if (isset($_GET['cinema_id'])) {
+        $result = $sessionService->getSessionsByCinemaId($_GET['cinema_id']);
+        http_response_code(200);
+        echo json_encode($result['data']);
     } else {
         http_response_code(400);
-        echo json_encode(["message" => "Вкажіть movie_id або id"]);
+        echo json_encode(["message" => "Вкажіть movie_id, cinema_id або id"]);
     }
 }
 else {

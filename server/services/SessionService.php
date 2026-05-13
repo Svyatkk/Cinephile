@@ -66,5 +66,25 @@ class SessionService {
         }
         return ["success" => false, "data" => null];
     }
+
+    public function getSessionsByCinemaId($cinema_id) {
+        $query = "SELECT s.*, h.name as hall_name, c.id as cinema_id, c.name as cinema_name,
+                         c.address as cinema_address, ci.id as city_id, ci.name as city_name,
+                         m.title as movie_title, m.age_restriction, m.duration_minutes, m.poster_url
+                  FROM sessions s
+                  JOIN halls h ON s.hall_id = h.id
+                  JOIN cinemas c ON h.cinema_id = c.id
+                  JOIN cities ci ON c.city_id = ci.id
+                  JOIN movies m ON s.movie_id = m.id
+                  WHERE c.id = :cinema_id
+                  AND DATE(s.start_time) >= CURDATE()
+                  ORDER BY s.start_time ASC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':cinema_id', $cinema_id);
+        $stmt->execute();
+
+        return ["success" => true, "data" => $stmt->fetchAll(PDO::FETCH_ASSOC)];
+    }
 }
 ?>

@@ -22,7 +22,7 @@ class Session {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-          
+        
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " 
                 (movie_id, hall_id, start_time, end_time, base_price, format, language_tag) 
@@ -56,8 +56,8 @@ class Session {
         $stmt->bindParam(':hall_id', $hall_id);
         $stmt->bindParam(':start_time', $start_time);
         $stmt->bindParam(':end_time', $end_time);
-        
         $stmt->execute();
+        
 
         if ($stmt->rowCount() > 0) {
             return true; 

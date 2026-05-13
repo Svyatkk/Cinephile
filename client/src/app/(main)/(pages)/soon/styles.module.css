@@ -1,0 +1,165 @@
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+    color: #fff;
+}
+
+.header {
+    margin-bottom: 32px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 6px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+}
+
+.loading {
+    color: #888;
+    text-align: center;
+    padding: 80px 0;
+    font-size: 16px;
+}
+
+.empty {
+    color: #888;
+    font-size: 15px;
+    text-align: center;
+    padding: 60px 0;
+}
+
+.noCinema {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 120px);
+    color: #fff;
+    text-align: center;
+    gap: 12px;
+}
+
+.noCinemaIcon {
+    font-size: 60px;
+    margin-bottom: 8px;
+}
+
+.noCinemaTitle {
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.noCinemaText {
+    font-size: 14px;
+    color: #888;
+    max-width: 320px;
+    margin: 0;
+}
+
+.dateGroups {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.dateGroup {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.dateLabel {
+    display: flex;
+    flex-direction: column;
+    min-width: 110px;
+    padding-top: 8px;
+    flex-shrink: 0;
+}
+
+.dateLabelMain {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ff0000;
+    line-height: 1.2;
+}
+
+.dateLabelSub {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+}
+
+.moviesRow {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.movieCard {
+    width: 140px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.movieCard:hover {
+    transform: scale(1.04);
+}
+
+.posterWrap {
+    position: relative;
+    width: 140px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #1a1818;
+    margin-bottom: 8px;
+}
+
+.poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.posterPlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    background: #1a1818;
+}
+
+.badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #ff0000;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    padding: 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.movieTitle {
+    font-size: 13px;
+    color: #e0e0e0;
+    margin: 0;
+    line-height: 1.3;
+}

@@ -16,7 +16,7 @@ export default function Home() {
         if (storedCinema) {
             try {
                 cinemaId = JSON.parse(storedCinema).id;
-            } catch (e) {}
+            } catch (e) { }
         }
 
         movieService.getAll(cinemaId)
