@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../models/CartLock.php';
+
 class CartLockService {
     private $db;
 
@@ -6,41 +8,48 @@ class CartLockService {
         $this->db = $db;
     }
 
-    public function lockSeats($user_id, $session_id, $seat_ids) {
+    public function lockSeats(int $user_id, int $session_id, array $seat_ids): array {
         try {
             $this->db->beginTransaction();
 
-            // Clear expired locks globally
             $this->db->exec("DELETE FROM cart_locks WHERE expires_at <= NOW()");
 
-            // Check if seats are already locked or purchased
             foreach ($seat_ids as $seat_id) {
-                // Check tickets
-                $tQuery = "SELECT id FROM tickets WHERE session_id = :session_id AND seat_id = :seat_id";
-                $tStmt = $this->db->prepare($tQuery);
-                $tStmt->execute([':session_id' => $session_id, ':seat_id' => $seat_id]);
-                if ($tStmt->fetch()) {
+                $checkTicketsQuery = "
+                    SELECT id 
+                    FROM tickets 
+                    WHERE session_id = :session_id AND seat_id = :seat_id
+                ";
+                $checkTicketsStmt = $this->db->prepare($checkTicketsQuery);
+                $checkTicketsStmt->execute([':session_id' => $session_id, ':seat_id' => $seat_id]);
+                
+                if ($checkTicketsStmt->fetch()) {
                     throw new Exception("Деякі місця вже придбані");
                 }
 
-                // Check active locks from OTHER users (or even this user, we just don't allow double lock)
-                $lQuery = "SELECT id FROM cart_locks WHERE session_id = :session_id AND seat_id = :seat_id AND expires_at > NOW() AND user_id != :user_id";
-                $lStmt = $this->db->prepare($lQuery);
-                $lStmt->execute([':session_id' => $session_id, ':seat_id' => $seat_id, ':user_id' => $user_id]);
-                if ($lStmt->fetch()) {
+                $checkLocksQuery = "
+                    SELECT id 
+                    FROM cart_locks 
+                    WHERE session_id = :session_id 
+                      AND seat_id = :seat_id 
+                      AND expires_at > NOW() 
+                      AND user_id != :user_id
+                ";
+                $checkLocksStmt = $this->db->prepare($checkLocksQuery);
+                $checkLocksStmt->execute([':session_id' => $session_id, ':seat_id' => $seat_id, ':user_id' => $user_id]);
+                
+                if ($checkLocksStmt->fetch()) {
                     throw new Exception("Деякі місця вже заброньовані іншим користувачем");
                 }
             }
 
-            // Remove previous locks for this user for this session to reset
-            $dQuery = "DELETE FROM cart_locks WHERE session_id = :session_id AND user_id = :user_id";
-            $dStmt = $this->db->prepare($dQuery);
-            $dStmt->execute([':session_id' => $session_id, ':user_id' => $user_id]);
+            $deleteLocksQuery = "
+                DELETE FROM cart_locks 
+                WHERE session_id = :session_id AND user_id = :user_id
+            ";
+            $deleteLocksStmt = $this->db->prepare($deleteLocksQuery);
+            $deleteLocksStmt->execute([':session_id' => $session_id, ':user_id' => $user_id]);
 
-            // Add new locks
-            require_once __DIR__ . '/../models/CartLock.php';
-            
-            // Expires in 15 minutes
             $cartLock = new CartLock($this->db);
             $cartLock->user_id = $user_id;
             $cartLock->session_id = $session_id;

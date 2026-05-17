@@ -8,7 +8,7 @@ class UserService {
         $this->db = $db;
     }
 
-    public function auth($name, $email, $password) {
+    public function auth(string $name, string $email, string $password): array {
         $user = new User($this->db);
         $user->email = $email;
     
@@ -48,6 +48,5 @@ class UserService {
             }
         }
     }
-
-
 }
+?>

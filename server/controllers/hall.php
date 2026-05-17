@@ -5,6 +5,7 @@ $data = json_decode(file_get_contents("php://input"));
 $method = $_SERVER['REQUEST_METHOD'];
 
 
+
 if ($method === 'POST') {
     if (!empty($data->cinema_id) && !empty($data->name) && !empty($data->rows_count) && !empty($data->seats_per_row)) {
         $hallService = new HallService($db);

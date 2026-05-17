@@ -27,16 +27,6 @@ export default function MovieBlock({ movie }: Props) {
     }, [movie?.id]);
 
     const getClosestSession = () => {
-        // Якщо дані вже прийшли з колекцією фільмів (оптимізація), використовуємо їх
-        if (movie.session_id && movie.session_start_time) {
-            return {
-                id: movie.session_id,
-                start_time: movie.session_start_time,
-                format: movie.session_format,
-                base_price: movie.session_price
-            } as ISession;
-        }
-
         if (!sessions || sessions.length === 0) return null;
         const now = new Date();
 

@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../models/Order.php';
+require_once __DIR__ . '/../models/Ticket.php';
+
 class OrderService {
     private $db;
 
@@ -6,23 +9,27 @@ class OrderService {
         $this->db = $db;
     }
 
-    public function createOrder($user_id, $session_id, $seat_ids, $total_amount) {
+    public function createOrder(int $user_id, int $session_id, array $seat_ids, float $total_amount): array {
         try {
             $this->db->beginTransaction();
 
             $this->db->exec("DELETE FROM cart_locks WHERE expires_at <= NOW()");
 
             foreach ($seat_ids as $seat_id) {
-                $lQuery = "SELECT id FROM cart_locks WHERE session_id = :session_id AND seat_id = :seat_id AND user_id = :user_id";
-                $lStmt = $this->db->prepare($lQuery);
-                $lStmt->execute([':session_id' => $session_id, ':seat_id' => $seat_id, ':user_id' => $user_id]);
-                if (!$lStmt->fetch()) {
+                $checkLockQuery = "
+                    SELECT id 
+                    FROM cart_locks 
+                    WHERE session_id = :session_id 
+                      AND seat_id = :seat_id 
+                      AND user_id = :user_id
+                ";
+                $checkLockStmt = $this->db->prepare($checkLockQuery);
+                $checkLockStmt->execute([':session_id' => $session_id, ':seat_id' => $seat_id, ':user_id' => $user_id]);
+                
+                if (!$checkLockStmt->fetch()) {
                     throw new Exception("Термін бронювання місць минув або місця не були заброньовані.");
                 }
             }
-
-            require_once __DIR__ . '/../models/Order.php';
-            require_once __DIR__ . '/../models/Ticket.php';
 
             $order = new Order($this->db);
             $order->user_id = $user_id;
@@ -34,10 +41,14 @@ class OrderService {
             }
             $order_id = $order->id;
 
-            $sQuery = "SELECT base_price FROM sessions WHERE id = :session_id";
-            $sStmt = $this->db->prepare($sQuery);
-            $sStmt->execute([':session_id' => $session_id]);
-            $session_data = $sStmt->fetch(PDO::FETCH_ASSOC);
+            $sessionQuery = "
+                SELECT base_price 
+                FROM sessions 
+                WHERE id = :session_id
+            ";
+            $sessionStmt = $this->db->prepare($sessionQuery);
+            $sessionStmt->execute([':session_id' => $session_id]);
+            $session_data = $sessionStmt->fetch(PDO::FETCH_ASSOC);
             $price = $session_data['base_price'];
 
             $ticket = new Ticket($this->db);
@@ -54,9 +65,12 @@ class OrderService {
                 }
             }
 
-            $dQuery = "DELETE FROM cart_locks WHERE session_id = :session_id AND user_id = :user_id";
-            $dStmt = $this->db->prepare($dQuery);
-            $dStmt->execute([':session_id' => $session_id, ':user_id' => $user_id]);
+            $deleteLockQuery = "
+                DELETE FROM cart_locks 
+                WHERE session_id = :session_id AND user_id = :user_id
+            ";
+            $deleteLockStmt = $this->db->prepare($deleteLockQuery);
+            $deleteLockStmt->execute([':session_id' => $session_id, ':user_id' => $user_id]);
 
             $this->db->commit();
             return ["success" => true, "message" => "Замовлення успішно створено.", "order_id" => $order_id];
@@ -67,24 +81,35 @@ class OrderService {
         }
     }
 
-    public function cancelOrder($order_id, $user_id) {
+    public function cancelOrder(int $order_id, int $user_id): array {
         try {
             $this->db->beginTransaction();
 
-            $oQuery = "SELECT id FROM orders WHERE id = :order_id AND user_id = :user_id";
-            $oStmt = $this->db->prepare($oQuery);
-            $oStmt->execute([':order_id' => $order_id, ':user_id' => $user_id]);
-            if (!$oStmt->fetch()) {
+            $orderQuery = "
+                SELECT id 
+                FROM orders 
+                WHERE id = :order_id AND user_id = :user_id
+            ";
+            $orderStmt = $this->db->prepare($orderQuery);
+            $orderStmt->execute([':order_id' => $order_id, ':user_id' => $user_id]);
+            
+            if (!$orderStmt->fetch()) {
                 throw new Exception("Замовлення не знайдено або у вас немає прав на його скасування.");
             }
 
-            $tQuery = "DELETE FROM tickets WHERE order_id = :order_id";
-            $tStmt = $this->db->prepare($tQuery);
-            $tStmt->execute([':order_id' => $order_id]);
+            $deleteTicketsQuery = "
+                DELETE FROM tickets 
+                WHERE order_id = :order_id
+            ";
+            $deleteTicketsStmt = $this->db->prepare($deleteTicketsQuery);
+            $deleteTicketsStmt->execute([':order_id' => $order_id]);
 
-            $dQuery = "DELETE FROM orders WHERE id = :order_id";
-            $dStmt = $this->db->prepare($dQuery);
-            $dStmt->execute([':order_id' => $order_id]);
+            $deleteOrderQuery = "
+                DELETE FROM orders 
+                WHERE id = :order_id
+            ";
+            $deleteOrderStmt = $this->db->prepare($deleteOrderQuery);
+            $deleteOrderStmt->execute([':order_id' => $order_id]);
 
             $this->db->commit();
             return ["success" => true, "message" => "Бронювання успішно скасовано."];
@@ -92,6 +117,23 @@ class OrderService {
             $this->db->rollBack();
             return ["success" => false, "message" => $e->getMessage()];
         }
+    }
+
+    public function getOrdersWithTickets(int $user_id): array {
+        $orderModel = new Order($this->db);
+        $orderModel->user_id = $user_id;
+        $orders = $orderModel->getOrdersByUser();
+
+        $ticketModel = new Ticket($this->db);
+        
+        $result = [];
+        foreach ($orders as $order) {
+            $ticketModel->order_id = $order['id'];
+            $order['tickets'] = $ticketModel->getTicketsByOrderId();
+            $result[] = $order;
+        }
+
+        return $result;
     }
 }
 ?>

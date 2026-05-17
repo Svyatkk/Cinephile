@@ -6,7 +6,7 @@ class SeatService {
         $this->db = $db;
     }
 
-    public function getSeatsForSession($session_id) {
+    public function getSeatsForSession(int $session_id): array {
         $sessionQuery = "SELECT hall_id FROM sessions WHERE id = :session_id";
         $stmt = $this->db->prepare($sessionQuery);
         $stmt->bindParam(':session_id', $session_id);
@@ -28,7 +28,7 @@ class SeatService {
             WHERE s.hall_id = :hall_id
             ORDER BY s.row_num ASC, s.seat_num ASC
         ";
-
+        
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':session_id', $session_id);
         $stmt->bindParam(':hall_id', $hall_id);

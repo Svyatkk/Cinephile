@@ -39,7 +39,11 @@
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform: translateX(-20px);
     opacity: 0;
+    transition: 0.5s;
+
 }
+
+
 
 .sideBar.open .link {
     transform: translateX(0);
@@ -79,6 +83,7 @@
 }
 
 .link:hover {
+    transition: 0.5s;
     color: #ff0000;
 }
 

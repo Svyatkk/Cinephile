@@ -8,7 +8,7 @@ class MovieService {
         $this->db = $db;
     }
 
-    public function create($title, $original_title, $description, $poster_url, $release_year, $duration_minutes, $genres, $director, $cast_actors, $country, $studio, $language, $age_restriction, $inclusive_adaptation) {
+    public function create(string $title, string $original_title, string $description, string $poster_url, ?int $release_year, ?int $duration_minutes, string $genres, string $director, string $cast_actors, string $country, string $studio, string $language, string $age_restriction, int $inclusive_adaptation): array {
         
         $movie = new Movie($this->db); 
 
@@ -40,18 +40,29 @@ class MovieService {
         }
     }
 
-    public function getAll($cinema_id = null) {
+    public function getAll(?int $cinema_id = null): array {
         try {
             if ($cinema_id) {
-                $query = "SELECT DISTINCT m.* FROM movies m
-                          JOIN sessions s ON m.id = s.movie_id
-                          JOIN halls h ON s.hall_id = h.id
-                          WHERE h.cinema_id = :cinema_id";
+                $query = "
+                    SELECT m.*, MIN(s.start_time) as nearest_session
+                    FROM movies m
+                    JOIN sessions s ON m.id = s.movie_id
+                    JOIN halls h ON s.hall_id = h.id
+                    WHERE h.cinema_id = :cinema_id AND s.start_time >= NOW()
+                    GROUP BY m.id
+                    ORDER BY nearest_session ASC
+                ";
                 $stmt = $this->db->prepare($query);
                 $stmt->execute([':cinema_id' => $cinema_id]);
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else {
-                $query = "SELECT * FROM movies";
+                $query = "
+                    SELECT m.*, MIN(s.start_time) as nearest_session 
+                    FROM movies m
+                    LEFT JOIN sessions s ON m.id = s.movie_id AND s.start_time >= NOW()
+                    GROUP BY m.id
+                    ORDER BY nearest_session IS NULL, nearest_session ASC
+                ";
                 $stmt = $this->db->query($query);
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -61,7 +72,7 @@ class MovieService {
     }
     
         
-    public function getMovieById($id) {
+    public function getMovieById(int $id): array {
         $movie = new Movie($this->db);
 
         if ($movie->readOne($id)) {

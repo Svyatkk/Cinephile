@@ -18,8 +18,8 @@ export const PAGES_URL = {
     PRODUCTS: '/products',
     CHECKOUT: '/checkout',
     CINEMAS: '/cinemas',
-    SOON: '/soon',
-    CINEMA: (id: number): string => `/cinemas/${id}`
+    CINEMA: (id: number): string => `/cinema/${id}`,
+    SOON: '/soon'
 
 
 }

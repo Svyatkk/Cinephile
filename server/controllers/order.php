@@ -21,22 +21,7 @@ if ($method === 'POST') {
     }
 } else if ($method === 'GET') {
     if (!empty($_GET['user_id'])) {
-        require_once __DIR__ . '/../models/Order.php';
-        require_once __DIR__ . '/../models/Ticket.php';
-
-        $orderModel = new Order($db);
-        $orderModel->user_id = $_GET['user_id'];
-        $orders = $orderModel->getOrdersByUser();
-
-        $ticketModel = new Ticket($db);
-        
-        $result = [];
-        foreach ($orders as $order) {
-            $ticketModel->order_id = $order['id'];
-            $order['tickets'] = $ticketModel->getTicketsByOrderId();
-            $result[] = $order;
-        }
-
+        $result = $orderService->getOrdersWithTickets((int)$_GET['user_id']);
         http_response_code(200);
         echo json_encode($result);
     } else {
