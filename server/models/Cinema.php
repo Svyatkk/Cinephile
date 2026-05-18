@@ -24,8 +24,7 @@ class Cinema {
         }
         return false;
     }
-
-        
+             
     public function readAll() {
         $query = "SELECT c.*, ci.name as city_name 
                   FROM " . $this->table_name . " c 

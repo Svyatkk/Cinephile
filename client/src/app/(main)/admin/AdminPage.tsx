@@ -9,11 +9,13 @@ import RegisterCityPanel from "@/components/RegisterCityPanel/RegisterCityPanel"
 import RegisterFilmPanel from "@/components/RegisterMoviePanel/RegisterMoviePanel";
 import RegisterHallPanel from "@/components/RegisterHallPanel/RegisterHallPanel";
 import RegisterCinemaPanel from "@/components/RegisterCinemaPanel/RegisterCinemaPanel";
+import StatisticsPanel from "@/components/StatisticsPanel/StatisticsPanel";
+import { PAGES_URL } from "@/api/config";
 
 export default function AdminPage() {
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
     const [admin, setAdmin] = useState<IUser | null>(null)
-    const [activeTab, setActiveTab] = useState<'film' | 'session' | 'city' | 'cinema' | 'hall'>('film')
+    const [activeTab, setActiveTab] = useState<'film' | 'session' | 'city' | 'cinema' | 'hall' | 'statistics'>('statistics')
 
     const route = useRouter();
 
@@ -29,7 +31,7 @@ export default function AdminPage() {
                 return;
             }
         }
-        route.push('/');
+        route.push(PAGES_URL.MAIN);
     }, [route]);
 
 
@@ -41,6 +43,12 @@ export default function AdminPage() {
             <h1 className={styles.adminTitle}>Система управління Cinephile</h1>
 
             <div className={styles.tabs}>
+                <button
+                    className={`${styles.tabBtn} ${activeTab === 'statistics' ? styles.activeTab : ''}`}
+                    onClick={() => setActiveTab('statistics')}
+                >
+                    Статистика
+                </button>
                 <button
                     className={`${styles.tabBtn} ${activeTab === 'film' ? styles.activeTab : ''}`}
                     onClick={() => setActiveTab('film')}
@@ -73,14 +81,16 @@ export default function AdminPage() {
                 </button>
             </div>
 
-
             <div className={styles.content}>
+                {activeTab === 'statistics' && <StatisticsPanel />}
                 {activeTab === 'film' && <RegisterFilmPanel />}
                 {activeTab === 'session' && <RegisterSessionPanel />}
                 {activeTab === 'city' && <RegisterCityPanel />}
                 {activeTab === 'cinema' && <RegisterCinemaPanel />}
                 {activeTab === 'hall' && <RegisterHallPanel />}
             </div>
-        </div>
+
+
+        </div >
     )
 }

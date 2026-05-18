@@ -61,6 +61,9 @@ else if ($uri === '/api/orders') {
 else if ($uri === '/api/upload') {
     require_once __DIR__ . '/../controllers/upload.php';
 }
+else if ($uri === '/api/statistics') {
+    require_once __DIR__ . '/../controllers/statistics.php';
+}
 
 else if (strpos($uri, '/api/uploads/') === 0) {
     $relativePath = str_replace('/api/', '', $uri);

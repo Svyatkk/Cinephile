@@ -9,6 +9,7 @@ interface SeatsGridProps {
 }
 
 export default function SeatsGrid({ seats, selectedSeatIds, onSeatClick }: SeatsGridProps) {
+
     const rows = seats.reduce((acc, seat) => {
         if (!acc[seat.row_num]) acc[seat.row_num] = [];
         acc[seat.row_num].push(seat);
@@ -16,7 +17,6 @@ export default function SeatsGrid({ seats, selectedSeatIds, onSeatClick }: Seats
     }, {} as Record<number, ISeat[]>);
 
 
-        
     return (
         <div className={styles.seatGrid}>
             {Object.keys(rows).map(rowNumStr => {

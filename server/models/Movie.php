@@ -19,7 +19,7 @@ class Movie {
     public $language;
     public $age_restriction;
     public $inclusive_adaptation;
-
+        
     public function __construct($db) {
         $this->conn = $db;
     }

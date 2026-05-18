@@ -47,6 +47,7 @@ export default function NavBar() {
         }
     }, [])
 
+
     return (
         <>
             <nav className={styles.nav}>
@@ -70,7 +71,6 @@ export default function NavBar() {
                     </div>
 
                 </div>
-
                 <div className={styles.block}>
 
                     <div className={styles.citySection}>

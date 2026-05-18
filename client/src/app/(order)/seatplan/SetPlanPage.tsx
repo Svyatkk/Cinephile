@@ -56,6 +56,13 @@ export default function SeatPlanPage() {
     const handleSeatClick = (seat: ISeat) => {
         if (seat.is_purchased || seat.is_locked) return;
 
+        const userStr = localStorage.getItem('user');
+        if (!userStr) {
+            alert('Будь ласка, увійдіть у систему для вибору місць');
+            router.push('/auth');
+            return;
+        }
+
         setSelectedSeatIds(prev => {
             if (prev.includes(seat.id)) {
                 return prev.filter(id => id !== seat.id);
