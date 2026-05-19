@@ -3,55 +3,66 @@
 import styles from './style.module.css'
 import { IMovie } from '@/types/movie.interface'
 import { useRouter } from 'next/navigation'
-import { PAGES_URL, BASE_URL } from '@/api/config'
-import { movieService } from '@/api/movie.service'
+import { PAGES_URL } from '@/api/config'
 import { useEffect, useState } from 'react'
 import { ISession } from '@/types/session.interface'
-import { time } from 'console'
 import { sessionService } from '@/api/session.service'
 import SessionSchedule from '../SessionSchedule/SessionSchedule'
 import Link from 'next/link'
-import Image from 'next/image'
+
 type Props = {
-    movie: IMovie
+    movie: IMovie;
+    cityId?: number;
+    cinemaId?: number;
 }
 
-export default function MovieBlock({ movie }: Props) {
+export default function MovieBlock({ movie, cityId, cinemaId }: Props) {
     const [sessions, setSessions] = useState<ISession[]>([]);
     const [active, setActive] = useState<boolean>(false);
+    const route = useRouter();
 
     useEffect(() => {
         sessionService.getByMovieId(Number(movie?.id))
-            .then(data => setSessions(data))
+            .then(data => {
+                let filtered = data;
+                if (cinemaId) {
+                    filtered = filtered.filter(s => Number(s.cinema_id) === cinemaId);
+                } else if (cityId) {
+                    filtered = filtered.filter(s => Number(s.city_id) === cityId);
+                }
+                setSessions(filtered);
+            })
             .catch(err => console.error('Error fetching sessions:', err));
-    }, [movie?.id]);
+    }, [movie?.id, cinemaId, cityId]);
 
-    const getClosestSession = () => {
-        if (!sessions || sessions.length === 0) return null;
+    const getClosestSession = (): ISession | null => {
+        if (!sessions.length) return null;
         const now = new Date();
-
-        const futureSessions = sessions
+        const future = sessions
             .filter(s => new Date(s.start_time) > now)
             .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime());
-
-        return futureSessions.length > 0 ? futureSessions[0] : null;
+        return future.length > 0 ? future[0] : null;
     };
 
     const closestSession = getClosestSession();
 
     const isSoon = closestSession
         ? (new Date(closestSession.start_time).getTime() - Date.now()) > 7 * 24 * 60 * 60 * 1000
-        : true;
+        : sessions.length === 0;
 
-    const route = useRouter();
     const poster = movie.poster_url;
     const fullImageUrl = poster?.startsWith('http')
         ? poster
         : `http://localhost/api/${poster?.startsWith('/') ? poster.slice(1) : poster}`;
 
     const formatTime = (dateString: string) => {
-        const date = new Date(dateString);
-        return date.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+        return new Date(dateString).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+    };
+
+    const goToSeatplan = (sessionId: number) => {
+        sessionStorage.removeItem('booking_expiry');
+        sessionStorage.removeItem('last_booking_page');
+        route.push(`${PAGES_URL.SEATPLAN}?sessionId=${sessionId}`);
     };
 
     return (
@@ -92,16 +103,17 @@ export default function MovieBlock({ movie }: Props) {
                                     </div>
                                     <button
                                         className={styles.buyBtn}
-                                        onClick={() => {
-                                            if (closestSession?.id) {
-                                                sessionStorage.removeItem('booking_expiry');
-                                                sessionStorage.removeItem('last_booking_page');
-                                                route.push(`${PAGES_URL.SEATPLAN}?sessionId=${closestSession.id}`);
-                                            }
-                                        }}
-                                    >Купити квиток</button>
+                                        onClick={() => closestSession?.id && goToSeatplan(closestSession.id)}
+                                    >
+                                        Купити квиток
+                                    </button>
                                 </div>
-                                <SessionSchedule inTheMovieBlock={true} movieId={Number(movie?.id)} />
+                                <SessionSchedule
+                                    inTheMovieBlock={true}
+                                    movieId={Number(movie?.id)}
+                                    cityId={cityId}
+                                    cinemaId={cinemaId}
+                                />
                             </div>
                         </>
                     ) : closestSession && isSoon ? (
@@ -115,13 +127,7 @@ export default function MovieBlock({ movie }: Props) {
                             <button
                                 className={styles.buyBtn}
                                 style={{ marginTop: '15px', background: 'linear-gradient(135deg, #fbbc05, #e5a703)', color: '#000', fontWeight: 'bold' }}
-                                onClick={() => {
-                                    if (closestSession?.id) {
-                                        sessionStorage.removeItem('booking_expiry');
-                                        sessionStorage.removeItem('last_booking_page');
-                                        route.push(`${PAGES_URL.SEATPLAN}?sessionId=${closestSession.id}`);
-                                    }
-                                }}
+                                onClick={() => closestSession?.id && goToSeatplan(closestSession.id)}
                             >
                                 Забронювати заздалегідь
                             </button>

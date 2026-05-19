@@ -1,17 +1,26 @@
 'use client'
+
 import { useState, useEffect } from 'react'
 import { sessionService } from '@/api/session.service'
 import { ISession } from '@/types/session.interface'
 import styles from './style.module.css'
 
 type Props = {
-    movieId: number,
-    cityId?: number,
-    cinemaId?: number,
-    inTheMovieBlock?: boolean | false,
-    onSessionClick?: (session: ISession) => void
+    movieId: number;
+    cityId?: number;
+    cinemaId?: number;
+    inTheMovieBlock?: boolean;
+    onSessionClick?: (session: ISession) => void;
 }
 
+
+
+function formatDate(dateStr: string) {
+    const d = new Date(dateStr)
+    const days = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+    const months = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня']
+    return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]}`
+}
 
 export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieBlock, onSessionClick }: Props) {
     const [sessions, setSessions] = useState<ISession[]>([])
@@ -21,26 +30,20 @@ export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieB
     useEffect(() => {
         sessionService.getByMovieId(movieId).then(data => {
             let filtered = data;
-            if (cityId) {
-                filtered = filtered.filter(s => Number(s.city_id) === cityId);
-            }
+
             if (cinemaId) {
                 filtered = filtered.filter(s => Number(s.cinema_id) === cinemaId);
+            } else if (cityId) {
+                filtered = filtered.filter(s => Number(s.city_id) === cityId);
             }
 
             setSessions(filtered)
 
-            const uniqueDates = Array.from(new Set(filtered.map((s: any) => s.start_time.split(' ')[0])))
+            const uniqueDates = Array.from(new Set(filtered.map(s => s.start_time.split(' ')[0]))) as string[]
             setDates(uniqueDates)
-            if (uniqueDates.length > 0) {
-                if (!uniqueDates.includes(selectedDate)) {
-                    setSelectedDate(uniqueDates[0])
-                }
-            } else {
-                setSelectedDate('')
-            }
+            setSelectedDate(prev => uniqueDates.includes(prev) ? prev : (uniqueDates[0] ?? ''))
         }).catch(console.error)
-    }, [movieId, cityId, cinemaId])
+    }, [movieId, cinemaId, cityId])
 
     if (sessions.length === 0) {
         return (
@@ -52,16 +55,13 @@ export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieB
         )
     }
 
-    const filteredSessions = sessions.filter((s: any) => s.start_time.startsWith(selectedDate))
+    const filteredSessions = sessions.filter(s => s.start_time.startsWith(selectedDate))
 
-
-    const grouped = filteredSessions.reduce((acc: any, s: any) => {
-        const cinemaKey = s.cinema_name
+    const grouped = filteredSessions.reduce((acc: Record<string, Record<string, ISession[]>>, s) => {
+        const cinemaKey = s.cinema_name ?? 'Невідомий кінотеатр'
         if (!acc[cinemaKey]) acc[cinemaKey] = {}
-
         const langKey = `${s.format} ${s.language_tag}`
         if (!acc[cinemaKey][langKey]) acc[cinemaKey][langKey] = []
-
         acc[cinemaKey][langKey].push(s)
         return acc
     }, {})
@@ -85,16 +85,17 @@ export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieB
                 {Object.keys(grouped).map(cinemaName => (
                     <div key={cinemaName} className={styles.cinemaGroup}>
                         <h3 className={styles.cinemaName}>{cinemaName}</h3>
-                        <p className={styles.cinemaAddress}>{grouped[cinemaName][Object.keys(grouped[cinemaName])[0]][0].cinema_address}</p>
-
+                        <p className={styles.cinemaAddress}>
+                            {grouped[cinemaName][Object.keys(grouped[cinemaName])[0]][0].cinema_address}
+                        </p>
                         <div className={styles.formats}>
                             {Object.keys(grouped[cinemaName]).map(langKey => (
                                 <div key={langKey} className={styles.formatGroup}>
                                     <h4 className={styles.formatTitle}>{langKey}</h4>
                                     <div className={styles.timeList}>
-                                        {grouped[cinemaName][langKey].map((s: any) => (
-                                            <div 
-                                                key={s.id} 
+                                        {grouped[cinemaName][langKey].map(s => (
+                                            <div
+                                                key={s.id}
                                                 className={styles.timeItem}
                                                 onClick={() => onSessionClick && onSessionClick(s)}
                                                 style={{ cursor: onSessionClick ? 'pointer' : 'default' }}
@@ -112,12 +113,4 @@ export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieB
             </div>
         </div>
     )
-}
-
-
-function formatDate(dateStr: string) {
-    const d = new Date(dateStr)
-    const days = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
-    const months = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня']
-    return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]}`
 }

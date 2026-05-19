@@ -22,6 +22,7 @@ function getDateTabs() {
     return tabs
 }
 
+
 function isSameDay(a: Date, b: Date) {
     return a.getFullYear() === b.getFullYear() &&
         a.getMonth() === b.getMonth() &&
@@ -150,7 +151,6 @@ export default function CinemaPage({ id }: Props) {
                         const posterUrl = getPosterUrl(movieSessions[0]?.poster_url);
                         return (
                             <div key={movieId} className={styles.movieGroup}>
-                                {/* Movie Poster */}
                                 <div className={styles.moviePosterWrap}>
                                     {posterUrl ? (
                                         <img src={posterUrl} alt={title} className={styles.moviePoster} />
@@ -159,7 +159,6 @@ export default function CinemaPage({ id }: Props) {
                                     )}
                                 </div>
 
-                                {/* Movie Details & Sessions */}
                                 <div className={styles.movieDetails}>
                                     <div className={styles.movieHeader}>
                                         {movieSessions[0]?.age_restriction && (

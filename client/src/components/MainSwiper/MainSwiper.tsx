@@ -1,24 +1,20 @@
 "use client";
 
-
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from "swiper/modules";
 import MovieBlock from "../MovieBlock/MovieBlock";
-import "swiper/css"
+import "swiper/css";
 import "swiper/css/navigation";
-
-
-import styles from './style.module.css'
-
+import styles from './style.module.css';
 import { IMovie } from '@/types/movie.interface';
 
 type Props = {
     movies: IMovie[] | null | undefined;
+    cityId?: number;
+    cinemaId?: number;
 };
 
-
-export default function MainSwiper({ movies }: Props) {
-
+export default function MainSwiper({ movies, cityId, cinemaId }: Props) {
     return (
         <div className={styles.wrapper}>
             <Swiper
@@ -37,7 +33,7 @@ export default function MainSwiper({ movies }: Props) {
             >
                 {movies?.map((slide) => (
                     <SwiperSlide key={slide.id}>
-                        <MovieBlock movie={slide} ></MovieBlock>
+                        <MovieBlock movie={slide} cityId={cityId} cinemaId={cinemaId} />
                     </SwiperSlide>
                 ))}
             </Swiper>
