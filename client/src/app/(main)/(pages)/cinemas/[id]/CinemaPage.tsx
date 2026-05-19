@@ -28,6 +28,13 @@ function isSameDay(a: Date, b: Date) {
         a.getDate() === b.getDate()
 }
 
+function getPosterUrl(poster?: string) {
+    if (!poster) return null
+    return poster.startsWith('http')
+        ? poster
+        : `http://localhost/api/${poster.startsWith('/') ? poster.slice(1) : poster}`
+}
+
 export default function CinemaPage({ id }: Props) {
     const router = useRouter()
     const [cinema, setCinema] = useState<ICinema>()
@@ -139,33 +146,54 @@ export default function CinemaPage({ id }: Props) {
                 {groupedByMovie.length === 0 ? (
                     <p className={styles.empty}>Немає сеансів на обраний день</p>
                 ) : (
-                    groupedByMovie.map(([movieId, { title, sessions: movieSessions }]) => (
-                        <div key={movieId} className={styles.movieGroup}>
-                            <div className={styles.movieHeader}>
-                                <h3 className={styles.movieTitle}>{title}</h3>
-                                {movieSessions[0]?.age_restriction && (
-                                    <span className={styles.age}>{movieSessions[0].age_restriction}+</span>
-                                )}
-                                {movieSessions[0]?.duration_minutes && (
-                                    <span className={styles.duration}>{movieSessions[0].duration_minutes} хв</span>
-                                )}
+                    groupedByMovie.map(([movieId, { title, sessions: movieSessions }]) => {
+                        const posterUrl = getPosterUrl(movieSessions[0]?.poster_url);
+                        return (
+                            <div key={movieId} className={styles.movieGroup}>
+                                {/* Movie Poster */}
+                                <div className={styles.moviePosterWrap}>
+                                    {posterUrl ? (
+                                        <img src={posterUrl} alt={title} className={styles.moviePoster} />
+                                    ) : (
+                                        <div className={styles.moviePosterPlaceholder}>🎬</div>
+                                    )}
+                                </div>
+
+                                {/* Movie Details & Sessions */}
+                                <div className={styles.movieDetails}>
+                                    <div className={styles.movieHeader}>
+                                        {movieSessions[0]?.age_restriction && (
+                                            <span className={styles.age}>{movieSessions[0].age_restriction}+</span>
+                                        )}
+                                        <h3 className={styles.movieTitle}>{title}</h3>
+                                        {movieSessions[0]?.duration_minutes && (
+                                            <span className={styles.duration}>{movieSessions[0].duration_minutes} хв</span>
+                                        )}
+                                    </div>
+                                    <div className={styles.sessionTimes}>
+                                        {movieSessions.map(s => (
+                                            <button
+                                                key={s.id}
+                                                className={styles.sessionBtn}
+                                                onClick={() => {
+                                                    if (s.id) {
+                                                        sessionStorage.removeItem('booking_expiry');
+                                                        sessionStorage.removeItem('last_booking_page');
+                                                        router.push(`${PAGES_URL.SEATPLAN}?sessionId=${s.id}`);
+                                                    }
+                                                }}
+                                            >
+                                                <span className={styles.sessionTime}>{formatTime(s.start_time)}</span>
+                                                <span className={styles.sessionMeta}>{s.format} · {s.language_tag}</span>
+                                                <span className={styles.sessionHall}>{s.hall_name}</span>
+                                                <span className={styles.sessionPrice}>{s.base_price} ₴</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                            <div className={styles.sessionTimes}>
-                                {movieSessions.map(s => (
-                                    <button
-                                        key={s.id}
-                                        className={styles.sessionBtn}
-                                        onClick={() => s.id && router.push(`${PAGES_URL.SEATPLAN}?sessionId=${s.id}`)}
-                                    >
-                                        <span className={styles.sessionTime}>{formatTime(s.start_time)}</span>
-                                        <span className={styles.sessionMeta}>{s.format} · {s.language_tag}</span>
-                                        <span className={styles.sessionHall}>{s.hall_name}</span>
-                                        <span className={styles.sessionPrice}>{s.base_price} ₴</span>
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    ))
+                        );
+                    })
                 )}
             </div>
         </div>

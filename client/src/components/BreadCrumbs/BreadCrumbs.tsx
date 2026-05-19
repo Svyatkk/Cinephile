@@ -1,14 +1,17 @@
 'use client'
 import styles from './styles.module.css'
 import Link from 'next/link'
-import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-
+import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 type Props = {
     arr?: {
         name: string,
         link: string
     }[]
 }
+
 
 export default function BreadCrumbs({ ...arr }: Props) {
     const pathname = usePathname();
@@ -18,9 +21,57 @@ export default function BreadCrumbs({ ...arr }: Props) {
     const queryString = searchParams.toString();
     const searchSuffix = queryString ? `?${queryString}` : '';
 
+    const [timeLeft, setTimeLeft] = useState<number | null>(null);
+    const isSuccessPage = pathname.includes('order-success');
+
+    useEffect(() => {
+        if (isSuccessPage) {
+            sessionStorage.removeItem('booking_expiry');
+            return;
+        }
+
+        let expiryStr = sessionStorage.getItem('booking_expiry');
+        let expiryTime: number;
+
+        if (!expiryStr) {
+            expiryTime = Date.now() + 10 * 60 * 1000;
+            sessionStorage.setItem('booking_expiry', String(expiryTime));
+        } else {
+            expiryTime = Number(expiryStr);
+        }
+
+        const updateTimer = () => {
+            const now = Date.now();
+            const diff = Math.max(0, Math.floor((expiryTime - now) / 1000));
+            setTimeLeft(diff);
+
+            if (diff <= 0) {
+                clearInterval(interval);
+                sessionStorage.removeItem('booking_expiry');
+                alert('Час сесії бронювання вичерпано. Будь ласка, оберіть місця знову.');
+                router.push('/');
+            }
+        };
+
+        updateTimer();
+        const interval = setInterval(updateTimer, 1000);
+
+        return () => clearInterval(interval);
+    }, [pathname, router, isSuccessPage]);
+
+    const formatTime = (seconds: number) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    };
+
     return (
         <section className={styles.breadCrumbs}>
-            <div className={styles.logoBox} onClick={() => router.push('/')}>
+            <div className={styles.logoBox} onClick={() => {
+                sessionStorage.removeItem('booking_expiry');
+                sessionStorage.removeItem('last_booking_page');
+                router.push('/');
+            }}>
                 Cinephile
             </div>
 
@@ -53,6 +104,16 @@ export default function BreadCrumbs({ ...arr }: Props) {
                     )
                 })}
             </div>
+
+            {!isSuccessPage && timeLeft !== null && (
+                <div className={styles.timerContainer}>
+                    <svg className={styles.timerIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span className={styles.timerText}>{formatTime(timeLeft)}</span>
+                </div>
+            )}
         </section>
     )
 }

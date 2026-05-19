@@ -1,0 +1,149 @@
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 60px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 40px 48px 80px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sectionTitle {
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+}
+
+.movieCard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.movieCard:hover {
+    transform: translateY(-6px);
+}
+
+.posterWrap {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    background-color: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: box-shadow 0.3s ease;
+}
+
+.movieCard:hover .posterWrap {
+    box-shadow: 0 15px 35px rgba(255, 59, 74, 0.15);
+}
+
+.poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.movieCard:hover .poster {
+    transform: scale(1.05);
+}
+
+.posterPlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background-color: #1e1e1e;
+}
+
+.soonBadge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #ff3b4a, #cc0010);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(255, 59, 74, 0.4);
+    letter-spacing: 0.5px;
+}
+
+.movieTitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.movieCard:hover .movieTitle {
+    color: #ff3b4a;
+}
+
+.loadingContainer {
+    width: 100%;
+    padding: 60px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.spinner {
+    font-size: 24px;
+    animation: rotate 2s infinite linear;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .container {
+        gap: 35px;
+        margin-top: 40px;
+        padding: 25px 16px 60px;
+    }
+    .sectionTitle {
+        font-size: 20px;
+    }
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 16px;
+    }
+    .movieTitle {
+        font-size: 13px;
+    }
+}

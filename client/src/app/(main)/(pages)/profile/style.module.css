@@ -284,3 +284,90 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
 }
+
+@media (max-width: 600px) {
+    .container {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+    }
+    .cabinetBox {
+        padding: 20px 15px !important;
+        border-radius: 12px !important;
+    }
+    .cabinetBox h1 {
+        font-size: 1.6rem !important;
+        margin-bottom: 20px !important;
+    }
+    .userInfo {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 15px !important;
+        margin-bottom: 25px !important;
+    }
+    .details {
+        width: 100% !important;
+    }
+    .value {
+        font-size: 1rem !important;
+        padding: 8px 12px !important;
+    }
+    .orders h2 {
+        font-size: 1.3rem !important;
+    }
+    .orderCard {
+        padding: 15px !important;
+    }
+    .orderHeader {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+    .statusActions {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+    .ticketInfo {
+        padding: 10px !important;
+    }
+    .movieTitle {
+        font-size: 1rem !important;
+    }
+    .sessionDetails {
+        font-size: 0.8rem !important;
+    }
+    .seatDetails {
+        font-size: 0.9rem !important;
+    }
+    .orderTotal {
+        font-size: 1rem !important;
+    }
+    .authPrompt {
+        padding: 30px 15px !important;
+        margin-top: 40px !important;
+    }
+    .authPrompt h1 {
+        font-size: 2.2rem !important;
+    }
+    .authPrompt p {
+        font-size: 1rem !important;
+    }
+    .loginBtn {
+        padding: 10px 25px !important;
+        font-size: 1rem !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+    .adminPanel {
+        padding: 25px 15px !important;
+    }
+    .adminPanel h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 15px !important;
+    }
+    .adminLink {
+        padding: 10px 25px !important;
+        font-size: 1rem !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+}

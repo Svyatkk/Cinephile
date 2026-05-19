@@ -108,3 +108,37 @@
     color: #666;
     margin-top: 2px;
 }
+
+@media (max-width: 768px) {
+    .schedule.inTheMovieBlock {
+        padding: 5px 0 0 0 !important;
+    }
+    .schedule.inTheMovieBlock .title {
+        font-size: 1rem !important;
+    }
+    .schedule.inTheMovieBlock .datePicker {
+        padding: 6px 10px !important;
+        font-size: 0.8rem !important;
+    }
+    .schedule.inTheMovieBlock .cinemaName {
+        font-size: 0.9rem !important;
+    }
+    .schedule.inTheMovieBlock .cinemaAddress {
+        font-size: 0.75rem !important;
+        margin-bottom: 10px !important;
+    }
+    .schedule.inTheMovieBlock .formatTitle {
+        font-size: 0.75rem !important;
+        margin-bottom: 6px !important;
+    }
+    .schedule.inTheMovieBlock .timeItem {
+        padding: 4px 8px !important;
+        border-radius: 6px !important;
+    }
+    .schedule.inTheMovieBlock .time {
+        font-size: 0.8rem !important;
+    }
+    .schedule.inTheMovieBlock .price {
+        font-size: 0.65rem !important;
+    }
+}

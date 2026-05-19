@@ -38,6 +38,11 @@ export default function MovieBlock({ movie }: Props) {
     };
 
     const closestSession = getClosestSession();
+
+    const isSoon = closestSession
+        ? (new Date(closestSession.start_time).getTime() - Date.now()) > 7 * 24 * 60 * 60 * 1000
+        : true;
+
     const route = useRouter();
     const poster = movie.poster_url;
     const fullImageUrl = poster?.startsWith('http')
@@ -56,6 +61,10 @@ export default function MovieBlock({ movie }: Props) {
             onMouseEnter={() => setActive(true)}
             onMouseLeave={() => setActive(false)}
         >
+            {isSoon && (
+                <div className={styles.soonBadge}>Скоро</div>
+            )}
+
             <div className={`${styles.information} ${active ? styles.active : ""}`}>
                 <div className={styles.blockInfo}>
                     <div className={styles.topActions}>
@@ -71,7 +80,7 @@ export default function MovieBlock({ movie }: Props) {
 
                     <div className={styles.cinemaTitle}>Cinephile Cinema</div>
 
-                    {closestSession ? (
+                    {closestSession && !isSoon ? (
                         <>
                             <div className={styles.todayLabel}>Сьогодні</div>
                             <div className={styles.closestSessionSection}>
@@ -83,12 +92,40 @@ export default function MovieBlock({ movie }: Props) {
                                     </div>
                                     <button
                                         className={styles.buyBtn}
-                                        onClick={() => closestSession?.id && route.push(`${PAGES_URL.SEATPLAN}?sessionId=${closestSession.id}`)}
+                                        onClick={() => {
+                                            if (closestSession?.id) {
+                                                sessionStorage.removeItem('booking_expiry');
+                                                sessionStorage.removeItem('last_booking_page');
+                                                route.push(`${PAGES_URL.SEATPLAN}?sessionId=${closestSession.id}`);
+                                            }
+                                        }}
                                     >Купити квиток</button>
                                 </div>
                                 <SessionSchedule inTheMovieBlock={true} movieId={Number(movie?.id)} />
                             </div>
                         </>
+                    ) : closestSession && isSoon ? (
+                        <div className={styles.premiereContainer}>
+                            <div className={styles.doorIcon}>📅</div>
+                            <div className={styles.premiereLabel} style={{ color: '#ff3b4a', fontWeight: '800' }}>Скоро в прокаті</div>
+                            <div className={styles.premiereDateText}>
+                                {new Date(closestSession.start_time).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            </div>
+                            <div className={styles.ticketsStatus}>Попередній продаж відкритий!</div>
+                            <button
+                                className={styles.buyBtn}
+                                style={{ marginTop: '15px', background: 'linear-gradient(135deg, #fbbc05, #e5a703)', color: '#000', fontWeight: 'bold' }}
+                                onClick={() => {
+                                    if (closestSession?.id) {
+                                        sessionStorage.removeItem('booking_expiry');
+                                        sessionStorage.removeItem('last_booking_page');
+                                        route.push(`${PAGES_URL.SEATPLAN}?sessionId=${closestSession.id}`);
+                                    }
+                                }}
+                            >
+                                Забронювати заздалегідь
+                            </button>
+                        </div>
                     ) : (
                         <div className={styles.premiereContainer}>
                             <div className={styles.doorIcon}>🚪</div>
@@ -96,7 +133,7 @@ export default function MovieBlock({ movie }: Props) {
                             <div className={styles.premiereDateText}>
                                 {movie.release_year ? `У ${movie.release_year} році` : 'Незабаром'}
                             </div>
-                            <div className={styles.ticketsStatus}>Квитки у продажу!</div>
+                            <div className={styles.ticketsStatus}>Очікуйте анонсу сеансів</div>
                         </div>
                     )}
                 </div>

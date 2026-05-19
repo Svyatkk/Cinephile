@@ -87,3 +87,32 @@
     color: #777;
     font-style: italic;
 }
+
+@media (max-width: 600px) {
+    .panelCitiesContainer {
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: calc(100vh - 60px) !important;
+        max-height: calc(100vh - 60px) !important;
+        border-radius: 0 !important;
+        overflow-y: auto !important;
+        padding: 15px !important;
+    }
+    .panelCitiesContainer.active {
+        top: 60px !important;
+    }
+    .rootCitiesPanel {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+    .leftCol {
+        border-right: none !important;
+        border-bottom: 1px solid #444 !important;
+        padding-right: 0 !important;
+        padding-bottom: 15px !important;
+    }
+    .rightCol {
+        padding-left: 0 !important;
+    }
+}

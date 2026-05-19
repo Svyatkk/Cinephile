@@ -7,7 +7,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { orderService } from "@/api/order.service"
 import { IOrder, ITicket } from "@/types/order.interface"
-
 export default function Account() {
 
     const [user, setUser] = useState<IUser | null>(null)
@@ -28,7 +27,6 @@ export default function Account() {
 
         if (user) {
             try {
-                const { orderService } = await import('@/api/order.service');
                 await orderService.cancelOrder(orderId, user.id);
                 setOrders(prev => prev.filter(o => o.id !== orderId));
             } catch (error: any) {

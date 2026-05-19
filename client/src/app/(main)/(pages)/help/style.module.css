@@ -1,0 +1,183 @@
+.page {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    background: #0b0b0d;
+    color: #e6e6e6;
+    min-height: 100vh;
+    padding: 40px 20px 80px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pageTitle {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.pageSubtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.sectionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sectionTitle {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    border-left: 4px solid #ff3b4a;
+    padding-left: 15px;
+    margin-bottom: 5px;
+}
+
+.accordions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.accordionCard {
+    background: #1a1a1c;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordionCard.active {
+    background: #222225;
+    border-color: rgba(255, 59, 74, 0.15);
+}
+
+.accordionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.accordionQuestion {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.4;
+    transition: color 0.3s;
+}
+
+.accordionHeader:hover .accordionQuestion {
+    color: #ff3b4a;
+}
+
+.arrowBtn {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.arrowBtn svg {
+    transition: transform 0.3s ease;
+}
+
+.arrowActive {
+    background-color: #ff0000;
+    border-color: #ff0000;
+    color: #ffffff;
+    transform: rotate(180deg);
+}
+
+.accordionBody {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordionBody.bodyOpen {
+    max-height: 1000px;
+}
+
+.accordionContent {
+    padding: 0 24px 24px 24px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 20px;
+}
+
+.accordionContent p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: 30px 15px 60px 15px;
+    }
+    
+    .pageTitle {
+        font-size: 2rem;
+    }
+    
+    .pageSubtitle {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+    }
+    
+    .sectionTitle {
+        font-size: 1.15rem;
+        padding-left: 10px;
+    }
+    
+    .accordionHeader {
+        padding: 16px;
+    }
+    
+    .accordionQuestion {
+        font-size: 0.95rem;
+    }
+    
+    .accordionContent {
+        padding: 0 16px 16px 16px;
+        padding-top: 15px;
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+    
+    .arrowBtn {
+        width: 28px;
+        height: 28px;
+    }
+}

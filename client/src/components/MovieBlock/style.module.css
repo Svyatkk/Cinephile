@@ -180,3 +180,81 @@
 .ticketsStatus {
     font-size: 16px;
 }
+
+@media (max-width: 768px) {
+    .block {
+        font-size: 18px !important;
+    }
+    .cinemaTitle {
+        font-size: 16px !important;
+        margin-top: 10px !important;
+    }
+    .todayLabel {
+        font-size: 12px !important;
+        margin-bottom: 5px !important;
+    }
+    .sectionHeading {
+        font-size: 13px !important;
+        margin-bottom: 4px !important;
+    }
+    .closestSessionBox {
+        padding: 6px 8px !important;
+        margin-bottom: 6px !important;
+    }
+    .timeText {
+        font-size: 16px !important;
+    }
+    .buyBtn {
+        padding: 6px 10px !important;
+        font-size: 10px !important;
+    }
+    .premiereContainer .doorIcon {
+        font-size: 28px !important;
+        margin-bottom: 5px !important;
+    }
+    .premiereContainer .premiereLabel {
+        font-size: 14px !important;
+    }
+    .premiereContainer .premiereDateText {
+        font-size: 14px !important;
+    }
+    .premiereContainer .ticketsStatus {
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .topActions {
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+    .actionBtn {
+        padding: 6px !important;
+        font-size: 9px !important;
+        gap: 4px !important;
+    }
+    .iconBox {
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 9px !important;
+    }
+    .information {
+        padding: 10px !important;
+    }
+}
+
+.soonBadge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #ff3b4a, #cc0010);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(255, 59, 74, 0.4);
+    z-index: 10;
+    letter-spacing: 0.5px;
+}

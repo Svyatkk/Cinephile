@@ -11,7 +11,6 @@ export interface ICity {
     cinemas?: ICinema[];
 }
 
-
 export interface IHall {
     id: number;
     cinema_id: number;

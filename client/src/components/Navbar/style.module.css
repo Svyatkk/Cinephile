@@ -33,19 +33,20 @@
 .citySection {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 10px;
     font-size: 18px;
 }
 
 .choseCity {
     display: flex;
+    align-items: center;
     gap: 10px;
-
-
 }
 
 .cities {
     display: flex;
+    align-items: center;
     gap: 2px;
 }
 
@@ -92,14 +93,6 @@
     align-items: center;
 }
 
-.sideBarOpen {
-    border: 1px solid white;
-    cursor: pointer;
-}
-
-.loginButton {
-    border: 1px solid white;
-}
 
 
 .login {
@@ -201,4 +194,47 @@
     visibility: visible;
     background-color: rgba(0, 0, 0, 0.6);
     transition: 0.5s;
+}
+
+@media (max-width: 768px) {
+    .logo {
+        font-size: 1.2em;
+    }
+
+    .citySection {
+        font-size: 13px;
+        gap: 5px;
+    }
+
+    .login p {
+        display: none;
+    }
+
+    .login {
+        gap: 5px;
+    }
+
+    .block {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.1em;
+    }
+
+    .citySection {
+        font-size: 11px;
+    }
+
+    .buttonCities {
+        width: 25px;
+        height: 25px;
+    }
+
+    .icon {
+        width: 25px;
+        height: 25px;
+    }
 }

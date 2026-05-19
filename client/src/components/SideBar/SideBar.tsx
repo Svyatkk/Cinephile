@@ -35,12 +35,10 @@ export default function SideBar({ active }: Props) {
                 <div className={style.links}>
                     <Link className={`${style.link} ${style.redText}`} href={PAGES_URL.MAIN}>Зараз у кіно</Link>
                     <Link className={style.link} href={PAGES_URL.SOON}>Скоро у прокаті</Link>
-                    <Link className={`${style.link} ${style.yellowText}`} href={PAGES_URL.MAIN}>Купити попкорн онлайн</Link>
-                    <Link className={style.link} href={PAGES_URL.MAIN}>Акції та знижки</Link>
+
                     <Link className={style.link} href={PAGES_URL.CINEMAS}>Кінотеатри</Link>
-                    <Link className={style.link} href={PAGES_URL.MAIN}>Повернення квитків</Link>
-                    <Link className={style.link} href={PAGES_URL.MAIN}>Допомога</Link>
-                    <Link className={style.link} href={PAGES_URL.MAIN}>Про компанію</Link>
+
+                    <Link className={style.link} href={PAGES_URL.HELP}>Допомога</Link>
 
                 </div>
 

@@ -1,6 +1,7 @@
 'use client'
 
 import SessionSchedule from "@/components/SessionSchedule/SessionSchedule"
+import RelatedMovies from "@/components/RelatedMovies/RelatedMovies"
 import styles from './style.module.css'
 import { movieService } from "@/api/movie.service";
 import { IMovie } from "@/types/movie.interface";
@@ -19,6 +20,8 @@ export default function MoviePage({ id }: Props) {
     const router = useRouter()
 
     const handleSessionClick = (session: ISession) => {
+        sessionStorage.removeItem('booking_expiry');
+        sessionStorage.removeItem('last_booking_page');
         router.push(`${PAGES_URL.SEATPLAN}?sessionId=${session.id}`)
     }
 
@@ -123,6 +126,8 @@ export default function MoviePage({ id }: Props) {
                     <SessionSchedule movieId={Number(id)} onSessionClick={handleSessionClick} />
                 </aside>
             </div>
+
+            <RelatedMovies currentMovieId={Number(id)} />
         </div>
     )
 }

@@ -7,11 +7,6 @@
   background-color: var(--background);
 }
 
-.block {
-  border: 1px solid white;
-  width: 200px;
-  height: 200px;
-}
 
 .wrapper {
   width: 100%;

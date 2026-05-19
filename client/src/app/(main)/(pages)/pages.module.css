@@ -5,14 +5,11 @@
     flex-direction: column;
     padding: 10px;
 
-    border: 1px solid white;
-
 
     min-height: calc(100vh - 60px);
 }
 
 .pages {
-    border: 1px solid white;
     max-width: 1300px;
     width: 100%;
 }

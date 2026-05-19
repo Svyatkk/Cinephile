@@ -172,6 +172,7 @@
     padding: 48px 48px 80px;
     display: flex;
     gap: 48px;
+    align-items: flex-start;
 }
 
 .body {
@@ -181,6 +182,9 @@
 .sidebar {
     width: 380px;
     flex-shrink: 0;
+    position: sticky;
+    top: 80px;
+    height: fit-content;
 }
 
 .section {
@@ -297,4 +301,50 @@
 
 .buyBtnLarge:hover {
     background: #ff3b4a;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: auto;
+        padding-top: 20px;
+    }
+
+    .heroContent {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 24px;
+        padding: 30px 16px;
+    }
+
+    .heroMeta {
+        align-items: center;
+        padding-bottom: 0;
+    }
+
+    .title {
+        font-size: 26px;
+    }
+
+    .tagRow {
+        justify-content: center;
+    }
+
+    .mainContent {
+        flex-direction: column;
+        padding: 24px 16px 60px;
+        gap: 36px;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: static;
+    }
+
+    .ctaSection {
+        padding: 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
 }

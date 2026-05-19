@@ -21,6 +21,7 @@ export const PAGES_URL = {
     CHECKOUT: '/checkout',
     CINEMAS: '/cinemas',
     CINEMA: (id: number): string => `/cinemas/${id}`,
-    SOON: '/soon'
+    SOON: '/soon',
+    HELP: '/help'
 
 }
