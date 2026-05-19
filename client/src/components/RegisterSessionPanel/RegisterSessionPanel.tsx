@@ -142,6 +142,7 @@ export default function RegisterSessionPanel() {
 
     const selectedMovie = movies.find(m => m.id === Number(formData.movie_id))
 
+
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>Додати сеанс</h2>
@@ -201,53 +202,62 @@ export default function RegisterSessionPanel() {
                         </button>
                     </div>
 
-                    {hallSlots.map((slot, idx) => (
-                        <div key={slot.id} style={{
-                            display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '10px',
-                            alignItems: 'center', marginBottom: '10px',
-                            background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '12px'
-                        }}>
-                            <select
-                                value={slot.cityId}
-                                onChange={e => updateSlot(slot.id, 'cityId', e.target.value)}
-                                style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
-                            >
-                                <option value="">Місто</option>
-                                {cities.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                            </select>
+                    {hallSlots.map((slot) => {
+                        const usedHallIds = new Set(
+                            hallSlots.filter(s => s.id !== slot.id && s.cinemaId === slot.cinemaId && s.hallId).map(s => s.hallId)
+                        )
+                        const availableHalls = halls
+                            .filter(h => h.cinema_id === Number(slot.cinemaId))
+                            .filter(h => !usedHallIds.has(String(h.id)))
 
-                            <select
-                                value={slot.cinemaId}
-                                onChange={e => updateSlot(slot.id, 'cinemaId', e.target.value)}
-                                disabled={!slot.cityId}
-                                style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
-                            >
-                                <option value="">Кінотеатр</option>
-                                {cinemas.filter(c => c.city_id === Number(slot.cityId)).map(c => (
-                                    <option key={c.id} value={c.id}>{c.name}</option>
-                                ))}
-                            </select>
+                        return (
+                            <div key={slot.id} style={{
+                                display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '10px',
+                                alignItems: 'center', marginBottom: '10px',
+                                background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '12px'
+                            }}>
+                                <select
+                                    value={slot.cityId}
+                                    onChange={e => updateSlot(slot.id, 'cityId', e.target.value)}
+                                    style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
+                                >
+                                    <option value="">Місто</option>
+                                    {cities.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                </select>
 
-                            <select
-                                value={slot.hallId}
-                                onChange={e => updateSlot(slot.id, 'hallId', e.target.value)}
-                                disabled={!slot.cinemaId}
-                                style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
-                            >
-                                <option value="">Зал</option>
-                                {halls.filter(h => h.cinema_id === Number(slot.cinemaId)).map(h => (
-                                    <option key={h.id} value={h.id}>{h.name}</option>
-                                ))}
-                            </select>
+                                <select
+                                    value={slot.cinemaId}
+                                    onChange={e => updateSlot(slot.id, 'cinemaId', e.target.value)}
+                                    disabled={!slot.cityId}
+                                    style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
+                                >
+                                    <option value="">Кінотеатр</option>
+                                    {cinemas.filter(c => c.city_id === Number(slot.cityId)).map(c => (
+                                        <option key={c.id} value={c.id}>{c.name}</option>
+                                    ))}
+                                </select>
 
-                            {hallSlots.length > 1 && (
-                                <button type="button" onClick={() => removeSlot(slot.id)} style={{
-                                    background: 'rgba(220,50,50,0.15)', border: '1px solid rgba(220,50,50,0.3)',
-                                    borderRadius: '6px', color: '#ff6b6b', padding: '8px 12px', cursor: 'pointer', fontSize: '16px'
-                                }}>✕</button>
-                            )}
-                        </div>
-                    ))}
+                                <select
+                                    value={slot.hallId}
+                                    onChange={e => updateSlot(slot.id, 'hallId', e.target.value)}
+                                    disabled={!slot.cinemaId}
+                                    style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
+                                >
+                                    <option value="">Зал</option>
+                                    {availableHalls.map(h => (
+                                        <option key={h.id} value={h.id}>{h.name}</option>
+                                    ))}
+                                </select>
+
+                                {hallSlots.length > 1 && (
+                                    <button type="button" onClick={() => removeSlot(slot.id)} style={{
+                                        background: 'rgba(220,50,50,0.15)', border: '1px solid rgba(220,50,50,0.3)',
+                                        borderRadius: '6px', color: '#ff6b6b', padding: '8px 12px', cursor: 'pointer', fontSize: '16px'
+                                    }}>✕</button>
+                                )}
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <button type="submit" disabled={isLoading} className={styles.submitBtn}>

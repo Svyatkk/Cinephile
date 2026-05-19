@@ -1,12 +1,14 @@
 'use client'
+
 import { useState, useEffect, FormEvent } from 'react'
 import styles from '../RegisterMoviePanel/style.module.css'
 import { hallService } from '@/api/hall.service'
 import { cinemaService } from '@/api/cinema.service'
-import { ICinema } from '@/types/cinema.interface'
+import { ICinema, IHall } from '@/types/cinema.interface'
 
 export default function RegisterHallPanel() {
     const [cinemas, setCinemas] = useState<ICinema[]>([])
+    const [existingHalls, setExistingHalls] = useState<IHall[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState({ type: '', text: '' })
 
@@ -22,8 +24,25 @@ export default function RegisterHallPanel() {
         cinemaService.getAll().then(setCinemas).catch(console.error)
     }, [])
 
+    useEffect(() => {
+        if (!formData.cinema_id) {
+            setExistingHalls([])
+            return
+        }
+        hallService.getAll()
+            .then(all => setExistingHalls(all.filter(h => h.cinema_id === Number(formData.cinema_id))))
+            .catch(console.error)
+    }, [formData.cinema_id])
+
+    const isDuplicateName = formData.name.trim() !== '' &&
+        existingHalls.some(h => h.name.trim().toLowerCase() === formData.name.trim().toLowerCase())
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
+        if (isDuplicateName) {
+            setMessage({ type: 'error', text: `Зал з назвою "${formData.name}" вже існує в цьому кінотеатрі.` })
+            return
+        }
         setIsLoading(true)
         setMessage({ type: '', text: '' })
 
@@ -36,7 +55,8 @@ export default function RegisterHallPanel() {
                 seats_per_row: Number(formData.seats_per_row)
             })
             setMessage({ type: 'success', text: 'Зал успішно створено разом із місцями!' })
-            setFormData({ ...formData, name: '' })
+            setExistingHalls(prev => [...prev, { id: Date.now(), cinema_id: Number(formData.cinema_id), name: formData.name } as IHall])
+            setFormData(prev => ({ ...prev, name: '' }))
         } catch (error: any) {
             setMessage({ type: 'error', text: error.message || 'Помилка при створенні залу' })
         } finally {
@@ -60,7 +80,7 @@ export default function RegisterHallPanel() {
                     <select
                         required
                         value={formData.cinema_id}
-                        onChange={(e) => setFormData({ ...formData, cinema_id: e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, cinema_id: e.target.value, name: '' })}
                     >
                         <option value="">Виберіть кінотеатр</option>
                         {cinemas.map(cinema => (
@@ -68,6 +88,26 @@ export default function RegisterHallPanel() {
                         ))}
                     </select>
                 </div>
+
+                {formData.cinema_id && existingHalls.length > 0 && (
+                    <div className={styles.formGroup}>
+                        <label style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px' }}>
+                            Вже існуючі зали в цьому кінотеатрі:
+                        </label>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {existingHalls.map(h => (
+                                <span key={h.id} style={{
+                                    padding: '4px 10px', borderRadius: '4px', fontSize: '12px',
+                                    background: 'rgba(255,255,255,0.06)',
+                                    border: '1px solid rgba(255,255,255,0.12)',
+                                    color: 'rgba(255,255,255,0.7)'
+                                }}>
+                                    {h.name}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 <div className={styles.formGroup}>
                     <label>Назва залу *</label>
@@ -77,7 +117,13 @@ export default function RegisterHallPanel() {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Зал 1"
+                        style={isDuplicateName ? { borderColor: '#e00' } : undefined}
                     />
+                    {isDuplicateName && (
+                        <span style={{ color: '#ff6b6b', fontSize: '12px', marginTop: '4px', display: 'block' }}>
+                            Зал з такою назвою вже існує в цьому кінотеатрі
+                        </span>
+                    )}
                 </div>
 
                 <div className={styles.formGroup}>
@@ -110,7 +156,7 @@ export default function RegisterHallPanel() {
                     />
                 </div>
 
-                <button type="submit" disabled={isLoading} className={styles.submitBtn}>
+                <button type="submit" disabled={isLoading || isDuplicateName} className={styles.submitBtn}>
                     {isLoading ? 'Збереження...' : 'Додати зал'}
                 </button>
             </form>

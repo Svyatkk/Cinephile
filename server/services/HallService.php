@@ -18,6 +18,13 @@ class HallService {
             $hall->name = $name;
             $hall->technologies = $technologies;
 
+            $checkQuery = "SELECT id FROM halls WHERE LOWER(TRIM(name)) = LOWER(TRIM(:name)) AND cinema_id = :cinema_id";
+            $checkStmt = $this->db->prepare($checkQuery);
+            $checkStmt->execute([':name' => $name, ':cinema_id' => $cinema_id]);
+            if ($checkStmt->rowCount() > 0) {
+                throw new Exception("Зал з такою назвою вже існує в цьому кінотеатрі.");
+            }
+
             if (!$hall->create()) {
                 throw new Exception("Не вдалося створити залу.");
             }

@@ -22,7 +22,6 @@ function getDateTabs() {
     return tabs
 }
 
-
 function isSameDay(a: Date, b: Date) {
     return a.getFullYear() === b.getFullYear() &&
         a.getMonth() === b.getMonth() &&

@@ -6,7 +6,6 @@ import { ISession } from '@/types/session.interface';
 import { IMovie } from '@/types/movie.interface';
 import { sessionService } from '@/api/session.service';
 
-// Мокові дані для прикладу (в реальному додатку отримуються з бекенду)
 const mockHalls: IHall[] = [
     { id: 1, cinema_id: 1, name: 'Зал 1', technologies: '2D' },
     { id: 2, cinema_id: 1, name: 'Зал 2', technologies: '3D' },
@@ -19,12 +18,12 @@ const mockMovies: IMovie[] = [
 ];
 
 interface Props {
-    movieId?: number; // Якщо передається, то сеанс реєструється саме для цього фільму
+    movieId?: number;
     onSessionCreated?: (session: ISession) => void;
 }
 
 export default function RegisterSessionMovie({ movieId, onSessionCreated }: Props) {
-    
+
     const [selectedMovie, setSelectedMovie] = useState<number | ''>(movieId || '');
     const [selectedHall, setSelectedHall] = useState<number | ''>('');
     const [date, setDate] = useState<string>('');
@@ -33,18 +32,17 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
     const [basePrice, setBasePrice] = useState<number | ''>('');
     const [format, setFormat] = useState<string>('2D');
     const [languageTag, setLanguageTag] = useState<string>('UA');
-    
+
     const [error, setError] = useState<string>('');
     const [success, setSuccess] = useState<boolean>(false);
 
-    // Автоматичний розрахунок end_time на основі тривалості фільму
     useEffect(() => {
         if (selectedMovie && startTime && date) {
             const movie = mockMovies.find(m => m.id === Number(selectedMovie));
             if (movie && movie.duration_minutes) {
                 const startDateTime = new Date(`${date}T${startTime}`);
                 const endDateTime = new Date(startDateTime.getTime() + movie.duration_minutes * 60000);
-                
+
                 const endHours = String(endDateTime.getHours()).padStart(2, '0');
                 const endMinutes = String(endDateTime.getMinutes()).padStart(2, '0');
                 setEndTime(`${endHours}:${endMinutes}`);
@@ -81,7 +79,7 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
             if (onSessionCreated) {
                 onSessionCreated(newSession);
             }
-            // Очищення форми
+
             setStartTime('');
             setEndTime('');
             setBasePrice('');
@@ -93,16 +91,16 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
     return (
         <div className={style.container}>
             <h2 className={style.title}>Створення нового сеансу</h2>
-            
+
             {error && <div className={style.error}>{error}</div>}
             {success && <div className={style.success}>Сеанс успішно створено!</div>}
-            
+
             <form onSubmit={handleSubmit} className={style.form}>
                 {!movieId && (
                     <div className={style.formGroup}>
                         <label>Фільм</label>
-                        <select 
-                            value={selectedMovie} 
+                        <select
+                            value={selectedMovie}
                             onChange={(e) => setSelectedMovie(Number(e.target.value))}
                             className={style.input}
                         >
@@ -117,8 +115,8 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
                 <div className={style.row}>
                     <div className={style.formGroup}>
                         <label>Зала</label>
-                        <select 
-                            value={selectedHall} 
+                        <select
+                            value={selectedHall}
                             onChange={(e) => setSelectedHall(Number(e.target.value))}
                             className={style.input}
                         >
@@ -131,9 +129,9 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
 
                     <div className={style.formGroup}>
                         <label>Дата</label>
-                        <input 
-                            type="date" 
-                            value={date} 
+                        <input
+                            type="date"
+                            value={date}
                             onChange={(e) => setDate(e.target.value)}
                             className={style.input}
                         />
@@ -143,9 +141,9 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
                 <div className={style.row}>
                     <div className={style.formGroup}>
                         <label>Час початку</label>
-                        <input 
-                            type="time" 
-                            value={startTime} 
+                        <input
+                            type="time"
+                            value={startTime}
                             onChange={(e) => setStartTime(e.target.value)}
                             className={style.input}
                         />
@@ -153,9 +151,9 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
 
                     <div className={style.formGroup}>
                         <label>Час закінчення</label>
-                        <input 
-                            type="time" 
-                            value={endTime} 
+                        <input
+                            type="time"
+                            value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}
                             className={style.input}
                         />
@@ -165,9 +163,9 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
                 <div className={style.row}>
                     <div className={style.formGroup}>
                         <label>Базова ціна (грн)</label>
-                        <input 
-                            type="number" 
-                            value={basePrice} 
+                        <input
+                            type="number"
+                            value={basePrice}
                             onChange={(e) => setBasePrice(e.target.value === '' ? '' : Number(e.target.value))}
                             className={style.input}
                             min="0"
@@ -176,8 +174,8 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
 
                     <div className={style.formGroup}>
                         <label>Формат</label>
-                        <select 
-                            value={format} 
+                        <select
+                            value={format}
                             onChange={(e) => setFormat(e.target.value)}
                             className={style.input}
                         >
@@ -189,8 +187,8 @@ export default function RegisterSessionMovie({ movieId, onSessionCreated }: Prop
 
                     <div className={style.formGroup}>
                         <label>Мова</label>
-                        <select 
-                            value={languageTag} 
+                        <select
+                            value={languageTag}
                             onChange={(e) => setLanguageTag(e.target.value)}
                             className={style.input}
                         >

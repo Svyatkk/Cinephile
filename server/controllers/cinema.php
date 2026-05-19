@@ -6,6 +6,15 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'POST') {
     if (!empty($data->name) && !empty($data->city_id) && !empty($data->address)) {
+        $checkQuery = "SELECT id FROM cinemas WHERE LOWER(TRIM(name)) = LOWER(TRIM(:name)) AND city_id = :city_id";
+        $checkStmt = $db->prepare($checkQuery);
+        $checkStmt->execute([':name' => $data->name, ':city_id' => $data->city_id]);
+        if ($checkStmt->rowCount() > 0) {
+            http_response_code(400);
+            echo json_encode(["message" => "Кінотеатр з такою назвою вже існує в цьому місті."]);
+            exit;
+        }
+
         $cinema = new Cinema($db);
         $cinema->name = $data->name;
         $cinema->city_id = $data->city_id;
