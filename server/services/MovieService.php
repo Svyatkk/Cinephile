@@ -39,7 +39,7 @@ class MovieService {
             ];
         }
     }
-
+    
     public function getAll(?int $cinema_id = null): array {
         try {
             if ($cinema_id) {

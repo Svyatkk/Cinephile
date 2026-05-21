@@ -8,6 +8,7 @@ import { ISeat } from '../../../types/seat.interface'
 import { orderService } from '@/api/order.service';
 import { ISession } from '@/types/session.interface';
 import SeatsGrid from '@/components/SeatsGrid/SeatsGrid';
+import { PAGES_URL } from '@/api/config';
 
 export default function SeatPlanPage() {
     const searchParams = useSearchParams();
@@ -27,10 +28,9 @@ export default function SeatPlanPage() {
             setLoading(false);
             return;
         }
-
         Promise.all([
             sessionService.getById(Number(sessionId)),
-            seatService.getForSession(Number(sessionId))
+            seatService.getForSession(Number(sessionId))// дістаємо мапу зали
         ]).then(([sessionData, seatsData]) => {
             setSession(sessionData);
             setSeats(seatsData);
@@ -59,7 +59,7 @@ export default function SeatPlanPage() {
         const userStr = localStorage.getItem('user');
         if (!userStr) {
             alert('Будь ласка, увійдіть у систему для вибору місць');
-            router.push('/auth');
+            router.push(PAGES_URL.AUTH);
             return;
         }
 

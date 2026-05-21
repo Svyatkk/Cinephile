@@ -9,6 +9,7 @@ class HallService {
         $this->db = $db;
     }
 
+    
     public function createHallWithSeats(int $cinema_id, string $name, string $technologies, int $rows_count, int $seats_per_row): array {
         try {
             $this->db->beginTransaction();

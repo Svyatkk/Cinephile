@@ -14,6 +14,7 @@ type Props = {
     cinemaId?: number;
 };
 
+
 export default function MainSwiper({ movies, cityId, cinemaId }: Props) {
     return (
         <div className={styles.wrapper}>

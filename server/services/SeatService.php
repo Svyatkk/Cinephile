@@ -28,6 +28,11 @@ class SeatService {
             WHERE s.hall_id = :hall_id
             ORDER BY s.row_num ASC, s.seat_num ASC
         ";
+
+//         за допомогою LEFT JOIN підглядає у дві інші таблиці:
+// Чи є це місце в таблиці tickets? (Якщо так -> статус bought).
+// Чи є це місце в таблиці cart_locks з живим таймером? (Якщо так -> статус locked).
+// Якщо ні там, ні там немає -> статус free.
         
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':session_id', $session_id);

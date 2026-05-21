@@ -12,6 +12,7 @@ export default function RegisterHallPanel() {
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState({ type: '', text: '' })
 
+
     const [formData, setFormData] = useState({
         cinema_id: '',
         name: '',

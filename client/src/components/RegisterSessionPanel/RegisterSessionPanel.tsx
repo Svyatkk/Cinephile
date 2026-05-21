@@ -55,6 +55,7 @@ export default function RegisterSessionPanel() {
             hallService.getAll(),
         ]).then(([m, ci, cn, h]) => {
             setMovies(m)
+
             setCities(ci)
             setCinemas(cn)
             setHalls(h)
@@ -144,141 +145,143 @@ export default function RegisterSessionPanel() {
 
 
     return (
-        <div className={styles.container}>
-            <h2 className={styles.title}>Додати сеанс</h2>
+        <div style={{ display: 'flex', gap: '40px', alignItems: 'flex-start', width: '100%', justifyContent: 'center' }}>
+            <div className={styles.container} style={{ flex: '1', maxWidth: '800px', margin: 0 }}>
+                <h2 className={styles.title}>Додати сеанс</h2>
 
-            <form onSubmit={handleSubmit} className={styles.form}>
-                <div className={styles.formGroup}>
-                    <label>Фільм *</label>
-                    <select required name="movie_id" value={formData.movie_id} onChange={handleChange}>
-                        <option value="">Виберіть фільм</option>
-                        {movies.map(m => (
-                            <option key={m.id} value={m.id}>{m.title}</option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className={styles.formGroup}>
-                    <label>Початок *</label>
-                    <input required type="datetime-local" name="start_time" value={formData.start_time} onChange={handleChange} />
-                </div>
-
-                <div className={styles.formGroup}>
-                    <label>Кінець *</label>
-                    <input required type="datetime-local" name="end_time" value={formData.end_time} onChange={handleChange} />
-                </div>
-
-                <div className={styles.formGroup}>
-                    <label>Ціна (базова) *</label>
-                    <input required type="number" name="base_price" value={formData.base_price} onChange={handleChange} placeholder="150" />
-                </div>
-
-                <div className={styles.formGroup}>
-                    <label>Формат</label>
-                    <select name="format" value={formData.format} onChange={handleChange}>
-                        <option value="2D">2D</option>
-                        <option value="3D">3D</option>
-                        <option value="IMAX">IMAX</option>
-                    </select>
-                </div>
-
-                <div className={styles.formGroup}>
-                    <label>Мова</label>
-                    <select name="language_tag" value={formData.language_tag} onChange={handleChange}>
-                        <option value="UA">UA (Дубляж)</option>
-                        <option value="EN">EN (Original)</option>
-                        <option value="UA-Sub">UA (Субтитри)</option>
-                    </select>
-                </div>
-
-                <div style={{ margin: '24px 0 8px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                        <label style={{ fontSize: '14px', fontWeight: 600 }}>Зали показу *</label>
-                        <button type="button" onClick={addSlot} style={{
-                            background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.15)',
-                            borderRadius: '6px', color: '#fff', padding: '6px 14px', cursor: 'pointer', fontSize: '13px'
-                        }}>
-                            + Додати зал
-                        </button>
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label>Фільм *</label>
+                        <select required name="movie_id" value={formData.movie_id} onChange={handleChange}>
+                            <option value="">Виберіть фільм</option>
+                            {movies.map(m => (
+                                <option key={m.id} value={m.id}>{m.title}</option>
+                            ))}
+                        </select>
                     </div>
 
-                    {hallSlots.map((slot) => {
-                        const usedHallIds = new Set(
-                            hallSlots.filter(s => s.id !== slot.id && s.cinemaId === slot.cinemaId && s.hallId).map(s => s.hallId)
-                        )
-                        const availableHalls = halls
-                            .filter(h => h.cinema_id === Number(slot.cinemaId))
-                            .filter(h => !usedHallIds.has(String(h.id)))
+                    <div className={styles.formGroup}>
+                        <label>Початок *</label>
+                        <input required type="datetime-local" name="start_time" value={formData.start_time} onChange={handleChange} />
+                    </div>
 
-                        return (
-                            <div key={slot.id} style={{
-                                display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '10px',
-                                alignItems: 'center', marginBottom: '10px',
-                                background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '12px'
+                    <div className={styles.formGroup}>
+                        <label>Кінець *</label>
+                        <input required type="datetime-local" name="end_time" value={formData.end_time} onChange={handleChange} />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label>Ціна (базова) *</label>
+                        <input required type="number" name="base_price" value={formData.base_price} onChange={handleChange} placeholder="150" />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label>Формат</label>
+                        <select name="format" value={formData.format} onChange={handleChange}>
+                            <option value="2D">2D</option>
+                            <option value="3D">3D</option>
+                            <option value="IMAX">IMAX</option>
+                        </select>
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label>Мова</label>
+                        <select name="language_tag" value={formData.language_tag} onChange={handleChange}>
+                            <option value="UA">UA (Дубляж)</option>
+                            <option value="EN">EN (Original)</option>
+                            <option value="UA-Sub">UA (Субтитри)</option>
+                        </select>
+                    </div>
+
+                    <div style={{ margin: '24px 0 8px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                            <label style={{ fontSize: '14px', fontWeight: 600 }}>Зали показу *</label>
+                            <button type="button" onClick={addSlot} style={{
+                                background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.15)',
+                                borderRadius: '6px', color: '#fff', padding: '6px 14px', cursor: 'pointer', fontSize: '13px'
                             }}>
-                                <select
-                                    value={slot.cityId}
-                                    onChange={e => updateSlot(slot.id, 'cityId', e.target.value)}
-                                    style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
-                                >
-                                    <option value="">Місто</option>
-                                    {cities.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                                </select>
-
-                                <select
-                                    value={slot.cinemaId}
-                                    onChange={e => updateSlot(slot.id, 'cinemaId', e.target.value)}
-                                    disabled={!slot.cityId}
-                                    style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
-                                >
-                                    <option value="">Кінотеатр</option>
-                                    {cinemas.filter(c => c.city_id === Number(slot.cityId)).map(c => (
-                                        <option key={c.id} value={c.id}>{c.name}</option>
-                                    ))}
-                                </select>
-
-                                <select
-                                    value={slot.hallId}
-                                    onChange={e => updateSlot(slot.id, 'hallId', e.target.value)}
-                                    disabled={!slot.cinemaId}
-                                    style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
-                                >
-                                    <option value="">Зал</option>
-                                    {availableHalls.map(h => (
-                                        <option key={h.id} value={h.id}>{h.name}</option>
-                                    ))}
-                                </select>
-
-                                {hallSlots.length > 1 && (
-                                    <button type="button" onClick={() => removeSlot(slot.id)} style={{
-                                        background: 'rgba(220,50,50,0.15)', border: '1px solid rgba(220,50,50,0.3)',
-                                        borderRadius: '6px', color: '#ff6b6b', padding: '8px 12px', cursor: 'pointer', fontSize: '16px'
-                                    }}>✕</button>
-                                )}
-                            </div>
-                        )
-                    })}
-                </div>
-
-                <button type="submit" disabled={isLoading} className={styles.submitBtn}>
-                    {isLoading ? 'Збереження...' : `Створити сеанс (${hallSlots.filter(s => s.hallId).length} ${hallSlots.filter(s => s.hallId).length === 1 ? 'зал' : 'зали'})`}
-                </button>
-            </form>
-
-            {results.length > 0 && (
-                <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {results.map((r, i) => (
-                        <div key={i} style={{
-                            padding: '10px 14px', borderRadius: '8px', fontSize: '13px',
-                            background: r.status === 'ok' ? 'rgba(50,200,80,0.1)' : 'rgba(220,50,50,0.1)',
-                            border: `1px solid ${r.status === 'ok' ? 'rgba(50,200,80,0.3)' : 'rgba(220,50,50,0.3)'}`,
-                            color: r.status === 'ok' ? '#5eff8a' : '#ff6b6b',
-                        }}>
-                            {r.status === 'ok' ? '✓' : '✗'} <strong>{r.hallName}</strong> — {r.message}
+                                + Додати зал
+                            </button>
                         </div>
-                    ))}
-                </div>
-            )}
+
+                        {hallSlots.map((slot) => {
+                            const usedHallIds = new Set(
+                                hallSlots.filter(s => s.id !== slot.id && s.cinemaId === slot.cinemaId && s.hallId).map(s => s.hallId)
+                            )
+                            const availableHalls = halls
+                                .filter(h => h.cinema_id === Number(slot.cinemaId))
+                                .filter(h => !usedHallIds.has(String(h.id)))
+
+                            return (
+                                <div key={slot.id} style={{
+                                    display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '10px',
+                                    alignItems: 'center', marginBottom: '10px',
+                                    background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '12px'
+                                }}>
+                                    <select
+                                        value={slot.cityId}
+                                        onChange={e => updateSlot(slot.id, 'cityId', e.target.value)}
+                                        style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
+                                    >
+                                        <option value="">МіМісто</option>
+                                        {cities.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                    </select>
+
+                                    <select
+                                        value={slot.cinemaId}
+                                        onChange={e => updateSlot(slot.id, 'cinemaId', e.target.value)}
+                                        disabled={!slot.cityId}
+                                        style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
+                                    >
+                                        <option value="">Кінотеатр</option>
+                                        {cinemas.filter(c => c.city_id === Number(slot.cityId)).map(c => (
+                                            <option key={c.id} value={c.id}>{c.name}</option>
+                                        ))}
+                                    </select>
+
+                                    <select
+                                        value={slot.hallId}
+                                        onChange={e => updateSlot(slot.id, 'hallId', e.target.value)}
+                                        disabled={!slot.cinemaId}
+                                        style={{ background: '#1a1a1a', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '8px' }}
+                                    >
+                                        <option value="">Зал</option>
+                                        {availableHalls.map(h => (
+                                            <option key={h.id} value={h.id}>{h.name}</option>
+                                        ))}
+                                    </select>
+
+                                    {hallSlots.length > 1 && (
+                                        <button type="button" onClick={() => removeSlot(slot.id)} style={{
+                                            background: 'rgba(220,50,50,0.15)', border: '1px solid rgba(220,50,50,0.3)',
+                                            borderRadius: '6px', color: '#ff6b6b', padding: '8px 12px', cursor: 'pointer', fontSize: '16px'
+                                        }}>✕</button>
+                                    )}
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                    <button type="submit" disabled={isLoading} className={styles.submitBtn}>
+                        {isLoading ? 'Збереження...' : `Створити сеанс (${hallSlots.filter(s => s.hallId).length} ${hallSlots.filter(s => s.hallId).length === 1 ? 'зал' : 'зали'})`}
+                    </button>
+                </form>
+
+                {results.length > 0 && (
+                    <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {results.map((r, i) => (
+                            <div key={i} style={{
+                                padding: '10px 14px', borderRadius: '8px', fontSize: '13px',
+                                background: r.status === 'ok' ? 'rgba(50,200,80,0.1)' : 'rgba(220,50,50,0.1)',
+                                border: `1px solid ${r.status === 'ok' ? 'rgba(50,200,80,0.3)' : 'rgba(220,50,50,0.3)'}`,
+                                color: r.status === 'ok' ? '#5eff8a' : '#ff6b6b',
+                            }}>
+                                {r.status === 'ok' ? '✓' : '✗'} <strong>{r.hallName}</strong> — {r.message}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
 
             {selectedMovie && (() => {
                 const uniqueCinemaIds = [...new Set(
@@ -286,10 +289,20 @@ export default function RegisterSessionPanel() {
                 )]
                 if (!uniqueCinemaIds.length) return null
                 return (
-                    <div style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                    <div style={{
+                        flex: '1',
+                        maxWidth: '500px',
+                        background: 'rgba(255,255,255,0.03)',
+                        backdropFilter: 'blur(10px)',
+                        padding: '24px',
+                        borderRadius: '16px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '32px',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)'
+                    }}>
                         <div style={{
-                            borderTop: '1px solid rgba(255,255,255,0.1)',
-                            paddingTop: '20px',
                             fontSize: '14px',
                             fontWeight: 600,
                             color: 'rgba(255,255,255,0.5)',
@@ -315,6 +328,7 @@ export default function RegisterSessionPanel() {
                                     <SessionSchedule
                                         movieId={Number(formData.movie_id)}
                                         cinemaId={cinemaId}
+                                        isAdmin={true}
                                     />
                                 </div>
                             )

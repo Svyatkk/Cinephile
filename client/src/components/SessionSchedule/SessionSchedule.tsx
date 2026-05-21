@@ -10,6 +10,7 @@ type Props = {
     cityId?: number;
     cinemaId?: number;
     inTheMovieBlock?: boolean;
+    isAdmin?: boolean;
     onSessionClick?: (session: ISession) => void;
 }
 
@@ -22,7 +23,7 @@ function formatDate(dateStr: string) {
     return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]}`
 }
 
-export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieBlock, onSessionClick }: Props) {
+export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieBlock, isAdmin, onSessionClick }: Props) {
     const [sessions, setSessions] = useState<ISession[]>([])
     const [selectedDate, setSelectedDate] = useState<string>('')
     const [dates, setDates] = useState<string[]>([])
@@ -30,7 +31,6 @@ export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieB
     useEffect(() => {
         sessionService.getByMovieId(movieId).then(data => {
             let filtered = data;
-
             if (cinemaId) {
                 filtered = filtered.filter(s => Number(s.cinema_id) === cinemaId);
             } else if (cityId) {
@@ -98,10 +98,15 @@ export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieB
                                                 key={s.id}
                                                 className={styles.timeItem}
                                                 onClick={() => onSessionClick && onSessionClick(s)}
-                                                style={{ cursor: onSessionClick ? 'pointer' : 'default' }}
+                                                style={{ cursor: onSessionClick ? 'pointer' : 'default', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                                             >
                                                 <span className={styles.time}>{s.start_time.split(' ')[1].substring(0, 5)}</span>
                                                 <span className={styles.price}>{Math.round(s.base_price)} грн</span>
+                                                {isAdmin && s.hall_name && (
+                                                    <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', marginTop: '2px', textAlign: 'center' }}>
+                                                        {s.hall_name}
+                                                    </span>
+                                                )}
                                             </div>
                                         ))}
                                     </div>

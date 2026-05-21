@@ -12,6 +12,7 @@ type Props = {
     id: string
 }
 
+
 function getDateTabs() {
     const tabs: Date[] = []
     for (let i = 0; i < 7; i++) {
@@ -48,7 +49,6 @@ export default function CinemaPage({ id }: Props) {
         cinemaService.getById(id)
             .then(data => setCinema(data))
             .catch(() => { })
-
         sessionService.getByCinemaId(id)
             .then(data => setSessions(data))
             .catch(err => console.log(err))

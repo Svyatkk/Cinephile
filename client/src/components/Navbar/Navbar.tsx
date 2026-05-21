@@ -46,10 +46,9 @@ export default function NavBar() {
             setUser(JSON.parse(storedUser));
         }
     }, [])
-
-
     return (
         <>
+
             <nav className={styles.nav}>
 
                 <div className={styles.firstBlock}>
@@ -152,8 +151,6 @@ export default function NavBar() {
                     active={activePanelCities}
                     cities={cities}
                 ></PanelCities>
-
-
 
             </nav >
         </>

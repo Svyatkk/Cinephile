@@ -22,6 +22,7 @@ export const hallService = {
             const error = await response.json();
             throw new Error(error.message || "Помилка при створенні залу");
         }
+            
         return response.json();
     }
 

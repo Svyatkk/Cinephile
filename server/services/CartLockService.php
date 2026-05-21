@@ -11,9 +11,12 @@ class CartLockService {
     public function lockSeats(int $user_id, int $session_id, array $seat_ids): array {
         try {
             $this->db->beginTransaction();
-
+    
+    
+                
             $this->db->exec("DELETE FROM cart_locks WHERE expires_at <= NOW()");
 
+            
             foreach ($seat_ids as $seat_id) {
                 $checkTicketsQuery = "
                     SELECT id 
@@ -43,11 +46,13 @@ class CartLockService {
                 }
             }
 
+
             $deleteLocksQuery = "
                 DELETE FROM cart_locks 
                 WHERE session_id = :session_id AND user_id = :user_id
             ";
             $deleteLocksStmt = $this->db->prepare($deleteLocksQuery);
+
             $deleteLocksStmt->execute([':session_id' => $session_id, ':user_id' => $user_id]);
 
             $cartLock = new CartLock($this->db);

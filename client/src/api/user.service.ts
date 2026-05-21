@@ -12,7 +12,7 @@ export const userService = {
         if (!response.ok) {
             const errorText = await response.text();
             console.error('Помилка від бекенду:', errorText);
-            throw new Error(`Помилка запиту: ${response.status}`);
+            throw new Error(response.status === 400 || response.status === 401 ? 'Неправильний логін або пароль' : `Помилка запиту: ${response.status}`);
         }
 
         return response.json()

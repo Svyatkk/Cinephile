@@ -4,8 +4,7 @@ export interface ITicket {
     seat_id: number;
     barcode: string;
     price: number;
-    
-    // Joined fields from DB
+
     movie_title: string;
     cinema_name: string;
     hall_name: string;
@@ -20,7 +19,6 @@ export interface IOrder {
     total_amount: number;
     status: string;
     created_at: string;
-    
-    // Relations
+
     tickets?: ITicket[];
 }

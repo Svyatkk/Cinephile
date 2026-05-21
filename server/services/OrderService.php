@@ -15,6 +15,7 @@ class OrderService {
 
             $this->db->exec("DELETE FROM cart_locks WHERE expires_at <= NOW()");
 
+
             foreach ($seat_ids as $seat_id) {
                 $checkLockQuery = "
                     SELECT id 
@@ -29,23 +30,27 @@ class OrderService {
                 if (!$checkLockStmt->fetch()) {
                     throw new Exception("Термін бронювання місць минув або місця не були заброньовані.");
                 }
+             
             }
+
 
             $order = new Order($this->db);
             $order->user_id = $user_id;
             $order->total_amount = $total_amount;
             $order->status = 'paid';
+
             
             if (!$order->create()) {
                 throw new Exception("Не вдалося створити замовлення");
             }
             $order_id = $order->id;
-
             $sessionQuery = "
                 SELECT base_price 
                 FROM sessions 
                 WHERE id = :session_id
             ";
+         
+
             $sessionStmt = $this->db->prepare($sessionQuery);
             $sessionStmt->execute([':session_id' => $session_id]);
             $session_data = $sessionStmt->fetch(PDO::FETCH_ASSOC);
@@ -69,6 +74,7 @@ class OrderService {
                 DELETE FROM cart_locks 
                 WHERE session_id = :session_id AND user_id = :user_id
             ";
+      
             $deleteLockStmt = $this->db->prepare($deleteLockQuery);
             $deleteLockStmt->execute([':session_id' => $session_id, ':user_id' => $user_id]);
 
@@ -118,7 +124,7 @@ class OrderService {
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
-
+    
     public function getOrdersWithTickets(int $user_id): array {
         $orderModel = new Order($this->db);
         $orderModel->user_id = $user_id;

@@ -20,7 +20,6 @@ export default function SideBar({ active }: Props) {
             setUser(true)
         }
     }, [])
-
     const handleLogout = (e: MouseEvent) => {
         e.preventDefault();
         localStorage.removeItem('user');

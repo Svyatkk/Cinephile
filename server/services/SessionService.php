@@ -14,7 +14,7 @@ class SessionService {
         if ($session->checkOverlap($hall_id, $start_time, $end_time)) {
             return ["success" => false, "message" => "У цій залі вже є сеанс у вибраний час."];
         }
-
+    
         $session->movie_id = $movie_id;
         $session->hall_id = $hall_id;
         $session->start_time = $start_time;

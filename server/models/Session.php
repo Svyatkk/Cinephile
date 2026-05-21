@@ -58,7 +58,7 @@ class Session {
         $stmt->bindParam(':end_time', $end_time);
         $stmt->execute();
         
-
+            
         if ($stmt->rowCount() > 0) {
             return true; 
         }

@@ -1,7 +1,7 @@
 import styles from './style.module.css';
 import Seat from '../Seat/Seat';
-import { ISeat } from '@/api/seat.service';
-
+import { seatService } from '@/api/seat.service';
+import { ISeat } from '@/types/seat.interface';
 interface SeatsGridProps {
     seats: ISeat[];
     selectedSeatIds: number[];
