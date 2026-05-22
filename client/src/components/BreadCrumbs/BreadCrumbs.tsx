@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import { PAGES_URL } from '@/api/config'
+import { orderService } from '@/api/order.service'
 type Props = {
     arr?: {
         name: string,
         link: string
     }[]
 }
-
 
 export default function BreadCrumbs({ ...arr }: Props) {
     const pathname = usePathname();
@@ -24,6 +25,20 @@ export default function BreadCrumbs({ ...arr }: Props) {
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const isSuccessPage = pathname.includes('order-success');
 
+
+    const handleUnlockAndNavigate = async (destination: string) => {
+        sessionStorage.removeItem('booking_expiry');
+        sessionStorage.removeItem('last_booking_page');
+        const sessionId = searchParams.get('sessionId');
+        if (sessionId && pathname.includes('checkout')) {
+            try {
+                await orderService.unlockSeats(Number(sessionId));
+            } catch (e) {
+            }
+        }
+        router.push(destination);
+    };
+
     useEffect(() => {
         if (isSuccessPage) {
             sessionStorage.removeItem('booking_expiry');
@@ -34,7 +49,7 @@ export default function BreadCrumbs({ ...arr }: Props) {
         let expiryTime: number;
 
         if (!expiryStr) {
-            expiryTime = Date.now() + 10 * 60 * 1000;
+            expiryTime = Date.now() + 15 * 60 * 1000;
             sessionStorage.setItem('booking_expiry', String(expiryTime));
         } else {
             expiryTime = Number(expiryStr);
@@ -49,7 +64,7 @@ export default function BreadCrumbs({ ...arr }: Props) {
                 clearInterval(interval);
                 sessionStorage.removeItem('booking_expiry');
                 alert('Час сесії бронювання вичерпано. Будь ласка, оберіть місця знову.');
-                router.push('/');
+                router.push(PAGES_URL.MAIN);
             }
         };
 
@@ -67,14 +82,9 @@ export default function BreadCrumbs({ ...arr }: Props) {
 
     return (
         <section className={styles.breadCrumbs}>
-            <div className={styles.logoBox} onClick={() => {
-                sessionStorage.removeItem('booking_expiry');
-                sessionStorage.removeItem('last_booking_page');
-                router.push('/');
-            }}>
+            <div className={styles.logoBox} onClick={() => handleUnlockAndNavigate(PAGES_URL.MAIN)}>
                 Cinephile
             </div>
-
 
             <div className={styles.linksContainer}>
                 {arr.arr?.map((link, index) => {
@@ -87,19 +97,23 @@ export default function BreadCrumbs({ ...arr }: Props) {
 
                     return (
                         <div className={styles.linkItem} key={index}>
-                            {isDisabled ? (
+                            {pathname.includes('checkout') && link.link.includes(PAGES_URL.SEATPLAN) ? (
+                                <span
+                                    className={`${styles.link} ${isActive ? styles.linkActive : styles.linkInactive}`}
+                                    onClick={() => handleUnlockAndNavigate(`${link.link}${searchSuffix}`)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {link.name}
+                                </span>
+                            ) : isDisabled ? (
                                 <span className={`${styles.link} ${styles.linkInactive} ${styles.linkDisabled}`}>
                                     {link.name} {isLast && <span className={styles.emojis}>😉 🤟</span>}
                                 </span>
                             ) : (
-                                <Link
-                                    href={`${link.link}${searchSuffix}`}
-                                    className={`${styles.link} ${isActive ? styles.linkActive : styles.linkInactive}`}
-                                >
+                                <Link href={`${link.link}${searchSuffix}`} className={`${styles.link} ${isActive ? styles.linkActive : styles.linkInactive}`}>
                                     {link.name} {isLast && <span className={styles.emojis}>😉 🤟</span>}
                                 </Link>
                             )}
-                            {!isLast && <span className={styles.separator}>&gt;</span>}
                         </div>
                     )
                 })}

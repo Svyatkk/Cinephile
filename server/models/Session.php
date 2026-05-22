@@ -38,7 +38,7 @@ class Session {
         $stmt->bindParam(':base_price', $this->base_price);
         $stmt->bindParam(':format', $this->format);
         $stmt->bindParam(':language_tag', $this->language_tag);
-
+            
         if ($stmt->execute()) {
             return true;
         }

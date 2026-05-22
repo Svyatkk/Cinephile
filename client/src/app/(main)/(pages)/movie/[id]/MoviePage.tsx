@@ -25,7 +25,6 @@ export default function MoviePage({ id }: Props) {
         router.push(`${PAGES_URL.SEATPLAN}?sessionId=${session.id}`)
     }
 
-    
     useEffect(() => {
         movieService.getById(id).then(res => {
             setMovie(res)
@@ -148,23 +147,14 @@ function MovieSkeleton() {
                 <div className={styles.heroContent}>
                     <div className={styles.posterPlaceholder} />
                     <div className={styles.heroMeta}>
-                        <div style={skeletonBlock(200, 16)} />
-                        <div style={{ ...skeletonBlock(320, 40), marginTop: 12 }} />
-                        <div style={{ ...skeletonBlock(200, 20), marginTop: 12 }} />
+                        <div className={`${styles.skeleton} ${styles.skeletonMeta1}`} />
+                        <div className={`${styles.skeleton} ${styles.skeletonTitle}`} />
+                        <div className={`${styles.skeleton} ${styles.skeletonMeta2}`} />
                     </div>
                 </div>
             </div>
         </div>
     )
-}
-
-function skeletonBlock(w: number, h: number) {
-    return {
-        width: w, height: h,
-        borderRadius: 6,
-        background: '#222',
-        animation: 'pulse 1.5s infinite ease-in-out',
-    }
 }
 
 function formatDuration(mins: number) {

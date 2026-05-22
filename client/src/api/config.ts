@@ -22,4 +22,3 @@ export const PAGES_URL = {
     SOON: '/soon',
     HELP: '/help'
 }
-

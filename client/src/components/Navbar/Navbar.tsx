@@ -25,7 +25,6 @@ export default function NavBar() {
     const [chosenCity, setchosenCity] = useState<ICity | null>(null)
     const [chosenCiname, setchosenCiname] = useState<ICinema | null>(null)
 
-
     useEffect(() => {
         const fetchCities = async () => {
             const response = await fetch(`${BASE_URL}/city`);
@@ -46,6 +45,8 @@ export default function NavBar() {
             setUser(JSON.parse(storedUser));
         }
     }, [])
+
+
     return (
         <>
 
@@ -144,6 +145,7 @@ export default function NavBar() {
                         setActivePanelCities(false);
                         window.dispatchEvent(new Event('cinemaChanged'));
                     }}
+
                     setChosenCity={(city) => {
                         setchosenCity(city);
                         localStorage.setItem('chosenCity', JSON.stringify(city));

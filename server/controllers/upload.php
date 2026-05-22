@@ -1,5 +1,4 @@
 <?php
-// controllers/upload.php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['poster']) && $_FILES['poster']['error'] === UPLOAD_ERR_OK) {

@@ -14,7 +14,7 @@ class SessionService {
         if ($session->checkOverlap($hall_id, $start_time, $end_time)) {
             return ["success" => false, "message" => "У цій залі вже є сеанс у вибраний час."];
         }
-    
+
         $session->movie_id = $movie_id;
         $session->hall_id = $hall_id;
         $session->start_time = $start_time;
@@ -41,7 +41,7 @@ class SessionService {
               AND s.start_time >= NOW()
             ORDER BY s.start_time ASC
         ";
-        
+            
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':movie_id', $movie_id);
         $stmt->execute();

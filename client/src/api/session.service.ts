@@ -2,6 +2,7 @@ import { fetchOptions, BASE_URL } from "./config";
 import { ISession } from "@/types/session.interface";
 
 export const sessionService = {
+
     async create(payload: ISession) {
         const response = await fetch(`${BASE_URL}/sessions`, {
             method: "POST",
@@ -42,6 +43,7 @@ export const sessionService = {
 
         return response.json();
     },
+
 
     async getByCinemaId(cinemaId: string): Promise<ISession[]> {
         const response = await fetch(`${BASE_URL}/sessions?cinema_id=${cinemaId}`, {

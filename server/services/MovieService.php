@@ -105,13 +105,6 @@ class MovieService {
             ];
         }
     }
-
-    // public functoin getSesionsMovie($name) {
-    //     $movie = new Movie($this->db);
-    
-            
-
-    // }
         
 }
 ?>

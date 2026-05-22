@@ -17,6 +17,33 @@ export const userService = {
 
         return response.json()
 
+    },
+
+    async getCurrentUser() {
+        const response = await fetch(`${BASE_URL}/auth`, {
+            method: "GET",
+            ...fetchOptions
+        });
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const data = await response.json();
+        return data.success ? data.user : null;
+    },
+
+    async logout() {
+        const response = await fetch(`${BASE_URL}/auth`, {
+            method: "DELETE",
+            ...fetchOptions
+        });
+
+        if (!response.ok) {
+            throw new Error('Помилка при виході');
+        }
+
+        return response.json();
     }
 
 }

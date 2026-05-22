@@ -2,10 +2,14 @@
 ini_set('display_errors', 0);
 error_reporting(E_ERROR);
 
-header("Access-Control-Allow-Origin: *");
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
+header("Access-Control-Allow-Origin: $origin");
+header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
@@ -13,14 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 
+
 $host = 'db';
 $db_name = 'cinephile_db';
 $username = 'cinephile_user';
 $password = 'secretpassword';
 
+date_default_timezone_set('Europe/Kyiv');
+
 try {
     $db = new PDO("mysql:host=" . $host . ";dbname=" . $db_name, $username, $password);
     $db->exec("set names utf8");
+    $db->exec("SET time_zone = '+03:00'");
     
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     

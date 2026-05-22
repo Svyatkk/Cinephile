@@ -26,6 +26,7 @@ class Ticket {
 
         return $stmt->execute();
     }
+
     
     public function getTicketsByOrderId() {
         $query = "SELECT t.*, s.row_num, s.seat_num, ses.start_time, ses.format, m.title as movie_title, c.name as cinema_name, h.name as hall_name

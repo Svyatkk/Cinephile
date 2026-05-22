@@ -348,3 +348,39 @@
         gap: 16px;
     }
 }
+
+/* Skeleton Styles */
+.skeleton {
+    border-radius: 6px;
+    background: #222;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeletonMeta1 {
+    width: 200px;
+    height: 16px;
+}
+
+.skeletonTitle {
+    width: 320px;
+    height: 40px;
+    margin-top: 12px;
+}
+
+.skeletonMeta2 {
+    width: 200px;
+    height: 20px;
+    margin-top: 12px;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.6;
+    }
+}

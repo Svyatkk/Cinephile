@@ -58,7 +58,6 @@ export const movieService = {
     },
 
     async getSessionsMovie(name: string) {
-
         const response = await fetch(`${BASE_URL}/getSessionsMovie/movie?name=${name}`, {
             ...fetchOptions,
         })
@@ -67,7 +66,6 @@ export const movieService = {
             console.error('Помилка від бекенду:', errorText);
             throw new Error(`Помилка запиту: ${response.status}`);
         }
-
 
         return response.json()
     }

@@ -17,7 +17,8 @@ export default function Account() {
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
             setUser(parsedUser);
-            orderService.getOrders(parsedUser.id).then(setOrders).catch(console.error);
+            // user_id тепер бере з сеансу на сервері
+            orderService.getOrders().then(setOrders).catch(console.error);
 
         }
     }, [])
@@ -27,7 +28,8 @@ export default function Account() {
 
         if (user) {
             try {
-                await orderService.cancelOrder(orderId, user.id);
+                // user_id тепер бере з сеансу на сервері
+                await orderService.cancelOrder(orderId);
                 setOrders(prev => prev.filter(o => o.id !== orderId));
             } catch (error: any) {
                 alert(error.message || 'Не вдалося скасувати бронювання');

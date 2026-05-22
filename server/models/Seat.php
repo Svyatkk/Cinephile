@@ -7,6 +7,7 @@ class Seat {
     public $seat_num;
     public $seat_type;
 
+        
     public function __construct($db) {
         $this->conn = $db;
     }

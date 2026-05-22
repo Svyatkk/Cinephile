@@ -96,14 +96,13 @@ export default function SessionSchedule({ movieId, cityId, cinemaId, inTheMovieB
                                         {grouped[cinemaName][langKey].map(s => (
                                             <div
                                                 key={s.id}
-                                                className={styles.timeItem}
+                                                className={`${styles.timeItem} ${onSessionClick ? styles.clickable : ''}`}
                                                 onClick={() => onSessionClick && onSessionClick(s)}
-                                                style={{ cursor: onSessionClick ? 'pointer' : 'default', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                                             >
                                                 <span className={styles.time}>{s.start_time.split(' ')[1].substring(0, 5)}</span>
                                                 <span className={styles.price}>{Math.round(s.base_price)} грн</span>
                                                 {isAdmin && s.hall_name && (
-                                                    <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', marginTop: '2px', textAlign: 'center' }}>
+                                                    <span className={styles.adminHall}>
                                                         {s.hall_name}
                                                     </span>
                                                 )}

@@ -5,7 +5,6 @@ import { movieService } from '@/api/movie.service'
 import { sessionService } from '@/api/session.service'
 import { IMovie } from '@/types/movie.interface'
 import { PAGES_URL } from '@/api/config'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import styles from './style.module.css'
 
@@ -14,7 +13,6 @@ type Props = {
 }
 
 export default function RelatedMovies({ currentMovieId }: Props) {
-    const router = useRouter()
     const [watchAlso, setWatchAlso] = useState<IMovie[]>([])
     const [soonInCinemas, setSoonInCinemas] = useState<IMovie[]>([])
     const [loading, setLoading] = useState(true)
@@ -23,29 +21,43 @@ export default function RelatedMovies({ currentMovieId }: Props) {
         const fetchAndClassifyMovies = async () => {
             try {
                 setLoading(true)
-                const allMovies: IMovie[] = await movieService.getAll()
 
+                const storedCinema = typeof window !== 'undefined'
+                    ? localStorage.getItem('chosenCinema')
+                    : null
+                const chosenCinemaId: number | null = storedCinema
+                    ? (JSON.parse(storedCinema) as { id: number }).id
+                    : null
+
+                const allMovies: IMovie[] = await movieService.getAll()
                 const filteredMovies = allMovies.filter(m => Number(m.id) !== currentMovieId)
 
                 const classifiedMovies = await Promise.all(
                     filteredMovies.map(async (movie) => {
                         try {
-                            const sessions = await sessionService.getByMovieId(Number(movie.id))
-                            const now = new Date()
+                            let sessions = await sessionService.getByMovieId(Number(movie.id))
 
+                            if (chosenCinemaId) {
+                                sessions = sessions.filter(s => Number(s.cinema_id) === chosenCinemaId)
+                            }
+
+                            const now = new Date()
                             const futureSessions = sessions
                                 .filter(s => new Date(s.start_time) > now)
                                 .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
 
-                            const closestSession = futureSessions.length > 0 ? futureSessions[0] : null
+                            if (chosenCinemaId && futureSessions.length === 0) {
+                                return null
+                            }
 
+                            const closestSession = futureSessions.length > 0 ? futureSessions[0] : null
                             const isSoon = closestSession
                                 ? (new Date(closestSession.start_time).getTime() - now.getTime()) > 7 * 24 * 60 * 60 * 1000
-                                : true;
+                                : true
 
                             return { movie, isSoon }
                         } catch (err) {
-                            return { movie, isSoon: true }
+                            return null
                         }
                     })
                 )
@@ -53,11 +65,12 @@ export default function RelatedMovies({ currentMovieId }: Props) {
                 const watchList: IMovie[] = []
                 const soonList: IMovie[] = []
 
-                classifiedMovies.forEach(({ movie, isSoon }) => {
-                    if (isSoon) {
-                        soonList.push(movie)
+                classifiedMovies.forEach((item) => {
+                    if (!item) return
+                    if (item.isSoon) {
+                        soonList.push(item.movie)
                     } else {
-                        watchList.push(movie)
+                        watchList.push(item.movie)
                     }
                 })
 
@@ -120,6 +133,7 @@ export default function RelatedMovies({ currentMovieId }: Props) {
                     </div>
                 </section>
             )}
+
 
             {soonInCinemas.length > 0 && (
                 <section className={styles.section}>

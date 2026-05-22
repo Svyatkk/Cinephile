@@ -15,6 +15,7 @@ export default function SeatPlanPage() {
     const router = useRouter();
     const sessionId = searchParams.get('sessionId');
 
+
     const [session, setSession] = useState<ISession | null>(null);
     const [seats, setSeats] = useState<ISeat[]>([]);
     const [selectedSeatIds, setSelectedSeatIds] = useState<number[]>([]);
@@ -72,12 +73,13 @@ export default function SeatPlanPage() {
         });
     };
 
+
     const handleContinue = async () => {
         if (selectedSeatIds.length === 0) return;
         const userStr = localStorage.getItem('user');
         if (!userStr) {
             alert('Будь ласка, увійдіть у систему для бронювання квитків');
-            router.push('/auth');
+            router.push(PAGES_URL.AUTH);
             return;
         }
 
@@ -120,6 +122,7 @@ export default function SeatPlanPage() {
                 <div className={styles.screen}>
                     <span className={styles.screenText}>Екран</span>
                 </div>
+
 
                 <SeatsGrid
                     seats={seats}

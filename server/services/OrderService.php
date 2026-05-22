@@ -13,8 +13,19 @@ class OrderService {
         try {
             $this->db->beginTransaction();
 
-            $this->db->exec("DELETE FROM cart_locks WHERE expires_at <= NOW()");
+            $checkSessionQuery = "
+                SELECT id, start_time 
+                FROM sessions 
+                WHERE id = :session_id AND start_time > NOW()
+            ";
+            $checkSessionStmt = $this->db->prepare($checkSessionQuery);
+            $checkSessionStmt->execute([':session_id' => $session_id]);
+            
+            if (!$checkSessionStmt->fetch()) {
+                throw new Exception("Сеанс уже розпочався або завершився. Замовлення неможливе.");
+            }
 
+            $this->db->exec("DELETE FROM cart_locks WHERE expires_at <= NOW()");
 
             foreach ($seat_ids as $seat_id) {
                 $checkLockQuery = "
@@ -30,7 +41,6 @@ class OrderService {
                 if (!$checkLockStmt->fetch()) {
                     throw new Exception("Термін бронювання місць минув або місця не були заброньовані.");
                 }
-             
             }
 
 
@@ -49,8 +59,7 @@ class OrderService {
                 FROM sessions 
                 WHERE id = :session_id
             ";
-         
-
+    
             $sessionStmt = $this->db->prepare($sessionQuery);
             $sessionStmt->execute([':session_id' => $session_id]);
             $session_data = $sessionStmt->fetch(PDO::FETCH_ASSOC);
@@ -74,7 +83,6 @@ class OrderService {
                 DELETE FROM cart_locks 
                 WHERE session_id = :session_id AND user_id = :user_id
             ";
-      
             $deleteLockStmt = $this->db->prepare($deleteLockQuery);
             $deleteLockStmt->execute([':session_id' => $session_id, ':user_id' => $user_id]);
 
@@ -90,7 +98,7 @@ class OrderService {
     public function cancelOrder(int $order_id, int $user_id): array {
         try {
             $this->db->beginTransaction();
-
+                
             $orderQuery = "
                 SELECT id 
                 FROM orders 

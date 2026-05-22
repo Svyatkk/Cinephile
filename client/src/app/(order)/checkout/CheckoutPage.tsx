@@ -8,12 +8,15 @@ import { orderService } from '@/api/order.service';
 import { ISession } from '@/types/session.interface';
 import Link from 'next/link';
 import { ISeat } from '@/types/seat.interface';
-
+import { PAGES_URL } from '@/api/config';
+import { movieService } from '@/api/movie.service';
 export default function CheckoutPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const sessionId = searchParams.get('sessionId');
     const seatIdsStr = searchParams.get('seatIds');
+
+    const [movieTitle, setMovieTitle] = useState<string>('');
 
     const [session, setSession] = useState<ISession | null>(null);
     const [selectedSeats, setSelectedSeats] = useState<ISeat[]>([]);
@@ -33,7 +36,8 @@ export default function CheckoutPage() {
 
         Promise.all([
             sessionService.getById(Number(sessionId)),
-            seatService.getForSession(Number(sessionId))
+            seatService.getForSession(Number(sessionId)),
+
         ]).then(([sessionData, seatsData]) => {
             setSession(sessionData);
             const filteredSeats = seatsData.filter(s => seatIds.includes(s.id));
@@ -58,7 +62,6 @@ export default function CheckoutPage() {
 
         try {
             await orderService.createOrder({
-                user_id: user.id,
                 session_id: session.id,
                 seat_ids: seatIds,
                 total_amount: totalAmount
@@ -70,6 +73,23 @@ export default function CheckoutPage() {
             setProcessing(false);
         }
     };
+
+
+    const handleCancel = async () => {
+        if (!session) return;
+        setProcessing(true);
+        setError(null);
+        try {
+            await orderService.unlockSeats(Number(session.id));
+            router.push(`${PAGES_URL.SEATPLAN}?sessionId=${session.id}`);
+        } catch (err: any) {
+            setError(err.message || 'Помилка при скасуванні бронювання.');
+        } finally {
+            setProcessing(false);
+        }
+    };
+
+
 
     if (loading) return <div className={styles.page}>Завантаження замовлення...</div>;
     if (error && !session) return <div className={styles.page}>{error}</div>;
@@ -92,7 +112,7 @@ export default function CheckoutPage() {
 
                 <div className={styles.summaryCard}>
                     <div className={styles.movieInfo}>
-                        <h2 className={styles.movieTitle}>Фільм: {session.movie_id}</h2> {/* You might want to pass movie title down or fetch it */}
+                        <h2 className={styles.movieTitle}>Фільм: {session.id}</h2>
                         <div className={styles.sessionDetails}>
                             <p>{session.cinema_name}, {session.hall_name}</p>
                             <p>{formattedDate} о {formattedTime}</p>
@@ -123,7 +143,7 @@ export default function CheckoutPage() {
                 <div className={styles.actions}>
                     <button
                         className={styles.cancelBtn}
-                        onClick={() => router.back()}
+                        onClick={handleCancel}
                         disabled={processing}
                     >
                         Скасувати

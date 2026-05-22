@@ -11,6 +11,7 @@ type Props = {
     setChosenCinema?: (cinema: ICinema) => void,
 }
 
+
 export default function PanelCities({ active, cities, setChosenCity, setChosenCinema, }: Props) {
     const [selectedCityId, setSelectedCityId] = useState<number | null>(null);
 

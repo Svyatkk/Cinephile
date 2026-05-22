@@ -12,11 +12,18 @@ class CartLockService {
         try {
             $this->db->beginTransaction();
     
-    
-                
-            $this->db->exec("DELETE FROM cart_locks WHERE expires_at <= NOW()");
-
+            $checkSessionQuery = "
+                SELECT id, start_time 
+                FROM sessions 
+                WHERE id = :session_id AND start_time > NOW()
+            ";
+            $checkSessionStmt = $this->db->prepare($checkSessionQuery);
+            $checkSessionStmt->execute([':session_id' => $session_id]);
             
+            if (!$checkSessionStmt->fetch()) {
+                throw new Exception("Сеанс уже розпочався або завершився. Бронювання неможливе.");
+            }
+
             foreach ($seat_ids as $seat_id) {
                 $checkTicketsQuery = "
                     SELECT id 
@@ -46,7 +53,6 @@ class CartLockService {
                 }
             }
 
-
             $deleteLocksQuery = "
                 DELETE FROM cart_locks 
                 WHERE session_id = :session_id AND user_id = :user_id
@@ -72,6 +78,21 @@ class CartLockService {
 
         } catch (Exception $e) {
             $this->db->rollBack();
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function unlockSeats(int $user_id, int $session_id): array {
+        try {
+            $deleteLocksQuery = "
+                DELETE FROM cart_locks 
+                WHERE session_id = :session_id AND user_id = :user_id
+            ";
+            $deleteLocksStmt = $this->db->prepare($deleteLocksQuery);
+            $deleteLocksStmt->execute([':session_id' => $session_id, ':user_id' => $user_id]);
+            
+            return ["success" => true, "message" => "Бронювання успішно скасовано."];
+        } catch (Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
